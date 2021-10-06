@@ -1,40 +1,38 @@
 # My Personal Project
 
 ## what will my application?
-My personal project will be revolved around a **gravity related platform game**. It will be consisted of one player 
-where he/she starts at the bottom of the screen. There are platforms the player needs to jump on in order to reach the 
-end point of the game located at the top of the screen. If the player reaches the top before the timer hits zero, he/she
-wins the game. One should be able to design their own placement of platforms and name of the level. Aside from a 
-player object, the game will also include the following *objects*: 
-- Spike platforms, regular platforms, moving platforms, bounce pads.
-- Turrets that are on some platforms that shoot bullets where each bullet is fired at a specific time interval.
-  - only present when player decided to play at a more difficult level
-- A finish platform that makes the player win the game. 
-- Timer that counts down. 
+my personal project will be revolved around a **sneaker botting profit-loss tracker with graphs**. This programme is
+specifically made for sneaker-botters who like to buy sneakers on websites for retail price and re-selling them at a
+higher price to make profits. This application will log weekly buys and sells and calculate **weekly** 
+gross profit and net profit. Every week, the user may add a new entry. The application will also provide total gross
+and net profits. Each weekly gross and net profit will be plotted as a dot on an XY axis, then the graph will connect 
+the dots and show the user their process over the month or year. For clarification, these features will be included in
+the programme: 
+- weekly entries for **investments**, which will include:
+  - purchases of sneakers with sneaker names, quantities of each sneaker, and price of each sneaker
+  - purchases of proxy plans and their corresponding price (proxies are IP addresses that hinder the site from detecting 
+multiple purchases from a single address).
+  - purchases of third party solvers and their corresponding price (Third party solvers solve captcha for the user).
+  - purchases of notification groups and their price
+  - in each weekly entry, there will be weekly gross profit and weekly net profit. 
+  - For all weekly entries, there will a total gross and net profit with corresponding graphs.
 
 ## who will use my application and why am I intrigued in creating it?
-The people that will use it are people that like to play and design quick games to pass time. Gamers will also use this 
-application as 2D games have a sense of originality. This application will also intrigue players who like to design 
-their own levels to challenge their friends. This project is interesting to me because I am in love with video games; 
-they provide me with an escape from reality. Video games gifted me many close friends that I still have today in UBC. 
-I  love 2D games; they give me a sense of originality and a feeling that I am playing in an era where video games first 
-emerged. I have always been intrigued by the amount of hard work that goes into programming a video game, and I 
-have always wanted to experience this incremental process myself. 
-
+This application is for people who like to bot sneakers and like to have a place to organize their profits and loses. 
+sneaker-botting is a very popular idea among teens and even adults, they make up a considerable community in Canada.
+Me and some of my friends have been sneaker-botting for a long time. For many people, especially beginners,
+it is a pain trying to keep track of profits, loses and investments. I usually keep track profits and loses on a 
+Google Doc which is hard to follow sometimes. Some people like using spread-sheets however I find them really 
+complicated. This gave rise to an idea to make an easy to operate and helpful profit-loss tracker. 
 
 ## User stories
-- As a user, I want to be able to add regular platforms to the game. 
-- As a user, I want to be able to add spike platforms to the game.
-- As a user, I want to be able to add moving platforms to the game.
-- As a user, I want to be able to add turret platforms to the game.
-- As a user, I want to be able to set the timer in the game.
-- As a user, I want to be able to add an ending platform in the game. 
-- As a user, I want to be able to make a level by myself and give the level a name of my choice.
-- As a user, I want to be able to jump and jump onto different platforms when playing the game.
-- As a user, I want to be able to move left and right on platforms and on the ground.
-- As a user, I want to be able to respawn on the bottom if I die by the spikes or pellets.
-- As a User, I want to be able to lose if I do not reach the finishing platform in time. 
-- As a user, I want to be able to view the time I have left in the game.
-- As a user, I want to be able to win the game by landing on the finishing platform. 
+- as a user I want to be able to add sneakers I just bought to the purchased sneakers list 
+- as a user I want to be able to add newly purchased proxy plans to the existing purchased proxy plan list
+- as a user I want to be able to add topped up amount in third party solvers to the existing amount.
+- as a user I want to be able to add a new weekly entry to the existing entries.
+- as a user I want to be able to view weekly gross and net profits
+- as a user I want to be able to view overall gross and net profits 
+- as a user I want to be able to delete a weekly entry in case of a mistake.
+- as a user I want to be able to view each weekly entry in terms of investment, and profits/loses.
 
 
