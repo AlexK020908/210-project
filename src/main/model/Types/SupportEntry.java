@@ -1,14 +1,11 @@
-package model;
+package model.Types;
 
-// a proxy that have a name and price plan
-public class ProxyEntry {
-    private String name;
-    private ProxyType proxyType;
-    private double pricePaidSoFar;
+public class SupportEntry {
+    protected String name;
+    protected double pricePaidSoFar;
 
-    public ProxyEntry(String name, ProxyType proxyType, double pricePaidSoFar) {
+    public SupportEntry(String name, double pricePaidSoFar) {
         this.name = name;
-        this.proxyType = proxyType;
         this.pricePaidSoFar = pricePaidSoFar;
     }
 
@@ -16,14 +13,9 @@ public class ProxyEntry {
         return name;
     }
 
-    public ProxyType getProxyType() {
-        return proxyType;
-    }
-
     public double getPricePaidSoFar() {
         return pricePaidSoFar;
     }
-    //one should be able to modify name and pricePaidSofar if there was a mistake
 
     public void setName(String name) {
         this.name = name;
@@ -40,6 +32,4 @@ public class ProxyEntry {
     public void removeFromPricePaidSoFar(double amount) {
         pricePaidSoFar -= amount;
     }
-
-
 }

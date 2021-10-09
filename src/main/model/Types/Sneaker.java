@@ -1,4 +1,4 @@
-package model;
+package model.Types;
 
 
 //represents a sneaker class that should have a name and a retail price and also the quantity bought
