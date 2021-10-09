@@ -1,9 +1,7 @@
 package model.investment;
 
-import model.Types.CookGroupSubscriptionEntry;
-import model.Types.ProxyEntry;
-import model.Types.ProxyType;
-import model.Types.SneakerEntry;
+import model.ProxyEntry;
+import model.ProxyType;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,11 +17,21 @@ public class ProxyPurchaseList {
         return proxyPurchaseList;
     }
 
+    //EFFECT: return the size of the proxy purchase list
+    public int getLength() {
+        return proxyPurchaseList.size();
+    }
+
+    //return the index of the specified proxy entry
+    public int indexOf(ProxyEntry entry) {
+        return proxyPurchaseList.indexOf(entry);
+    }
+
 
     //MODIFIES: this
     //EFFECT: Add the given proxy entry to the end of the proxy Entry list, the given list already has the same
     //proxy and same type, simply add the amount paid to the existing entry
-    public void addEntry(ProxyEntry entry) {
+    public boolean addEntry(ProxyEntry entry) {
         String nameOfProxy = entry.getName();
         ProxyType proxyType = entry.getProxyType();
         double pricePaid = entry.getPricePaidSoFar();
@@ -31,9 +39,12 @@ public class ProxyPurchaseList {
         for (ProxyEntry next : proxyPurchaseList) {
             if (next.getName() == nameOfProxy && next.getProxyType() == proxyType) {
                 next.addToPricePaidSoFar(pricePaid);
+                return false;
             }
-            proxyPurchaseList.add(entry);
+
         }
+        proxyPurchaseList.add(entry);
+        return true;
 
     }
 
@@ -47,11 +58,11 @@ public class ProxyPurchaseList {
     }
 
     //EFFECT: return total money spend on proxies
-    public int getTotalMoneySpent() {
-        int sum = 0;
+    public double getTotalMoneySpent() {
+        double sum = 0;
         for (ProxyEntry next : proxyPurchaseList) {
             double price = next.getPricePaidSoFar();
-            sum = (int) (sum + price);
+            sum = sum + price;
         }
         return sum;
     }

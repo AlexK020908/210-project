@@ -1,7 +1,6 @@
 package model.investment;
 
-import model.Types.CookGroupSubscriptionEntry;
-import model.Types.ThirdPartySolverEntry;
+import model.ThirdPartySolverEntry;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,18 +16,31 @@ public class ThirdPartyCaptchaSolversPurchaseList {
         return solversPurchaseList;
     }
 
+    //EFFECT: return the size of the solver purchase list
+    public int getLength() {
+        return solversPurchaseList.size();
+    }
+
+    //EFFECT: give the index of the specified solver in the solver purchase list
+    public int indexOf(ThirdPartySolverEntry entry) {
+        return solversPurchaseList.indexOf(entry);
+    }
+
+
     //MODIFIES: this
     //EFFECT: Add the given sneaker to the end of the third party solver list, if the sneaker name is already in the
     // list simply add the quantity to the existing quantity of that sneaker
-    public void addEntry(ThirdPartySolverEntry entry) {
+    public boolean addEntry(ThirdPartySolverEntry entry) {
         String name = entry.getName();
         double pricePaid = entry.getPricePaidSoFar();
         for (ThirdPartySolverEntry next: solversPurchaseList) {
             if (next.getName() == name) {
                 next.addToPricePaidSoFar(pricePaid);
+                return false;
             }
-            solversPurchaseList.add(entry);
         }
+        solversPurchaseList.add(entry);
+        return true;
 
     }
 
@@ -41,11 +53,11 @@ public class ThirdPartyCaptchaSolversPurchaseList {
 
 
     //EFFECT: return total money spend on third part solvers
-    public int getTotalMoneySpent() {
-        int sum = 0;
+    public double getTotalMoneySpent() {
+        double sum = 0;
         for (ThirdPartySolverEntry next : solversPurchaseList) {
             double price = next.getPricePaidSoFar();
-            sum = (int) (sum + price);
+            sum =  (sum + price);
         }
         return sum;
     }

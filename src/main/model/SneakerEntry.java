@@ -1,6 +1,6 @@
-package model.Types;
+package model;
 
-import model.Types.Sneaker;
+import model.Sneaker;
 
 public class SneakerEntry extends Sneaker {
     private int quantityBought;

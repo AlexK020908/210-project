@@ -1,7 +1,7 @@
 package model.investment;
 
-import model.Types.CookGroupSubscriptionEntry;
-import model.Types.SneakerEntry;
+import model.Sneaker;
+import model.SneakerEntry;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +15,16 @@ public class SneakerPurchaseList {
 
     public List<SneakerEntry> getSneakerPurchaseList() {
         return sneakerPurchaseList;
+    }
+
+    //EFFECT: return the size of the sneaker purchase list
+    public int getLength() {
+        return sneakerPurchaseList.size();
+    }
+
+    //EFFECT: returnt the index of the given sneaker entry
+    public int indexOf(SneakerEntry entry) {
+        return sneakerPurchaseList.indexOf(entry);
     }
 
     //MODIFIES: this
@@ -60,12 +70,12 @@ public class SneakerPurchaseList {
 
     }
 
-    public int getTotalMoneySpent() {
-        int sum = 0;
+    public double getTotalMoneySpent() {
+        double sum = 0;
         for (SneakerEntry next : sneakerPurchaseList) {
             int quantity = next.getQuantityBought();
             double price = next.getPrice();
-            sum = sum + (int) (quantity * price);
+            sum = sum +  (quantity * price);
         }
         return sum;
     }

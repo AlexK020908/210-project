@@ -1,4 +1,4 @@
-package model.Types;
+package model;
 
 
 //third part solver with a name and price

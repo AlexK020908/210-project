@@ -1,4 +1,4 @@
-package model.Types;
+package model;
 
 // a proxy that have a name and price plan
 public class ProxyEntry extends SupportEntry {

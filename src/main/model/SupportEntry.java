@@ -1,4 +1,4 @@
-package model.Types;
+package model;
 
 public class SupportEntry {
     protected String name;

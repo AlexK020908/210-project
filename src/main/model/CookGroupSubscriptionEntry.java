@@ -1,4 +1,4 @@
-package model.Types;
+package model;
 
 //cook group that should have a cook group name and a price
 public class CookGroupSubscriptionEntry extends SupportEntry {
