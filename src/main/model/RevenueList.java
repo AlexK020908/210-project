@@ -10,6 +10,7 @@ public class RevenueList {
         revenues = new LinkedList<>();
     }
 
+
     //getter
     //EFFECT: get the current revenues
     public List<Revenue> getRevenues() {

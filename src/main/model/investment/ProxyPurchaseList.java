@@ -7,24 +7,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProxyPurchaseList {
-    private List<ProxyEntry> purchaseList;
+    private List<ProxyEntry> proxyPurchaseList;
 
     public ProxyPurchaseList() {
-        purchaseList = new LinkedList<>();
+        proxyPurchaseList = new LinkedList<>();
     }
 
-    public List<ProxyEntry> getPurchaseList() {
-        return purchaseList;
-    }
 
     //EFFECT: return the size of the proxy purchase list
     public int getLength() {
-        return purchaseList.size();
+        return proxyPurchaseList.size();
     }
 
-    //return the index of the specified proxy entry
+    //return the index of the specified proxy entry, if does not exist, return -1
     public int indexOf(ProxyEntry entry) {
-        return purchaseList.indexOf(entry);
+        if (proxyPurchaseList.contains(entry)) {
+            return proxyPurchaseList.indexOf(entry);
+        }
+        return -1;
     }
 
 
@@ -36,14 +36,14 @@ public class ProxyPurchaseList {
         ProxyType proxyType = entry.getProxyType();
         double pricePaid = entry.getPricePaidSoFar();
 
-        for (ProxyEntry next : purchaseList) {
+        for (ProxyEntry next : proxyPurchaseList) {
             if (next.getName() == nameOfProxy && next.getProxyType() == proxyType) {
                 next.addToPricePaidSoFar(pricePaid);
                 return false;
             }
 
         }
-        purchaseList.add(entry);
+        proxyPurchaseList.add(entry);
         return true;
 
     }
@@ -52,8 +52,8 @@ public class ProxyPurchaseList {
     //MODIFIES:THIS
     //EFFECT: remove the specified entry from the given list
     public Boolean removeEntry(ProxyEntry entry) {
-        if (purchaseList.contains(entry)) {
-            purchaseList.remove(entry);
+        if (proxyPurchaseList.contains(entry)) {
+            proxyPurchaseList.remove(entry);
             return true;
         }
         return false;
@@ -64,7 +64,7 @@ public class ProxyPurchaseList {
     //EFFECT: return total money spend on proxies
     public double getTotalMoneySpent() {
         double sum = 0;
-        for (ProxyEntry next : purchaseList) {
+        for (ProxyEntry next : proxyPurchaseList) {
             double price = next.getPricePaidSoFar();
             sum = sum + price;
         }

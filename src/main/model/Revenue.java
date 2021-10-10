@@ -3,8 +3,8 @@ package model;
 public class Revenue {
     private double revenue;
 
-    public Revenue() {
-        revenue = 0.0;
+    public Revenue(double revenue) {
+        this.revenue = revenue;
     }
 
     public double getRevenue() {

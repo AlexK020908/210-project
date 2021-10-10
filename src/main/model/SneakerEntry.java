@@ -18,7 +18,12 @@ public class SneakerEntry extends Sneaker {
         quantityBought += amount;
     }
 
+    //EFFECT: Decrease the amount of quantity bought, if larger than the amount there already, return 0
     public void decreaseQuantityBought(int amount) {
-        quantityBought -= amount;
+        if (amount >= quantityBought) {
+            quantityBought = 0;
+        } else {
+            quantityBought -= amount;
+        }
     }
 }

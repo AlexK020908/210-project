@@ -4,6 +4,7 @@ import model.investment.CookGroupPurchaseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.font.FontRenderContext;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -153,6 +154,40 @@ public class CookGroupPurchaseListTest {
 
 
     }
+
+    @Test
+    public void testLengthZero(){
+        assertEquals(0, cookGroupPurchaseList.getLength());
+    }
+
+    @Test
+    public void testLengthManyElements(){
+        cookGroupPurchaseList.addEntry(forbidden);
+        assertEquals(1, cookGroupPurchaseList.getLength());
+        cookGroupPurchaseList.addEntry(forbidden);
+        assertEquals(1, cookGroupPurchaseList.getLength());
+        cookGroupPurchaseList.addEntry(theNorthCop);
+        cookGroupPurchaseList.addEntry(DropAlert);
+        cookGroupPurchaseList.addEntry(secretSauce);
+        assertEquals(4, cookGroupPurchaseList.getLength());
+
+    }
+
+    @Test
+    public void testIndexOfElementDoesNotExist(){
+        assertEquals(-1, cookGroupPurchaseList.indexOf(forbidden));
+    }
+
+    @Test
+    public void testIndexOfElementInAListExist(){
+        cookGroupPurchaseList.addEntry(theNorthCop);
+        cookGroupPurchaseList.addEntry(forbidden);
+        cookGroupPurchaseList.addEntry(DropAlert);
+        cookGroupPurchaseList.addEntry(secretSauce);
+        assertEquals(1, cookGroupPurchaseList.indexOf(forbidden));
+        assertEquals(3, cookGroupPurchaseList.indexOf(secretSauce));
+    }
+
 
 
 

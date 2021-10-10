@@ -1,30 +1,34 @@
 package model.investment;
 
 import model.CookGroupSubscriptionEntry;
+import model.SupportEntry;
+import model.ThirdPartySolverEntry;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class CookGroupPurchaseList {
-    private List<CookGroupSubscriptionEntry> purchaseList;
+
+public class CookGroupPurchaseList  {
+    private List<CookGroupSubscriptionEntry> cookGroupPurchaseList;
 
     public CookGroupPurchaseList() {
-        purchaseList = new LinkedList<>();
-    }
-
-    public List<CookGroupSubscriptionEntry> getPurchaseList() {
-        return purchaseList;
+        cookGroupPurchaseList = new LinkedList<>();
     }
 
     //EFFECT: get the size of the given list
     public int getLength() {
-        return purchaseList.size();
+        return cookGroupPurchaseList.size();
     }
 
-    //EFFECT: get index of the first Occurance of the specified entry
+    //EFFECT: get index of the first Occurance of the specified entry, if the elemnet does not exist
+    //simply return -1
     public int indexOf(CookGroupSubscriptionEntry entry) {
-        return purchaseList.indexOf(entry);
+        if (cookGroupPurchaseList.contains(entry)) {
+            return cookGroupPurchaseList.indexOf(entry);
+        }
+        return -1;
     }
+
 
     //MODIFIES: this
     //EFFECT: Add the given sneaker to the end of the cook group sub list and return true,
@@ -34,13 +38,13 @@ public class CookGroupPurchaseList {
         String name = entry.getName();
         double pricePaid = entry.getPricePaidSoFar();
 
-        for (CookGroupSubscriptionEntry next: purchaseList) {
+        for (SupportEntry next: cookGroupPurchaseList) {
             if (next.getName() == name) {
                 next.addToPricePaidSoFar(pricePaid);
                 return false; //can I return a string instead? like updated exsiting subsrcition?
             }
         }
-        purchaseList.add(entry);
+        cookGroupPurchaseList.add(entry);
         return true;
     }
 
@@ -48,8 +52,8 @@ public class CookGroupPurchaseList {
     //MODIFIES:THIS
     //EFFECT: remove the specified entry from the given list and return true, otherwise return false
     public boolean removeEntry(CookGroupSubscriptionEntry entry) {
-        if (purchaseList.contains(entry)) {
-            purchaseList.remove(entry);
+        if (cookGroupPurchaseList.contains(entry)) {
+            cookGroupPurchaseList.remove(entry);
             return true;
         }
         return false;
@@ -58,7 +62,7 @@ public class CookGroupPurchaseList {
     //EFFECT: return total money spend on cook Groups
     public double getTotalMoneySpent() {
         double sum = 0.0;
-        for (CookGroupSubscriptionEntry next : purchaseList) {
+        for (SupportEntry next : cookGroupPurchaseList) {
             double price = next.getPricePaidSoFar();
             sum =  sum + price;
         }

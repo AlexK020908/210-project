@@ -222,4 +222,66 @@ public class ProxyPurchaseListTest {
 
 
     }
+
+    @Test
+    public void testLengthZero(){
+        assertEquals(0, ProxyPurchaseList.getLength());
+    }
+
+    @Test
+    public void testLengthManyElements(){
+        ProxyPurchaseList.addEntry(Oculus);
+        assertEquals(1, ProxyPurchaseList.getLength());
+        ProxyPurchaseList.addEntry(Oculus);
+        assertEquals(1, ProxyPurchaseList.getLength());
+        ProxyPurchaseList.addEntry(OculusTwo);
+        ProxyPurchaseList.addEntry(OculusThree);
+        ProxyPurchaseList.addEntry(LeafProxies);
+        assertEquals(4, ProxyPurchaseList.getLength());
+
+        //add all entries..
+        ProxyPurchaseList.addEntry(LeafProxiesTwo);
+        ProxyPurchaseList.addEntry(LeafProxiesThree);
+        ProxyPurchaseList.addEntry(SmartProxy);
+        ProxyPurchaseList.addEntry(SmartProxyTwo);
+        ProxyPurchaseList.addEntry(SmartProxyThree);
+        ProxyPurchaseList.addEntry(OxyLabs);
+        ProxyPurchaseList.addEntry(OxyLabsTwo);
+        ProxyPurchaseList.addEntry(OxyLabsThree);
+        assertEquals(12, ProxyPurchaseList.getLength());
+
+    }
+
+    @Test
+    public void testIndexOfElementDoesNotExist(){
+        assertEquals(-1, ProxyPurchaseList.indexOf(Oculus));
+    }
+
+    @Test
+    public void testIndexOfElementInAListExist(){
+        //one proxy entry
+        ProxyPurchaseList.addEntry(Oculus);
+        assertEquals(0, ProxyPurchaseList.indexOf(Oculus));
+        //5 proxy entry
+        ProxyPurchaseList.addEntry(OculusTwo);
+        ProxyPurchaseList.addEntry(OculusThree);
+        ProxyPurchaseList.addEntry(LeafProxies);
+        ProxyPurchaseList.addEntry(LeafProxiesTwo);
+        assertEquals(3, ProxyPurchaseList.indexOf(LeafProxies));
+        assertEquals(4, ProxyPurchaseList.indexOf(LeafProxiesTwo));
+
+        //add the rest
+        ProxyPurchaseList.addEntry(LeafProxiesThree);
+        ProxyPurchaseList.addEntry(SmartProxy);
+        ProxyPurchaseList.addEntry(SmartProxyTwo);
+        ProxyPurchaseList.addEntry(SmartProxyThree);
+        ProxyPurchaseList.addEntry(OxyLabs);
+        ProxyPurchaseList.addEntry(OxyLabsTwo);
+        ProxyPurchaseList.addEntry(OxyLabsThree);
+        assertEquals(6, ProxyPurchaseList.indexOf(SmartProxy));
+        assertEquals(11, ProxyPurchaseList.indexOf(OxyLabsThree));
+
+
+
+    }
 }

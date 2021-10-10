@@ -12,9 +12,6 @@ public class ThirdPartyCaptchaSolversPurchaseList {
         solversPurchaseList = new LinkedList<>();
     }
 
-    public List<ThirdPartySolverEntry> getSolversPurchaseList() {
-        return solversPurchaseList;
-    }
 
     //EFFECT: return the size of the solver purchase list
     public int getLength() {
@@ -47,8 +44,12 @@ public class ThirdPartyCaptchaSolversPurchaseList {
     //REQUIRES: the entry is already in the list
     //MODIFIES:THIS
     //EFFECT: remove the specified entry from the given list
-    public void removeEntry(ThirdPartySolverEntry entry) {
-        solversPurchaseList.remove(entry);
+    public boolean removeEntry(ThirdPartySolverEntry entry) {
+        if (solversPurchaseList.contains(entry)) {
+            solversPurchaseList.remove(entry);
+            return true;
+        }
+        return false;
     }
 
 
