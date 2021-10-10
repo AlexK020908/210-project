@@ -6,24 +6,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CookGroupPurchaseList {
-    private List<CookGroupSubscriptionEntry> cookGroupPurchaseList;
+    private List<CookGroupSubscriptionEntry> purchaseList;
 
     public CookGroupPurchaseList() {
-        cookGroupPurchaseList = new LinkedList<>();
+        purchaseList = new LinkedList<>();
     }
 
-    public List<CookGroupSubscriptionEntry> getCookGroupPurchaseList() {
-        return cookGroupPurchaseList;
+    public List<CookGroupSubscriptionEntry> getPurchaseList() {
+        return purchaseList;
     }
 
     //EFFECT: get the size of the given list
     public int getLength() {
-        return cookGroupPurchaseList.size();
+        return purchaseList.size();
     }
 
-    //EFFECT: get index of the first occurance of the specified entry
+    //EFFECT: get index of the first Occurance of the specified entry
     public int indexOf(CookGroupSubscriptionEntry entry) {
-        return cookGroupPurchaseList.indexOf(entry);
+        return purchaseList.indexOf(entry);
     }
 
     //MODIFIES: this
@@ -34,13 +34,13 @@ public class CookGroupPurchaseList {
         String name = entry.getName();
         double pricePaid = entry.getPricePaidSoFar();
 
-        for (CookGroupSubscriptionEntry next: cookGroupPurchaseList) {
+        for (CookGroupSubscriptionEntry next: purchaseList) {
             if (next.getName() == name) {
                 next.addToPricePaidSoFar(pricePaid);
                 return false; //can I return a string instead? like updated exsiting subsrcition?
             }
         }
-        cookGroupPurchaseList.add(entry);
+        purchaseList.add(entry);
         return true;
     }
 
@@ -48,8 +48,8 @@ public class CookGroupPurchaseList {
     //MODIFIES:THIS
     //EFFECT: remove the specified entry from the given list and return true, otherwise return false
     public boolean removeEntry(CookGroupSubscriptionEntry entry) {
-        if (cookGroupPurchaseList.contains(entry)) {
-            cookGroupPurchaseList.remove(entry);
+        if (purchaseList.contains(entry)) {
+            purchaseList.remove(entry);
             return true;
         }
         return false;
@@ -58,7 +58,7 @@ public class CookGroupPurchaseList {
     //EFFECT: return total money spend on cook Groups
     public double getTotalMoneySpent() {
         double sum = 0.0;
-        for (CookGroupSubscriptionEntry next : cookGroupPurchaseList) {
+        for (CookGroupSubscriptionEntry next : purchaseList) {
             double price = next.getPricePaidSoFar();
             sum =  sum + price;
         }
