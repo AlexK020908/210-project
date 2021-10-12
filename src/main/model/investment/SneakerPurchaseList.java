@@ -64,10 +64,13 @@ public class SneakerPurchaseList {
 
     //REQUIRES: the entry is already in the list
     //MODIFIES:THIS
-    //EFFECT: remove the specified entry from the given list
-    public void removeEntry(SneakerEntry entry) {
-        sneakerPurchaseList.remove(entry);
-
+    //EFFECT: remove the specified entry from the given list and return true, it does not exist, return false
+    public Boolean removeEntry(SneakerEntry entry) {
+        if (sneakerPurchaseList.contains(entry)) {
+            sneakerPurchaseList.remove(entry);
+            return true;
+        }
+        return false;
     }
 
     public double getTotalMoneySpent() {

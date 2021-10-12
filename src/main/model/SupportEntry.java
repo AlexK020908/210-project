@@ -1,5 +1,7 @@
 package model;
 
+import model.investment.EntryTypes;
+
 public class SupportEntry {
     protected String name;
     protected double pricePaidSoFar;
@@ -7,7 +9,9 @@ public class SupportEntry {
     public SupportEntry(String name, double pricePaidSoFar) {
         this.name = name;
         this.pricePaidSoFar = pricePaidSoFar;
+
     }
+
 
     public String getName() {
         return name;
@@ -32,4 +36,5 @@ public class SupportEntry {
     public void removeFromPricePaidSoFar(double amount) {
         pricePaidSoFar -= amount;
     }
+
 }

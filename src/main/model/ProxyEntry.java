@@ -1,5 +1,7 @@
 package model;
 
+import model.investment.EntryTypes;
+
 // a proxy that have a name and price plan
 public class ProxyEntry extends SupportEntry {
     private ProxyType proxyType;
