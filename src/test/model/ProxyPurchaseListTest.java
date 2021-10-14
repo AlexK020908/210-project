@@ -12,18 +12,18 @@ public class ProxyPurchaseListTest {
     ProxyPurchaseList ProxyPurchaseList;
 
     //initialize some Cook Group Subscription Entries to test add and remove methods
-    private ProxyEntry Oculus = new ProxyEntry("Oculus", 59.99);
-    private ProxyEntry OculusTwo = new ProxyEntry("Oculus", 39.99);
-    private ProxyEntry OculusThree = new ProxyEntry("Oculus", 30.00);
-    private ProxyEntry LeafProxies = new ProxyEntry("Leaf proxies", 29.99);
-    private ProxyEntry LeafProxiesTwo = new ProxyEntry("Leaf proxies", 19.99);
-    private ProxyEntry LeafProxiesThree = new ProxyEntry("Leaf proxies", 20.00);
-    private ProxyEntry OxyLabs = new ProxyEntry("OxyLabs", 25.00);
-    private ProxyEntry OxyLabsTwo = new ProxyEntry("OxyLabs", 15.00);
-    private ProxyEntry OxyLabsThree = new ProxyEntry("OxyLabs", 19.99);
-    private ProxyEntry SmartProxy = new ProxyEntry("Smart Proxy", 17.00);
-    private ProxyEntry SmartProxyTwo = new ProxyEntry("Smart Proxy", 10.00);
-    private ProxyEntry SmartProxyThree = new ProxyEntry("Smart Proxy", 13.00);
+    private final ProxyEntry Oculus = new ProxyEntry("Oculus", 59.99);
+    private final ProxyEntry OculusTwo = new ProxyEntry("Oculus", 39.99);
+    private final ProxyEntry OculusThree = new ProxyEntry("Oculus", 30.00);
+    private final ProxyEntry LeafProxies = new ProxyEntry("Leaf proxies", 29.99);
+    private final ProxyEntry LeafProxiesTwo = new ProxyEntry("Leaf proxies", 19.99);
+    private final ProxyEntry LeafProxiesThree = new ProxyEntry("Leaf proxies", 20.00);
+    private final ProxyEntry OxyLabs = new ProxyEntry("OxyLabs", 25.00);
+    private final ProxyEntry OxyLabsTwo = new ProxyEntry("OxyLabs", 15.00);
+    private final ProxyEntry OxyLabsThree = new ProxyEntry("OxyLabs", 19.99);
+    private final ProxyEntry SmartProxy = new ProxyEntry("Smart Proxy", 17.00);
+    private final ProxyEntry SmartProxyTwo = new ProxyEntry("Smart Proxy", 10.00);
+    private final ProxyEntry SmartProxyThree = new ProxyEntry("Smart Proxy", 13.00);
 
 
     @BeforeEach

@@ -29,10 +29,6 @@ public class SupportEntryList<T extends SupportEntry> {
         return typePurchaseList.size();
     }
 
-    //EFFECT: return all the entries inside the entry list. If list is empty, simply return an empty list
-    public List<T> getPurchaseList() {
-        return typePurchaseList;
-    }
 
 
     //EFFECT: get the position of the specified entry in the list, the first element has position 0, if the entry does

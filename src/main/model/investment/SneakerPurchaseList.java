@@ -19,10 +19,6 @@ public class SneakerPurchaseList {
 
     }
 
-    //EFFECT: RETURN all the entries in the sneaker purchase list
-    public List<SneakerEntry> getPurchaseList() {
-        return sneakerPurchaseList;
-    }
 
     //EFFECT: get the position of the specified sneaker entry in the list, the first element has position 0,
     // if the entry does not exist, simply return -1
