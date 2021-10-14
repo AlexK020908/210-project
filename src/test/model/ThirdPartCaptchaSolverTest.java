@@ -1,12 +1,9 @@
 package model;
 
 import model.investment.ThirdPartyCaptchaSolversPurchaseList;
-import model.investment.ThirdPartyCaptchaSolversPurchaseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static model.ProxyType.*;
-import static model.ProxyType.CaptchaProxy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +28,7 @@ public class ThirdPartCaptchaSolverTest {
     public void testAddOneEntry() {
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster));
         assertEquals(1, thirdPartyCaptchaSolversPurchaseList.getLength());
-        assertEquals(CapMonster.getPricePaidSoFar(), thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
+        assertEquals(CapMonster.getPricePaid(), thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
     }
 
@@ -41,7 +38,7 @@ public class ThirdPartCaptchaSolverTest {
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster));
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(TwoCaptcha));
         assertEquals(2, thirdPartyCaptchaSolversPurchaseList.getLength());
-        assertEquals(CapMonster.getPricePaidSoFar() + TwoCaptcha.getPricePaidSoFar(),
+        assertEquals(CapMonster.getPricePaid() + TwoCaptcha.getPricePaid(),
                 thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
         assertEquals(1, thirdPartyCaptchaSolversPurchaseList.indexOf(TwoCaptcha));
@@ -53,7 +50,7 @@ public class ThirdPartCaptchaSolverTest {
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster));
         assertFalse(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster));
         assertEquals(1, thirdPartyCaptchaSolversPurchaseList.getLength());
-        assertEquals((CapMonster.getPricePaidSoFar()), thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
+        assertEquals((CapMonster.getPricePaid()), thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
         //the reason why we did not times oculus's price by two is becuase addEntry multiplied it for us already
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
     }
@@ -64,8 +61,8 @@ public class ThirdPartCaptchaSolverTest {
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(TwoCaptcha));
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(AntiCaptcha));
         assertEquals(3, thirdPartyCaptchaSolversPurchaseList.getLength());
-        assertEquals(CapMonster.getPricePaidSoFar() + TwoCaptcha.getPricePaidSoFar()
-                        + AntiCaptcha.getPricePaidSoFar(),
+        assertEquals(CapMonster.getPricePaid() + TwoCaptcha.getPricePaid()
+                        + AntiCaptcha.getPricePaid(),
                 thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
         assertEquals(1, thirdPartyCaptchaSolversPurchaseList.indexOf(TwoCaptcha));
@@ -84,8 +81,8 @@ public class ThirdPartCaptchaSolverTest {
 
 
         assertEquals(3, thirdPartyCaptchaSolversPurchaseList.getLength());
-        assertEquals(CapMonster.getPricePaidSoFar() + TwoCaptcha.getPricePaidSoFar()
-                        + AntiCaptcha.getPricePaidSoFar()
+        assertEquals(CapMonster.getPricePaid() + TwoCaptcha.getPricePaid()
+                        + AntiCaptcha.getPricePaid()
                 , thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
         assertEquals(1, thirdPartyCaptchaSolversPurchaseList.indexOf(TwoCaptcha));
@@ -145,22 +142,22 @@ public class ThirdPartCaptchaSolverTest {
 
         //case 2: one entry
         thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster);
-        assertEquals(CapMonster.getPricePaidSoFar(), thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
+        assertEquals(CapMonster.getPricePaid(), thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
 
         //case 3: add another entry
         thirdPartyCaptchaSolversPurchaseList.addEntry(AntiCaptcha);
-        assertEquals(CapMonster.getPricePaidSoFar() + AntiCaptcha.getPricePaidSoFar()
+        assertEquals(CapMonster.getPricePaid() + AntiCaptcha.getPricePaid()
                 , thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
 
         //case 4: add existing purchase
         thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster);
-        assertEquals(CapMonster.getPricePaidSoFar() + AntiCaptcha.getPricePaidSoFar()
+        assertEquals(CapMonster.getPricePaid() + AntiCaptcha.getPricePaid()
                 , thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
 
         //case 5: add the rest of entries that do not already exist in the list
         thirdPartyCaptchaSolversPurchaseList.addEntry(TwoCaptcha);
-        assertEquals(CapMonster.getPricePaidSoFar() + AntiCaptcha.getPricePaidSoFar()
-                        + TwoCaptcha.getPricePaidSoFar()
+        assertEquals(CapMonster.getPricePaid() + AntiCaptcha.getPricePaid()
+                        + TwoCaptcha.getPricePaid()
                 , thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
 
     }

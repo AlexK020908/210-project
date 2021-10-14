@@ -3,19 +3,18 @@
 ## what will my application?
 my personal project will be revolved around a **sneaker botting profit-loss tracker with graphs**. This programme is
 specifically made for sneaker-botters who like to buy sneakers on websites for retail price and re-selling them at a
-higher price to make profits. This application will log weekly buys and sells and calculate **weekly** 
-gross profit and net profit. Every week, the user may add a new entry. The application will also provide total gross
-and net profits. Each weekly gross and net profit will be plotted as a dot on an XY axis, then the graph will connect 
-the dots and show the user their process over the month or year. For clarification, these features will be included in
-the programme: 
-- weekly entries for **investments**, which will include:
+higher price to make profits. This application will log  buys and sells and calculate gross profit and net profit. 
+Every time the user makes a buy or sale, he/she can log entries into this application. The application will also provide 
+total gross and net profits. There will be two main types of **Investment**, one is support investment, and the other is 
+sneaker investment
+
+the programme will have: 
+-  4 entry options of **investments**, which will include:
   - purchases of sneakers with sneaker names, quantities of each sneaker, and price of each sneaker
   - purchases of proxy plans and their corresponding price (proxies are IP addresses that hinder the site from detecting 
 multiple purchases from a single address).
   - purchases of third party solvers and their corresponding price (Third party solvers solve captcha for the user).
   - purchases of notification groups and their price
-  - in each weekly entry, there will be weekly gross profit and weekly net profit. 
-  - For all weekly entries, there will a total gross and net profit with corresponding graphs.
 
 ## who will use my application and why am I intrigued in creating it?
 This application is for people who like to bot sneakers and like to have a place to organize their profits and loses. 
@@ -29,10 +28,11 @@ complicated. This gave rise to an idea to make an easy to operate and helpful pr
 - as a user I want to be able to add sneakers I just bought to the purchased sneakers list 
 - as a user I want to be able to add newly purchased proxy plans to the existing purchased proxy plan list
 - as a user I want to be able to add topped up amount in third party solvers to the existing amount.
-- as a user I want to be able to add a new weekly entry to the existing entries.
-- as a user I want to be able to view weekly gross and net profits
-- as a user I want to be able to view overall gross and net profits 
-- as a user I want to be able to delete a weekly entry in case of a mistake.
-- as a user I want to be able to view each weekly entry in terms of investment, and profits/loses.
+- as a user I want to be able to add sales in form of revenues to the revenue list
+- as a user I want to be able to view my current total revenue made.
+- as a user I want to be able to view overall gross and net profits
+- as a user I want to be able to view my total amount of money spent on Support investments 
+- as a user I want to be able to view my total money spent on Sneaker investments.
+
 
 

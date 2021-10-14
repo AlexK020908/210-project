@@ -1,14 +1,12 @@
 package model;
 
-import model.investment.EntryTypes;
-
 public class SupportEntry {
     protected String name;
-    protected double pricePaidSoFar;
+    protected double pricePaid;
 
     public SupportEntry(String name, double pricePaidSoFar) {
         this.name = name;
-        this.pricePaidSoFar = pricePaidSoFar;
+        this.pricePaid = pricePaidSoFar;
 
     }
 
@@ -17,8 +15,8 @@ public class SupportEntry {
         return name;
     }
 
-    public double getPricePaidSoFar() {
-        return pricePaidSoFar;
+    public double getPricePaid() {
+        return pricePaid;
     }
 
     public void setName(String name) {
@@ -28,13 +26,13 @@ public class SupportEntry {
     //MODIFIES: this
     //EFFECT: add the specified amount to  the current subscription amount
     public void addToPricePaidSoFar(double amount) {
-        pricePaidSoFar += amount;
+        pricePaid += amount;
     }
 
     //modifies This
     //EFFECT: subtract the specified amount from current subscription amount, only use if you made a mistake
     public void removeFromPricePaidSoFar(double amount) {
-        pricePaidSoFar -= amount;
+        pricePaid -= amount;
     }
 
 }

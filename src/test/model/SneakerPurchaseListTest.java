@@ -31,42 +31,66 @@ class SneakerPurchaseListTest {
     @Test
     public void testAddEntry(){
         // add one entry
+        sneakerPurchaseList.addEntry(s1);
+        assertEquals(1, sneakerPurchaseList.getLength());
+        assertEquals(0, sneakerPurchaseList.indexOf(s1));
 
-        //add one entry with repeating name
+        //add one entry with repeating name, s2 has the same name
+        sneakerPurchaseList.addEntry(s11);
+        assertEquals(1, sneakerPurchaseList.getLength());
+        assertEquals(15,
+                s1.getQuantityBought());
+        assertEquals(-1, sneakerPurchaseList.indexOf(s11));
+        //the reason why we passed s1 in sneaker entry is because since they have the same name, only the
+        //quantity is updated, so the name stays the same.
 
-        //add some more entry
+        //add some more entry of different names
+        sneakerPurchaseList.addEntry(s2);
+        sneakerPurchaseList.addEntry(s3);
+        sneakerPurchaseList.addEntry(s4);
 
+        assertEquals(4, sneakerPurchaseList.getLength());
+        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+        assertEquals(2, sneakerPurchaseList.indexOf(s3));
+        assertEquals(3, sneakerPurchaseList.indexOf(s4));
+        assertEquals(-1, sneakerPurchaseList.indexOf(s11));
 
-        //add all entries
+        //add the remaining entries
+        sneakerPurchaseList.addEntry(s5);
+        sneakerPurchaseList.addEntry(s6);
+        sneakerPurchaseList.addEntry(s7);
+        sneakerPurchaseList.addEntry(s22);
+        sneakerPurchaseList.addEntry(s44);
+        assertEquals(7, sneakerPurchaseList.getLength());
+        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+        assertEquals(4, sneakerPurchaseList.indexOf(s5));
+        assertEquals(-1, sneakerPurchaseList.indexOf(s44));
+        assertEquals(16, //16 is the sum of s2 and s22's quantity
+                s2.getQuantityBought());
+
 
     }
-
-    @Test
-    public void testRemoveEntry(){
-        //try to remove from empty list of entries
-
-        //add all entries remove one entry
-
-
-        //remove some entries
-
-        //remove all entries
-
-
-    }
-
     @Test
     public void testTotalPayment(){
         //test empty entry list
-
-        // add one entry and calulate sum
-
+        assertEquals(0,sneakerPurchaseList.getTotalMoneySpent());
+        // add one entry and calculate sum
+        sneakerPurchaseList.addEntry(s1);
+        assertEquals(650, sneakerPurchaseList.getTotalMoneySpent());
+        //add one repeating name sneaker and check the total money spent
+        
 
         //add some more entries and return sum
 
 
         //add all entries and return sum
     }
+
+    @Test
+    public void testGetLength(){
+
+    }
+
 
 
 
