@@ -190,7 +190,7 @@ public class ProfitOrLossCalculator {
     }
 
     //MODIFIES: this
-    //EFFECT: PROMTpS the user to enter a NEW third party solver entry and add it to the corresponding purchase list
+    //EFFECT: PROMTpS the user to enter a NEW third party solver entry and add it to the corresponding purchase list.
     private void addThirdPartySolverEntry(SupportEntryList<ThirdPartySolverEntry> selectedPurchaseType) {
         System.out.print("enter name of Third Party Solver: ");
         String entryName = input.next();
