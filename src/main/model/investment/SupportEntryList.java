@@ -1,6 +1,6 @@
 package model.investment;
 
-import model.SneakerEntry;
+import model.EntryType;
 import model.SupportEntry;
 
 import java.util.LinkedList;
@@ -12,12 +12,14 @@ public class SupportEntryList<T extends SupportEntry> {
     private List<T> typePurchaseList;
     private EntryType type;
 
+
     //EFFECT: initiate the purchaseList to a linkedList
     public SupportEntryList(EntryType type) {
         typePurchaseList = new LinkedList<>();
         this.type = type;
     }
 
+    //EFFECT: RETURN the actual type of this list of entries
     public EntryType getType() {
         return this.type;
     }
@@ -27,9 +29,11 @@ public class SupportEntryList<T extends SupportEntry> {
         return typePurchaseList.size();
     }
 
+    //EFFECT: return all the entries inside the entry list. If list is empty, simply return an empty list
     public List<T> getPurchaseList() {
         return typePurchaseList;
     }
+
 
     //EFFECT: get the position of the specified entry in the list, the first element has position 0, if the entry does
     //not exist, simply return -1
@@ -40,11 +44,11 @@ public class SupportEntryList<T extends SupportEntry> {
         return -1;
     }
 
-    //REQUIRES: the parameter to be supportEntry type of a subtype of supportEntry type
+    //REQUIRES: parameter to be of type SupportEntry or a subtype of SupportEntry
     //MODIFIES: this
-    //EFFECT: Add the given proxy entry to the end of the proxy Entry list and return true,
-    // if the given list already has the same proxy and same type, simply add the amount paid to the existing entry
-    // and return false to indicate that no new entries are added, an entry is simply updated
+    //EFFECT: Add the given proxy entry to the end of the proxy Entry list and return TRUE,
+    // if the given list already has the same proxy and same type, simply add the price paid to the existing entry
+    // and return FALSE to indicate that no new entries are added, an entry is simply updated
     public boolean addEntry(T entry) {
         String name = entry.getName();
         double pricePaid = entry.getPricePaid();
@@ -64,7 +68,7 @@ public class SupportEntryList<T extends SupportEntry> {
 
     //REQUIRES: the entry is already in the list
     //MODIFIES:THIS
-    //EFFECT: remove the specified entry from the given list and return true, if the entry does not exist, return true
+    //EFFECT: remove the specified entry from the given list and return true, if the entry does not exist, return FALSE
     public Boolean removeEntry(T entry) {
         if (typePurchaseList.contains(entry)) {
             typePurchaseList.remove(entry);
@@ -76,7 +80,7 @@ public class SupportEntryList<T extends SupportEntry> {
     }
 
 
-    //EFFECT: return the total amount of money spent on the spcificied entry in the purchase list
+    //EFFECT: return the total amount of money spent on the entry type in the purchase list
     public double getTotalMoneySpent() {
         double sum = 0;
         for (T next : typePurchaseList) {
@@ -84,6 +88,15 @@ public class SupportEntryList<T extends SupportEntry> {
             sum = sum + price;
         }
         return sum;
+    }
+
+
+    @Override
+    //EFFECT: list all the entries as a string
+    public String toString() {
+        String supportEntryList = typePurchaseList.stream()
+                .map(supportEntry -> supportEntry.toString()).reduce(" ", String::concat);
+        return supportEntryList;
     }
 
 

@@ -2,12 +2,9 @@ package model.investment;
 
 import model.CookGroupSubscriptionEntry;
 
-import java.util.List;
-import java.util.Map;
+import static model.EntryType.CookGroup;
 
-import static model.investment.EntryType.CookGroup;
-
-//this class focuses on the cook group purchases and put them in a list
+//this class focuses on the cook group purchases and put them in a list, it extends the generic class SupportEntryList
 public class CookGroupPurchaseList extends SupportEntryList<CookGroupSubscriptionEntry> {
 
     public CookGroupPurchaseList() {

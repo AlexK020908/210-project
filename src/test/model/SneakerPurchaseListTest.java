@@ -78,17 +78,40 @@ class SneakerPurchaseListTest {
         sneakerPurchaseList.addEntry(s1);
         assertEquals(650, sneakerPurchaseList.getTotalMoneySpent());
         //add one repeating name sneaker and check the total money spent
-        
-
+        sneakerPurchaseList.addEntry(s11);
+        assertEquals(130 * 15, sneakerPurchaseList.getTotalMoneySpent());
         //add some more entries and return sum
-
+        sneakerPurchaseList.addEntry(s2);
+        sneakerPurchaseList.addEntry(s22);
+        sneakerPurchaseList.addEntry(s3);
+        assertEquals(130* 15 + 100*16 + 275 * 2, sneakerPurchaseList.getTotalMoneySpent() );
 
         //add all entries and return sum
+        sneakerPurchaseList.addEntry(s4);
+        sneakerPurchaseList.addEntry(s5);
+        sneakerPurchaseList.addEntry(s6);
+        sneakerPurchaseList.addEntry(s7);
+        assertEquals(130* 15 + 100*16 + 275 * 2 + 300*5 + 200*3 + 500*2 + 200 * 10,
+                sneakerPurchaseList.getTotalMoneySpent() );
     }
 
     @Test
     public void testGetLength(){
+        //test empty list
+        assertEquals(0, sneakerPurchaseList.getLength());
 
+        //test one sneaker entry
+        sneakerPurchaseList.addEntry(s1);
+        sneakerPurchaseList.addEntry(s11); //same sneaker entry with same name
+        assertEquals(1, sneakerPurchaseList.getLength());
+        //test list with many sneaker entry
+        sneakerPurchaseList.addEntry(s2);
+        sneakerPurchaseList.addEntry(s3);
+        sneakerPurchaseList.addEntry(s4);
+        sneakerPurchaseList.addEntry(s5);
+        sneakerPurchaseList.addEntry(s6);
+        sneakerPurchaseList.addEntry(s7);
+        assertEquals(7, sneakerPurchaseList.getLength());
     }
 
 
