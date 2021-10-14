@@ -12,6 +12,7 @@ public class ThirdPartCaptchaSolverListTest {
 
     //initialize some Cook Group Subscription Entries to test add and remove methods
     private ThirdPartySolverEntry CapMonster = new ThirdPartySolverEntry("CapMonster", 12);
+    private ThirdPartySolverEntry CapMonsterNegative = new ThirdPartySolverEntry("CapMonster", -12);
     private ThirdPartySolverEntry TwoCaptcha = new ThirdPartySolverEntry("TwoCaptcha", 10);
     private ThirdPartySolverEntry AntiCaptcha = new ThirdPartySolverEntry("AntiCaptcha", 15);
 
@@ -38,10 +39,13 @@ public class ThirdPartCaptchaSolverListTest {
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster));
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(TwoCaptcha));
         assertEquals(2, thirdPartyCaptchaSolversPurchaseList.getLength());
-        assertEquals(CapMonster.getPricePaid() + TwoCaptcha.getPricePaid(),
+        assertEquals(12.00 +10.00,
                 thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
-        assertEquals(1, thirdPartyCaptchaSolversPurchaseList.indexOf(TwoCaptcha));
+        assertEquals(1, thirdPartyCaptchaSolversPurchaseList.indexOf(TwoCaptcha));//adding a negative value of the same type of CapMonster
+        assertFalse(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonsterNegative));
+        assertEquals(12.00 +10.00, thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
+        // the value did not change because it OculusNegativePrice has a negative price
 
     }
 
@@ -50,9 +54,10 @@ public class ThirdPartCaptchaSolverListTest {
         assertTrue(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster));
         assertFalse(thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster));
         assertEquals(1, thirdPartyCaptchaSolversPurchaseList.getLength());
-        assertEquals((CapMonster.getPricePaid()), thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
+        assertEquals(12.00 + 12.00, thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
         //the reason why we did not times oculus's price by two is becuase addEntry multiplied it for us already
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
+
     }
 
     @Test

@@ -89,6 +89,8 @@ public class SupportEntryList<T extends SupportEntry> {
 
     @Override
     //EFFECT: list all the entries as a string
+    //THIS method references code from GeekForGeeks
+    //[https://www.geeksforgeeks.org/stream-map-java-examples/]
     public String toString() {
         String supportEntryList = typePurchaseList.stream()
                 .map(supportEntry -> supportEntry.toString()).reduce("", String::concat);

@@ -17,6 +17,7 @@ public class CookGroupPurchaseListTest {
 
     //initialize some Cook Group Subscription Entries to test add and remove methods
     private final CookGroupSubscriptionEntry forbidden = new CookGroupSubscriptionEntry("Forbidden", 46.99);
+    private final CookGroupSubscriptionEntry forbiddenNegativeInvalidValue = new CookGroupSubscriptionEntry("Forbidden", -5);
     private final CookGroupSubscriptionEntry theNorthCop = new CookGroupSubscriptionEntry("The North Cop", 36.99);
     private final CookGroupSubscriptionEntry DropAlert = new CookGroupSubscriptionEntry("Drop alert", 30.00);
     private final CookGroupSubscriptionEntry secretSauce = new CookGroupSubscriptionEntry("Secret Sauce", 65.00);
@@ -43,6 +44,10 @@ public class CookGroupPurchaseListTest {
         assertEquals(46.99+36.99, cookGroupPurchaseList.getTotalMoneySpent());
         assertEquals(0, cookGroupPurchaseList.indexOf(forbidden));
         assertEquals(1, cookGroupPurchaseList.indexOf(theNorthCop));
+        //adding a negative value of the same type of forbidden
+        assertFalse(cookGroupPurchaseList.addEntry(forbiddenNegativeInvalidValue));
+        assertEquals(46.99+36.99, cookGroupPurchaseList.getTotalMoneySpent());
+        // the value did not change because it forbiddenNegativeInvalidValue has a negative amount
 
     }
 

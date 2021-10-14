@@ -12,6 +12,8 @@ class SneakerPurchaseListTest {
     //initializing some sneakers
     private final SneakerEntry s1 = new SneakerEntry("Nike Dunk Low", 130, 5);
     private final SneakerEntry s11 = new SneakerEntry("Nike Dunk Low", 130, 10);
+    private final SneakerEntry s11NegativeQuantity = new SneakerEntry("Nike Dunk Low",
+            130, -10);
     private final SneakerEntry s2 = new SneakerEntry("AirForce Low Supreme", 100, 6);
     private final SneakerEntry s22 = new SneakerEntry("AirForce Low Supreme", 100, 10);
     private final SneakerEntry s3 = new SneakerEntry("Jordan Retro 12", 275 , 2);
@@ -41,8 +43,14 @@ class SneakerPurchaseListTest {
         assertEquals(15,
                 s1.getQuantityBought());
         assertEquals(-1, sneakerPurchaseList.indexOf(s11));
-        //the reason why we passed s1 in sneaker entry is because since they have the same name, only the
+        //the reason why we passed s1.getQuantityBought is because since s11 an s1 have the same name, only the
         //quantity is updated, so the name stays the same.
+
+        //adding a negative quantity sneaker that is  of the same name as s11 and s1
+        assertFalse(sneakerPurchaseList.addEntry(s11NegativeQuantity));
+        assertEquals(15, s1.getQuantityBought());
+        // the quantity did not change because s11NegativeQuantity has a negative quantity
+
 
         //add some more entry of different names
         sneakerPurchaseList.addEntry(s2);

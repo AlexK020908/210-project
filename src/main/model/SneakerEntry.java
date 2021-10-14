@@ -33,7 +33,9 @@ public class SneakerEntry  {
     //MODIFIES: this
     //EFFECT: increase the quantities bought of that sneaker by the specified amount
     public void increaseQuantityBought(int amount) {
-        quantityBought += amount;
+        if (amount > 0) {
+            quantityBought += amount;
+        }
     }
 
     @Override

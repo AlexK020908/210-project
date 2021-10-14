@@ -23,9 +23,11 @@ public class ProfitOrLossCalculator {
 
     // MODIFIES: this
     // EFFECTS: processes user input
+    // This [class/method] references code from this [repo/website]
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/TellerApp]
     private void runProfitOrLoss() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         init();
 
@@ -45,6 +47,8 @@ public class ProfitOrLossCalculator {
 
     // MODIFIES: this
     // EFFECTS: processes user command
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/TellerApp]
     private void processCommand(String command) {
         if (command.equals("i")) {
             addSupportInvestment();
@@ -59,76 +63,6 @@ public class ProfitOrLossCalculator {
         } else {
             System.out.println("Selection not valid...");
         }
-    }
-
-    //MODIFIES: this
-    //EFFECTS: calculate if the person is making money or not. If they are making money print out their profit and a
-    // statement to inform they are making money otherwise print out their loss and a statement indicating they
-    // are losing money. If the person is breaking even, inform him/her as well.
-    private void calculateProfitOrLoss() {
-        double moneySpentOnCookGroups = cookGroupPurchaseList.getTotalMoneySpent();
-        double moneySpentOnSneakers = sneakerPurchaseList.getTotalMoneySpent();
-        double moneySpentOnProxies = proxyPurchaseList.getTotalMoneySpent();
-        double moneySpentOnThirdPartCaptchaSolvers = solversPurchaseList.getTotalMoneySpent();
-
-        double revenueMadeInTotal = revenueList.calculateTotalRevenue();
-        double moneySpentTotal = moneySpentOnCookGroups
-                    + moneySpentOnSneakers + moneySpentOnProxies
-                    + moneySpentOnThirdPartCaptchaSolvers;
-
-        if (moneySpentTotal > revenueMadeInTotal) {
-            System.out.println("you are losing money!");
-            System.out.println("you are in a net negative profit of: " + (moneySpentTotal - revenueMadeInTotal));
-        } else if (moneySpentTotal < revenueMadeInTotal) {
-            System.out.println("congrats! you are making money");
-            System.out.println("you are making a positive net profit of: " + (revenueMadeInTotal - moneySpentTotal));
-        } else if (moneySpentTotal == revenueMadeInTotal) {
-            System.out.println("you are breaking even, you need more sales!");
-            System.out.println("you are making a net profit of " + 0);
-        }
-
-
-    }
-
-    //EFFECT: print out the money the user made without their investment taken into account
-    private void viewRevenue() {
-        System.out.println("your total revenue is: " + revenueList.calculateTotalRevenue());
-    }
-
-    //MODIFIES: this
-    //EFFECT: CONDUCTS a new revenue entry, and print out the new revenue total
-    private void runRevenue() {
-        System.out.println("please enter the new revenue made");
-        double revenueMade = input.nextDouble();
-        Revenue revenue = new Revenue(revenueMade);
-        revenueList.addNewRevenue(revenue);
-        System.out.println("your new revenue has been added to your revenue list");
-        System.out.println("your total revenue is now: " + revenueList.calculateTotalRevenue());
-
-    }
-
-
-    // MODIFIES: this
-    // EFFECTS: initializes all purchase lists and also the revenue list
-    private void init() {
-        cookGroupPurchaseList = new CookGroupPurchaseList();
-        proxyPurchaseList = new ProxyPurchaseList();
-        sneakerPurchaseList = new SneakerPurchaseList();
-        solversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
-        revenueList = new RevenueList();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-    }
-
-    // EFFECTS: displays menu of options to user.
-    private void displayMenu() {
-        System.out.println("\nSelect from the following entry list types:");
-        System.out.println("\ti -> add Support Investment");
-        System.out.println("\ts -> add Sneaker Investment");
-        System.out.println("\tr -> add revenue");
-        System.out.println("\tv -> view revenue");
-        System.out.println("\tc -> calculate Profit or Loss");
-        System.out.println("\tq -> quit");
     }
 
     // MODIFIES: this
@@ -146,6 +80,28 @@ public class ProfitOrLossCalculator {
 
         printList(selectedPurchaseTypeList);
         System.out.println("your total price paid is " + ": " + selectedPurchaseTypeList.getTotalMoneySpent());
+    }
+
+    // EFFECTS: prompts the user to select between proxy purchase list, third party solver purchase list and
+    // cook group purchase list
+    private SupportEntryList purchaseListTypeSelection() {
+        String selection = "";  // force entry into loop
+
+        while (!(selection.equals("p") || selection.equals("t") || selection.equals("c"))) {
+            System.out.println("p -> proxyPurchaseList");
+            System.out.println("t -> thirdPartSolverPurchaseList");
+            System.out.println("c -> cookGroupPurchaseList");
+            selection = input.next();
+            selection = selection.toLowerCase();
+        }
+
+        if (selection.equals("p")) {
+            return proxyPurchaseList;
+        } else if (selection.equals("t")) {
+            return solversPurchaseList;
+        }
+        return cookGroupPurchaseList;
+
     }
 
     //MODIFIES: this
@@ -188,6 +144,77 @@ public class ProfitOrLossCalculator {
         return sneakerPurchaseList;
 
     }
+
+    //EFFECT: print out the money the user made without their investment taken into account
+    private void viewRevenue() {
+        System.out.println("your total revenue is: " + revenueList.calculateTotalRevenue());
+    }
+
+    //MODIFIES: this
+    //EFFECT: CONDUCTS a new revenue entry, and print out the new revenue total
+    private void runRevenue() {
+        System.out.println("please enter the new revenue made");
+        double revenueMade = input.nextDouble();
+        Revenue revenue = new Revenue(revenueMade);
+        revenueList.addNewRevenue(revenue);
+        System.out.println("your new revenue has been added to your revenue list");
+        System.out.println("your total revenue is now: " + revenueList.calculateTotalRevenue());
+
+    }
+
+    //MODIFIES: this
+    //EFFECTS: calculate if the person is making money or not. If they are making money print out their profit and a
+    // statement to inform they are making money otherwise print out their loss and a statement indicating they
+    // are losing money. If the person is breaking even, inform him/her as well.
+    private void calculateProfitOrLoss() {
+        double moneySpentOnCookGroups = cookGroupPurchaseList.getTotalMoneySpent();
+        double moneySpentOnSneakers = sneakerPurchaseList.getTotalMoneySpent();
+        double moneySpentOnProxies = proxyPurchaseList.getTotalMoneySpent();
+        double moneySpentOnThirdPartCaptchaSolvers = solversPurchaseList.getTotalMoneySpent();
+
+        double revenueMadeInTotal = revenueList.calculateTotalRevenue();
+        double moneySpentTotal = moneySpentOnCookGroups
+                + moneySpentOnSneakers + moneySpentOnProxies
+                + moneySpentOnThirdPartCaptchaSolvers;
+
+        if (moneySpentTotal > revenueMadeInTotal) {
+            System.out.println("you are losing money!");
+            System.out.println("you are in a net negative profit of: " + (moneySpentTotal - revenueMadeInTotal));
+        } else if (moneySpentTotal < revenueMadeInTotal) {
+            System.out.println("congrats! you are making money");
+            System.out.println("you are making a positive net profit of: " + (revenueMadeInTotal - moneySpentTotal));
+        } else if (moneySpentTotal == revenueMadeInTotal) {
+            System.out.println("you are breaking even, you need more sales!");
+            System.out.println("you are making a net profit of " + 0);
+        }
+
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes all purchase lists and also the revenue list
+    private void init() {
+        cookGroupPurchaseList = new CookGroupPurchaseList();
+        proxyPurchaseList = new ProxyPurchaseList();
+        sneakerPurchaseList = new SneakerPurchaseList();
+        solversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
+        revenueList = new RevenueList();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+    }
+
+    // EFFECTS: displays menu of options to user.
+    private void displayMenu() {
+        System.out.println("\nSelect from the following entry list types:");
+        System.out.println("\ti -> add Support Investment");
+        System.out.println("\ts -> add Sneaker Investment");
+        System.out.println("\tr -> add revenue");
+        System.out.println("\tv -> view revenue");
+        System.out.println("\tc -> calculate Profit or Loss");
+        System.out.println("\tq -> quit");
+    }
+
+
 
     //MODIFIES: this
     //EFFECT: PROMTpS the user to enter a NEW third party solver entry and add it to the corresponding purchase list.
@@ -236,30 +263,9 @@ public class ProfitOrLossCalculator {
         System.out.println("purchaseList" + ":  " + sneakerPurchaseList.toString());
 
     }
-
-
-    // EFFECTS: prompts the user to select between proxy purchase list, third party solver purchase list and
-    // cook group purchase list
-    private SupportEntryList purchaseListTypeSelection() {
-        String selection = "";  // force entry into loop
-
-        while (!(selection.equals("p") || selection.equals("t") || selection.equals("c"))) {
-            System.out.println("p -> proxyPurchaseList");
-            System.out.println("t -> thirdPartSolverPurchaseList");
-            System.out.println("c -> cookGroupPurchaseList");
-            selection = input.next();
-            selection = selection.toLowerCase();
-        }
-
-        if (selection.equals("p")) {
-            return proxyPurchaseList;
-        } else if (selection.equals("t")) {
-            return solversPurchaseList;
-        }
-        return cookGroupPurchaseList;
-
-    }
 }
+
+
 
 
 

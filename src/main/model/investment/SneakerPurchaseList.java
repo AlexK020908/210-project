@@ -96,6 +96,8 @@ public class SneakerPurchaseList {
 
     @Override
     //EFFECT: LIST all the sneaker entries as a string
+    //THIS method references code from GeekForGeeks
+    //[https://www.geeksforgeeks.org/stream-map-java-examples/]
     public String toString() {
         String listOfSneakerEntries = sneakerPurchaseList.stream() //making it into a stream of string
                 .map(sneakerEntry -> sneakerEntry.toString()) //for every sneaker entry, using toString method

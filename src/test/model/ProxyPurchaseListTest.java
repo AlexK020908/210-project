@@ -15,6 +15,7 @@ public class ProxyPurchaseListTest {
     private final ProxyEntry Oculus = new ProxyEntry("Oculus", 59.99);
     private final ProxyEntry OculusTwo = new ProxyEntry("Oculus", 39.99);
     private final ProxyEntry OculusThree = new ProxyEntry("Oculus", 30.00);
+    private final ProxyEntry OculusNegativePrice = new ProxyEntry("Oculus", -2.00);
     private final ProxyEntry LeafProxies = new ProxyEntry("Leaf proxies", 29.99);
     private final ProxyEntry LeafProxiesTwo = new ProxyEntry("Leaf proxies", 19.99);
     private final ProxyEntry LeafProxiesThree = new ProxyEntry("Leaf proxies", 20.00);
@@ -45,11 +46,14 @@ public class ProxyPurchaseListTest {
         assertTrue(ProxyPurchaseList.addEntry(Oculus));
         assertTrue(ProxyPurchaseList.addEntry(SmartProxy));
         assertEquals(2, ProxyPurchaseList.getLength());
-        assertEquals(Oculus.getPricePaid() + SmartProxy.getPricePaid(),
+        assertEquals(59.99 + 17.00,
                 ProxyPurchaseList.getTotalMoneySpent());
         assertEquals(0, ProxyPurchaseList.indexOf(Oculus));
         assertEquals(1, ProxyPurchaseList.indexOf(SmartProxy));
-
+        //adding a negative value of the same type of oculus
+        assertFalse(ProxyPurchaseList.addEntry(OculusNegativePrice));
+        assertEquals(59.99 + 17.00, ProxyPurchaseList.getTotalMoneySpent());
+        // the value did not change because it OculusNegativePrice has a negative price
     }
 
     @Test
