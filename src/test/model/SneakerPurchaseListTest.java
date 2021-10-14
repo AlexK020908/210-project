@@ -10,16 +10,16 @@ class SneakerPurchaseListTest {
     SneakerPurchaseList sneakerPurchaseList;
 
     //initializing some sneakers
-    private SneakerEntry s1 = new SneakerEntry("Nike Dunk Low", 130, 5);
-    private SneakerEntry s11 = new SneakerEntry("Nike Dunk Low", 130, 10);
-    private SneakerEntry s2 = new SneakerEntry("AirForce Low Supreme", 100, 6);
-    private SneakerEntry s22 = new SneakerEntry("AirForce Low Supreme", 100, 10);
-    private SneakerEntry s3 = new SneakerEntry("Jordan Retro 12", 275 , 2);
-    private SneakerEntry s4 = new SneakerEntry("YEEZY 350 light v2", 300, 5);
-    private SneakerEntry s44 = new SneakerEntry("YEEZY 350 light v2", 300, 12);
-    private SneakerEntry s5 = new SneakerEntry("YEEZY 750 v2", 200, 3);
-    private SneakerEntry s6 = new SneakerEntry("Nike Dunk Low OffWhite White", 500, 2);
-    private SneakerEntry s7 = new SneakerEntry("Travis Scoot Cactus", 200, 10);
+    private final SneakerEntry s1 = new SneakerEntry("Nike Dunk Low", 130, 5);
+    private final SneakerEntry s11 = new SneakerEntry("Nike Dunk Low", 130, 10);
+    private final SneakerEntry s2 = new SneakerEntry("AirForce Low Supreme", 100, 6);
+    private final SneakerEntry s22 = new SneakerEntry("AirForce Low Supreme", 100, 10);
+    private final SneakerEntry s3 = new SneakerEntry("Jordan Retro 12", 275 , 2);
+    private final SneakerEntry s4 = new SneakerEntry("YEEZY 350 light v2", 300, 5);
+    private final SneakerEntry s44 = new SneakerEntry("YEEZY 350 light v2", 300, 12);
+    private final SneakerEntry s5 = new SneakerEntry("YEEZY 750 v2", 200, 3);
+    private final SneakerEntry s6 = new SneakerEntry("Nike Dunk Low OffWhite White", 500, 2);
+    private final SneakerEntry s7 = new SneakerEntry("Travis Scoot Cactus", 200, 10);
 
 
 
@@ -114,8 +114,81 @@ class SneakerPurchaseListTest {
         assertEquals(7, sneakerPurchaseList.getLength());
     }
 
+    @Test
+    public void testGetQuantityBought(){
+        assertEquals(5, s1.getQuantityBought());
+        assertEquals(6, s2.getQuantityBought());
+    }
 
+    @Test
+    public void testIncreaseQuantityBought(){
+        //here we are using s1 as the main sneakerEntry
+        //base case
+        s1.increaseQuantityBought(0);
+        assertEquals(5, s1.getQuantityBought());
+        //increase by a small amount
+        s1.increaseQuantityBought(2);
+        assertEquals(5 + 2, s1.getQuantityBought());
+        //increase by a large amount
+        s1.increaseQuantityBought(10);
+        assertEquals(5 + 2 + 10, s1.getQuantityBought());
 
+    }
+
+    @Test
+    public void sneakerEntryToStringTest(){
+        //using s1 as main testing sneaker entry again
+        assertEquals(" " + s1.getName() + " , " + s1.getRetailPrice() + " , " + s1.getQuantityBought() + " ,"
+                , s1.toString());
+
+    }
+
+    @Test
+    public void sneakerEntryListToStringTest(){
+        //empty list
+        assertEquals("", sneakerPurchaseList.toString());
+        //List with one sneaker entries
+        sneakerPurchaseList.addEntry(s1);
+        assertEquals(" " + s1.getName() + " , " + s1.getRetailPrice() + " , " + s1.getQuantityBought() + " ,"
+        , sneakerPurchaseList.toString());
+        //List with some sneaker entries
+        sneakerPurchaseList.addEntry(s2);
+        sneakerPurchaseList.addEntry(s3);
+        assertEquals(" " + s1.getName() + " , " + s1.getRetailPrice() + " , " + s1.getQuantityBought() + " ,"
+                + " " + s2.getName() + " , " + s2.getRetailPrice() + " , " + s2.getQuantityBought() + " ," +
+                        " " + s3.getName() + " , " + s3.getRetailPrice() + " , " + s3.getQuantityBought() + " ,"
+                , sneakerPurchaseList.toString());
+        //List with many sneaker entries
+        sneakerPurchaseList.addEntry(s4);
+        sneakerPurchaseList.addEntry(s5);
+        sneakerPurchaseList.addEntry(s6);
+
+    }
+
+    @Test
+    public void testIndexOf(){
+        //base case, index of a sneaker entry that does not exist with an empty list
+        assertEquals(-1, sneakerPurchaseList.indexOf(s1));
+        //index of a sneaker entry that does not exist
+        sneakerPurchaseList.addEntry(s1);
+        assertEquals(-1, sneakerPurchaseList.indexOf(s22));
+        //add many sneaker entries and check random sneaker entry's position
+        sneakerPurchaseList.addEntry(s2);
+        sneakerPurchaseList.addEntry(s3);
+        sneakerPurchaseList.addEntry(s4);
+        sneakerPurchaseList.addEntry(s5);
+        sneakerPurchaseList.addEntry(s6);
+        sneakerPurchaseList.addEntry(s7);
+        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+        assertEquals(3, sneakerPurchaseList.indexOf(s4));
+        assertEquals(6, sneakerPurchaseList.indexOf(s7));
+
+    }
+
+    @Test
+    public void testGetPurchaseList(){
+
+    }
 
 
 }

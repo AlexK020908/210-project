@@ -5,9 +5,10 @@ import model.investment.*;
 
 import java.util.Scanner;
 
+//Profit or Loss calculator application
+public class ProfitOrLossCalculator {
 
-public class GrossCalc {
-
+    //declare lists that will be used in the profit or loss logger
     private CookGroupPurchaseList cookGroupPurchaseList;
     private ProxyPurchaseList proxyPurchaseList;
     private SneakerPurchaseList sneakerPurchaseList = new SneakerPurchaseList();
@@ -16,7 +17,7 @@ public class GrossCalc {
     private Scanner input;
 
     // EFFECTS: runs the profit or loss calculator app
-    public GrossCalc() {
+    public ProfitOrLossCalculator() {
         runProfitOrLoss();
     }
 
@@ -60,6 +61,10 @@ public class GrossCalc {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: calculate if the person is making money or not. If they are making money print out their profit and a
+    // statement to inform they are making money otherwise print out their loss and a statement indicating they
+    // are losing money. If the person is breaking even, inform him/her as well.
     private void calculateProfitOrLoss() {
         double moneySpentOnCookGroups = cookGroupPurchaseList.getTotalMoneySpent();
         double moneySpentOnSneakers = sneakerPurchaseList.getTotalMoneySpent();
@@ -85,10 +90,13 @@ public class GrossCalc {
 
     }
 
+    //EFFECT: print out the money the user made without their investment taken into account
     private void viewRevenue() {
         System.out.println("your total revenue is: " + revenueList.calculateTotalRevenue());
     }
 
+    //MODIFIES: this
+    //EFFECT: CONDUCTS a new revenue entry, and print out the new revenue total
     private void runRevenue() {
         System.out.println("please enter the new revenue made");
         double revenueMade = input.nextDouble();
@@ -101,7 +109,7 @@ public class GrossCalc {
 
 
     // MODIFIES: this
-    // EFFECTS: initializes accounts
+    // EFFECTS: initializes all purchase lists and also the revenue list
     private void init() {
         cookGroupPurchaseList = new CookGroupPurchaseList();
         proxyPurchaseList = new ProxyPurchaseList();
@@ -112,7 +120,7 @@ public class GrossCalc {
         input.useDelimiter("\n");
     }
 
-    // EFFECTS: displays menu of options to user
+    // EFFECTS: displays menu of options to user.
     private void displayMenu() {
         System.out.println("\nSelect from the following entry list types:");
         System.out.println("\ti -> add Support Investment");
@@ -140,6 +148,8 @@ public class GrossCalc {
         System.out.println("your total price paid is " + ": " + selectedPurchaseTypeList.getTotalMoneySpent());
     }
 
+    //MODIFIES: this
+    //EFFECT: add a new sneaker entry and print out the total price paid for all the sneakers.
     private void addSneakerMainEntry() {
         SneakerPurchaseList sneakerPurchaseList = sneakerEntrySelection();
         addSneakerEntry(sneakerPurchaseList);
@@ -147,6 +157,8 @@ public class GrossCalc {
         System.out.println("your total price paid is " + ": " + sneakerPurchaseList.getTotalMoneySpent());
     }
 
+    //MODIFIES : this
+    //EFFECT: prompts user to enter new sneaker entry adds the newly entered sneaker entry to the list of entries
     private void addSneakerEntry(SneakerPurchaseList sneakerPurchaseList) {
         System.out.print("enter name of sneaker: ");
         String entryName = input.next();
@@ -163,11 +175,12 @@ public class GrossCalc {
         }
     }
 
+    //EFFECT: prompts the user to press s to access to his/her sneaker purchase list
     private SneakerPurchaseList sneakerEntrySelection() {
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("s"))) {
-            System.out.println("s sneakerPurchaseList");
+            System.out.println("s -> sneakerPurchaseList");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -176,8 +189,9 @@ public class GrossCalc {
 
     }
 
-
-    private void addThirdPartySolverEntry(SupportEntryList selectedPurchaseType) {
+    //MODIFIES: this
+    //EFFECT: PROMTpS the user to enter a NEW third party solver entry and add it to the corresponding purchase list
+    private void addThirdPartySolverEntry(SupportEntryList<ThirdPartySolverEntry> selectedPurchaseType) {
         System.out.print("enter name of Third Party Solver: ");
         String entryName = input.next();
         System.out.println("enter price of Third Party Solver: ");
@@ -187,7 +201,9 @@ public class GrossCalc {
         System.out.println("your third party solver entry list has been updated");
     }
 
-    private void addCookGroupEntry(SupportEntryList selectedPurchaseType) {
+    //MODIFIES: this
+    //EFFECT: PROMTpS the user to enter a NEW cook group entry and add it to the corresponding purchase list
+    private void addCookGroupEntry(SupportEntryList<CookGroupSubscriptionEntry> selectedPurchaseType) {
         System.out.print("enter name of Cook Group: ");
         String entryName = input.next();
         System.out.println("enter price of Cook Group: ");
@@ -197,7 +213,9 @@ public class GrossCalc {
         System.out.println("your cook group entry list has been updated");
     }
 
-    private void addProxyEntry(SupportEntryList selectedPurchaseType) {
+    //MODIFIES: this
+    //EFFECT: PROMTpS the user to enter a NEW proxy entry and add it to the corresponding purchase list
+    private void addProxyEntry(SupportEntryList<ProxyEntry> selectedPurchaseType) {
         System.out.print("enter name of proxy: ");
         String entryName = input.next();
         System.out.println("enter price of proxy: ");
@@ -207,24 +225,28 @@ public class GrossCalc {
         System.out.println("your proxy group entry list has been updated");
     }
 
+
+    //EFFECT: print out support purchase list on the screen
     private void printList(SupportEntryList selectedPurchaseType) {
         System.out.println("purchaseList" + ":  " + selectedPurchaseType.toString());
     }
 
+    //EFFECT: print out sneaker purchase list on the screen
     private void printList(SneakerPurchaseList sneakerPurchaseList) {
         System.out.println("purchaseList" + ":  " + sneakerPurchaseList.toString());
 
     }
 
 
-    // EFFECTS: selecting either remove or add will return the the proxy purchase list
+    // EFFECTS: prompts the user to select between proxy purchase list, third party solver purchase list and
+    // cook group purchase list
     private SupportEntryList purchaseListTypeSelection() {
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("p") || selection.equals("t") || selection.equals("c"))) {
-            System.out.println("p proxyPurchaseList");
-            System.out.println("t thirdPartSolverPurchaseList");
-            System.out.println("c cookGroupPurchaseList");
+            System.out.println("p -> proxyPurchaseList");
+            System.out.println("t -> thirdPartSolverPurchaseList");
+            System.out.println("c -> cookGroupPurchaseList");
             selection = input.next();
             selection = selection.toLowerCase();
         }

@@ -95,7 +95,7 @@ public class SupportEntryList<T extends SupportEntry> {
     //EFFECT: list all the entries as a string
     public String toString() {
         String supportEntryList = typePurchaseList.stream()
-                .map(supportEntry -> supportEntry.toString()).reduce(" ", String::concat);
+                .map(supportEntry -> supportEntry.toString()).reduce("", String::concat);
         return supportEntryList;
     }
 

@@ -16,10 +16,10 @@ public class CookGroupPurchaseListTest {
    CookGroupPurchaseList cookGroupPurchaseList;
 
     //initialize some Cook Group Subscription Entries to test add and remove methods
-    private CookGroupSubscriptionEntry forbidden = new CookGroupSubscriptionEntry("Forbidden", 46.99);
-    private CookGroupSubscriptionEntry theNorthCop = new CookGroupSubscriptionEntry("The North Cop", 36.99);
-    private CookGroupSubscriptionEntry DropAlert = new CookGroupSubscriptionEntry("Drop alert", 30.00);
-    private CookGroupSubscriptionEntry secretSauce = new CookGroupSubscriptionEntry("Secret Sauce", 65.00);
+    private final CookGroupSubscriptionEntry forbidden = new CookGroupSubscriptionEntry("Forbidden", 46.99);
+    private final CookGroupSubscriptionEntry theNorthCop = new CookGroupSubscriptionEntry("The North Cop", 36.99);
+    private final CookGroupSubscriptionEntry DropAlert = new CookGroupSubscriptionEntry("Drop alert", 30.00);
+    private final CookGroupSubscriptionEntry secretSauce = new CookGroupSubscriptionEntry("Secret Sauce", 65.00);
 
     @BeforeEach
     public void setUp(){
@@ -188,6 +188,40 @@ public class CookGroupPurchaseListTest {
         assertEquals(3, cookGroupPurchaseList.indexOf(secretSauce));
     }
 
+    @Test
+    public void cookGroupEntryToStringTest(){
+        //use forbidden as main testing cook group entry
+        assertEquals(forbidden.getName() + " " + forbidden.getPricePaid() + " ," , forbidden.toString());
+    }
+
+    @Test
+    public void getTypeTest(){
+        assertEquals(EntryType.CookGroup, cookGroupPurchaseList.getType());
+        assertFalse(EntryType.PROXY.equals(cookGroupPurchaseList.getType()));
+        assertFalse(EntryType.Sneaker.equals(cookGroupPurchaseList.getType()));
+        assertFalse(EntryType.ThirdPartSolver.equals(cookGroupPurchaseList.getType()));
+    }
+
+    @Test
+    public void testToString(){
+        //empty list
+        assertEquals("", cookGroupPurchaseList.toString());
+        //some Cook group entries
+        cookGroupPurchaseList.addEntry(forbidden);
+        cookGroupPurchaseList.addEntry(theNorthCop);
+        assertEquals( forbidden.getName() + " " + forbidden.getPricePaid() + " ," +
+                        theNorthCop.getName() + " " + theNorthCop.getPricePaid() + " ,"
+                , cookGroupPurchaseList.toString());
+
+        //all cook group entries
+        cookGroupPurchaseList.addEntry(DropAlert);
+        cookGroupPurchaseList.addEntry(secretSauce);
+        assertEquals( forbidden.getName() + " " + forbidden.getPricePaid() + " ," +
+                        theNorthCop.getName() + " " + theNorthCop.getPricePaid() + " ," +
+                        DropAlert.getName() + " " + DropAlert.getPricePaid() + " ," +
+                        secretSauce.getName() + " " + secretSauce.getPricePaid() + " ,"
+                , cookGroupPurchaseList.toString());
+    }
 
 
 

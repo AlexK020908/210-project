@@ -12,6 +12,7 @@ public class SneakerPurchaseList {
     private List<SneakerEntry> sneakerPurchaseList;
 
 
+
     //EFFECT: Initialize an empty sneaker purchase linked list
     public SneakerPurchaseList() {
         sneakerPurchaseList = new LinkedList<>();

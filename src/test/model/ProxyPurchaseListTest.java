@@ -12,22 +12,22 @@ public class ProxyPurchaseListTest {
     ProxyPurchaseList ProxyPurchaseList;
 
     //initialize some Cook Group Subscription Entries to test add and remove methods
-    private ProxyEntry Oculus = new ProxyEntry("Oculus",59.99);
-    private ProxyEntry OculusTwo = new ProxyEntry("Oculus",39.99);
-    private ProxyEntry OculusThree = new ProxyEntry("Oculus",30.00);
+    private ProxyEntry Oculus = new ProxyEntry("Oculus", 59.99);
+    private ProxyEntry OculusTwo = new ProxyEntry("Oculus", 39.99);
+    private ProxyEntry OculusThree = new ProxyEntry("Oculus", 30.00);
     private ProxyEntry LeafProxies = new ProxyEntry("Leaf proxies", 29.99);
-    private ProxyEntry LeafProxiesTwo = new ProxyEntry("Leaf proxies",19.99);
+    private ProxyEntry LeafProxiesTwo = new ProxyEntry("Leaf proxies", 19.99);
     private ProxyEntry LeafProxiesThree = new ProxyEntry("Leaf proxies", 20.00);
-    private ProxyEntry OxyLabs = new ProxyEntry("OxyLabs",25.00);
-    private ProxyEntry OxyLabsTwo = new ProxyEntry("OxyLabs",15.00);
+    private ProxyEntry OxyLabs = new ProxyEntry("OxyLabs", 25.00);
+    private ProxyEntry OxyLabsTwo = new ProxyEntry("OxyLabs", 15.00);
     private ProxyEntry OxyLabsThree = new ProxyEntry("OxyLabs", 19.99);
     private ProxyEntry SmartProxy = new ProxyEntry("Smart Proxy", 17.00);
-    private ProxyEntry SmartProxyTwo = new ProxyEntry("Smart Proxy",10.00);
+    private ProxyEntry SmartProxyTwo = new ProxyEntry("Smart Proxy", 10.00);
     private ProxyEntry SmartProxyThree = new ProxyEntry("Smart Proxy", 13.00);
 
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         ProxyPurchaseList = new ProxyPurchaseList();
 
     }
@@ -35,7 +35,7 @@ public class ProxyPurchaseListTest {
     @Test
     public void testAddOneEntry() {
         assertTrue(ProxyPurchaseList.addEntry(Oculus));
-        assertEquals(1,ProxyPurchaseList.getLength());
+        assertEquals(1, ProxyPurchaseList.getLength());
         assertEquals(59.99, ProxyPurchaseList.getTotalMoneySpent());
         assertEquals(0, ProxyPurchaseList.indexOf(Oculus));
     }
@@ -44,8 +44,8 @@ public class ProxyPurchaseListTest {
     public void testAddSecondEntryDifferentType() {
         assertTrue(ProxyPurchaseList.addEntry(Oculus));
         assertTrue(ProxyPurchaseList.addEntry(SmartProxy));
-        assertEquals(2,ProxyPurchaseList.getLength());
-        assertEquals(Oculus.getPricePaid()+SmartProxy.getPricePaid(),
+        assertEquals(2, ProxyPurchaseList.getLength());
+        assertEquals(Oculus.getPricePaid() + SmartProxy.getPricePaid(),
                 ProxyPurchaseList.getTotalMoneySpent());
         assertEquals(0, ProxyPurchaseList.indexOf(Oculus));
         assertEquals(1, ProxyPurchaseList.indexOf(SmartProxy));
@@ -56,7 +56,7 @@ public class ProxyPurchaseListTest {
     public void testAddSecondEntrySameType() {
         assertTrue(ProxyPurchaseList.addEntry(Oculus));
         assertFalse(ProxyPurchaseList.addEntry(OculusTwo));
-        assertEquals(1,ProxyPurchaseList.getLength());
+        assertEquals(1, ProxyPurchaseList.getLength());
         assertEquals((Oculus.getPricePaid()), ProxyPurchaseList.getTotalMoneySpent());
         //the reason why we did not times oculus's price by two is becuase addEntry multiplied it for us already
         assertEquals(0, ProxyPurchaseList.indexOf(Oculus));
@@ -66,13 +66,13 @@ public class ProxyPurchaseListTest {
     public void testAddManyEntriesDifferentType() {
         assertTrue(ProxyPurchaseList.addEntry(OculusTwo));
         assertFalse(ProxyPurchaseList.addEntry(OculusTwo));
-        assertEquals(1,ProxyPurchaseList.getLength());
+        assertEquals(1, ProxyPurchaseList.getLength());
 
         assertTrue(ProxyPurchaseList.addEntry(LeafProxies));
         assertTrue(ProxyPurchaseList.addEntry(OxyLabs));
-        assertEquals(3,ProxyPurchaseList.getLength());
+        assertEquals(3, ProxyPurchaseList.getLength());
         assertEquals(OculusTwo.getPricePaid()
-                + LeafProxies.getPricePaid() + OxyLabs.getPricePaid(),
+                        + LeafProxies.getPricePaid() + OxyLabs.getPricePaid(),
                 ProxyPurchaseList.getTotalMoneySpent());
         assertEquals(0, ProxyPurchaseList.indexOf(OculusTwo));
         assertEquals(-1, ProxyPurchaseList.indexOf(OculusThree));
@@ -95,9 +95,9 @@ public class ProxyPurchaseListTest {
         assertFalse(ProxyPurchaseList.addEntry(SmartProxyTwo));
         assertFalse(ProxyPurchaseList.addEntry(OculusTwo));
 
-        assertEquals(4,ProxyPurchaseList.getLength());
+        assertEquals(4, ProxyPurchaseList.getLength());
         assertEquals(OculusTwo.getPricePaid() + LeafProxies.getPricePaid()
-                + SmartProxyTwo.getPricePaid() + OxyLabs.pricePaid
+                        + SmartProxyTwo.getPricePaid() + OxyLabs.pricePaid
                 , ProxyPurchaseList.getTotalMoneySpent());
         assertEquals(0, ProxyPurchaseList.indexOf(OculusTwo));
         assertEquals(1, ProxyPurchaseList.indexOf(LeafProxies));
@@ -112,25 +112,25 @@ public class ProxyPurchaseListTest {
 
     //remove method test
     @Test
-    public void testRemoveDoesNotExist(){
+    public void testRemoveDoesNotExist() {
         assertFalse(ProxyPurchaseList.removeEntry(OculusTwo));
         assertFalse(ProxyPurchaseList.removeEntry(OxyLabsThree));
     }
 
     @Test
-    public void testRemoveOneEntry(){
+    public void testRemoveOneEntry() {
         ProxyPurchaseList.addEntry(Oculus);
-        assertEquals(1,ProxyPurchaseList.getLength());
+        assertEquals(1, ProxyPurchaseList.getLength());
         //remove the entry
         assertTrue(ProxyPurchaseList.removeEntry(Oculus));
-        assertEquals(0,ProxyPurchaseList.getLength());
+        assertEquals(0, ProxyPurchaseList.getLength());
 
         //two entries in the list
         ProxyPurchaseList.addEntry(Oculus);
         ProxyPurchaseList.addEntry(OculusTwo);
         //REMOVING one entry
         assertTrue(ProxyPurchaseList.removeEntry(Oculus));
-        assertEquals(0,ProxyPurchaseList.getLength());
+        assertEquals(0, ProxyPurchaseList.getLength());
         //IT IS ZERO becuase we added the same name, only the price is updated
 
         //initialize ALL entries in the list
@@ -162,7 +162,7 @@ public class ProxyPurchaseListTest {
     }
 
     @Test
-    public void testTotalMoneySpend(){
+    public void testTotalMoneySpend() {
 
         //cases: no purchases on cook group
         assertEquals(0, ProxyPurchaseList.getTotalMoneySpent());
@@ -196,18 +196,18 @@ public class ProxyPurchaseListTest {
                         + LeafProxies.getPricePaid()
                         + SmartProxy.getPricePaid()
                         + OxyLabs.getPricePaid()
-               , ProxyPurchaseList.getTotalMoneySpent());
+                , ProxyPurchaseList.getTotalMoneySpent());
 
 
     }
 
     @Test
-    public void testLengthZero(){
+    public void testLengthZero() {
         assertEquals(0, ProxyPurchaseList.getLength());
     }
 
     @Test
-    public void testLengthManyElements(){
+    public void testLengthManyElements() {
         ProxyPurchaseList.addEntry(Oculus);
         assertEquals(1, ProxyPurchaseList.getLength());
         ProxyPurchaseList.addEntry(Oculus);
@@ -231,12 +231,12 @@ public class ProxyPurchaseListTest {
     }
 
     @Test
-    public void testIndexOfElementDoesNotExist(){
+    public void testIndexOfElementDoesNotExist() {
         assertEquals(-1, ProxyPurchaseList.indexOf(Oculus));
     }
 
     @Test
-    public void testIndexOfElementInAListExist(){
+    public void testIndexOfElementInAListExist() {
         //one proxy entry
         ProxyPurchaseList.addEntry(Oculus);
         assertEquals(0, ProxyPurchaseList.indexOf(Oculus));
@@ -261,6 +261,42 @@ public class ProxyPurchaseListTest {
         assertEquals(-1, ProxyPurchaseList.indexOf(OxyLabsThree));
 
 
+    }
 
+    @Test
+    public void ProxyEntryToStringTest() {
+        //use Oculus as main testing proxy entry
+        assertEquals(Oculus.getName() + " " + Oculus.getPricePaid() + " ,", Oculus.toString());
+    }
+
+    @Test
+    public void getTypeTest() {
+        assertEquals(EntryType.PROXY, ProxyPurchaseList.getType());
+        assertFalse(EntryType.CookGroup.equals(ProxyPurchaseList.getType()));
+        assertFalse(EntryType.Sneaker.equals(ProxyPurchaseList.getType()));
+        assertFalse(EntryType.ThirdPartSolver.equals(ProxyPurchaseList.getType()));
+    }
+
+    @Test
+    public void testToString() {
+        //empty list
+        assertEquals("", ProxyPurchaseList.toString());
+        //some Cook group entries
+        ProxyPurchaseList.addEntry(Oculus);
+        ProxyPurchaseList.addEntry(LeafProxies);
+        assertEquals(Oculus.getName() + " " + Oculus.getPricePaid() + " ," +
+                        LeafProxies.getName() + " " + LeafProxies.getPricePaid() + " ,"
+                , ProxyPurchaseList.toString());
+
+        //all cook group entries
+        ProxyPurchaseList.addEntry(OxyLabs);
+        ProxyPurchaseList.addEntry(OxyLabsTwo);
+        ProxyPurchaseList.addEntry(OxyLabsThree);
+        ProxyPurchaseList.addEntry(SmartProxy);
+        assertEquals(Oculus.getName() + " " + Oculus.getPricePaid() + " ," +
+                        LeafProxies.getName() + " " + LeafProxies.getPricePaid() + " ," +
+                        OxyLabs.getName() + " " + OxyLabs.getPricePaid() + " ," +
+                        SmartProxy.getName() + " " + SmartProxy.getPricePaid() + " ,"
+                , ProxyPurchaseList.toString());
     }
 }

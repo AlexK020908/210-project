@@ -37,7 +37,7 @@ public class SneakerEntry  {
     }
 
     @Override
-    //EFFECT: PRINT out the sneaker entry by overrind the toString method
+    //EFFECT: PRINT out the sneaker entry by override the toString method
     public String toString() {
         return  " " + name + " , " + retailPrice + " , " + quantityBought + " ,";
     }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ThirdPartCaptchaSolverTest {
+public class ThirdPartCaptchaSolverListTest {
     ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
 
     //initialize some Cook Group Subscription Entries to test add and remove methods
@@ -193,4 +193,35 @@ public class ThirdPartCaptchaSolverTest {
         assertEquals(0, thirdPartyCaptchaSolversPurchaseList.indexOf(CapMonster));
     }
 
+    @Test
+    public void thirdPartSolverToStringTest(){
+        //use capMonster as main testing proxy entry
+        assertEquals(CapMonster.getName() + " " + CapMonster.getPricePaid() + " ," , CapMonster.toString());
+    }
+
+    @Test
+    public void getTypeTest(){
+        assertEquals(EntryType.ThirdPartSolver, thirdPartyCaptchaSolversPurchaseList.getType());
+        assertFalse(EntryType.CookGroup.equals(thirdPartyCaptchaSolversPurchaseList.getType()));
+        assertFalse(EntryType.Sneaker.equals(thirdPartyCaptchaSolversPurchaseList.getType()));
+        assertFalse(EntryType.PROXY.equals(thirdPartyCaptchaSolversPurchaseList.getType()));
+    }
+
+    @Test
+    public void testToString() {
+        //empty list
+        assertEquals("", thirdPartyCaptchaSolversPurchaseList.toString());
+        //some Cook group entries
+        thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster);
+        assertEquals(CapMonster.getName() + " " + CapMonster.getPricePaid() + " ,"
+                , thirdPartyCaptchaSolversPurchaseList.toString());
+
+        //all cook group entries
+        thirdPartyCaptchaSolversPurchaseList.addEntry(TwoCaptcha);
+        thirdPartyCaptchaSolversPurchaseList.addEntry(AntiCaptcha);
+        assertEquals(CapMonster.getName() + " " + CapMonster.getPricePaid() + " ," +
+                        TwoCaptcha.getName() + " " + TwoCaptcha.getPricePaid() + " ," +
+                        AntiCaptcha.getName() + " " + AntiCaptcha.getPricePaid() + " ,"
+                , thirdPartyCaptchaSolversPurchaseList.toString());
+    }
 }
