@@ -34,13 +34,17 @@ public class SneakerPurchaseList {
     }
 
 
+    //
     //MODIFIES: this
     /*
      EFFECT: Add the given sneaker to the end of the sneaker entry list and return true ,
      if the sneaker name is already in the list, update the quantity of the specific sneaker purchase and
      return false to indicate that no new entries have been added, the overlapping entry is simply updated in terms
-     of its quantity
+     of its quantity.
      */
+
+    // NOTE that we do not have to compare the price as the sneaker with the same name SHOULD have
+    // the same price
     public boolean addEntry(SneakerEntry entry) {
         List<String> sneakerNames = getSneakerNames();
         String nameOfSneaker = (entry.getName());
