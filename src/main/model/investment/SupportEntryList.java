@@ -44,8 +44,8 @@ public class SupportEntryList<T extends SupportEntry> {
     //MODIFIES: this
     //EFFECT: Add the given entry to the end of the Entry list and return TRUE,
     // if the given list already has an entry with the same name, simply add the price paid for the entry
-    // to the overlapping entry and return FALSE to indicate that no new entries are added, an entry in the purchase list
-    // is simply updated
+    // to the overlapping entry and return FALSE to indicate that no new entries are added, an entry in the purchase
+    // list is simply updated
     public boolean addEntry(T entry) {
         String name = entry.getName();
         double pricePaid = entry.getPricePaid();
