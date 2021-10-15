@@ -1,5 +1,6 @@
 package model;
 
+//class for revenue
 public class Revenue {
     private double revenue;
 

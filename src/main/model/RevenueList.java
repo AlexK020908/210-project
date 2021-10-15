@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+//All the revenues in a list
 public class RevenueList {
     private List<Revenue> revenues;
 
