@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+ //Testing proxy purchase list
 public class ProxyPurchaseListTest {
 
     ProxyPurchaseList ProxyPurchaseList;

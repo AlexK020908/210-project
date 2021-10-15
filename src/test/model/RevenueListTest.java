@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//testing revenue list
 public class RevenueListTest {
     RevenueList Revenues;
     private Revenue r1 = new Revenue(20.00);

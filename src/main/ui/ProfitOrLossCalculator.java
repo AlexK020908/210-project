@@ -12,7 +12,7 @@ public class ProfitOrLossCalculator {
     private CookGroupPurchaseList cookGroupPurchaseList;
     private ProxyPurchaseList proxyPurchaseList;
     private SneakerPurchaseList sneakerPurchaseList = new SneakerPurchaseList();
-    private ThirdPartyCaptchaSolversPurchaseList solversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
+    private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
     private RevenueList revenueList;
     private Scanner input;
 
@@ -66,31 +66,32 @@ public class ProfitOrLossCalculator {
     }
 
     // MODIFIES: this
-    // EFFECTS: conducts a deposit transaction.
+    // EFFECTS: Add a support Investment to the selected support investment purchase list.
     private void addSupportInvestment() {
-        SupportEntryList selectedPurchaseTypeList = purchaseListTypeSelection();
-        if (selectedPurchaseTypeList.getType() == EntryType.PROXY) {
-            addProxyEntry(selectedPurchaseTypeList);
-        } else if (selectedPurchaseTypeList.getType() == EntryType.CookGroup) {
-            addCookGroupEntry(selectedPurchaseTypeList);
-        } else if (selectedPurchaseTypeList.getType() == EntryType.ThirdPartSolver) {
-            addThirdPartySolverEntry(selectedPurchaseTypeList);
+        SupportEntryList supportInvestmentPurchaseList = purchaseListTypeSelection();
+        if (supportInvestmentPurchaseList.getType() == EntryType.PROXY) {
+            addProxyEntry(supportInvestmentPurchaseList);
+        } else if (supportInvestmentPurchaseList.getType() == EntryType.CookGroup) {
+            addCookGroupEntry(supportInvestmentPurchaseList);
+        } else if (supportInvestmentPurchaseList.getType() == EntryType.ThirdPartSolver) {
+            addThirdPartySolverEntry(supportInvestmentPurchaseList);
         }
 
 
-        printList(selectedPurchaseTypeList);
-        System.out.println("your total price paid is " + ": " + selectedPurchaseTypeList.getTotalMoneySpent());
+        printList(supportInvestmentPurchaseList);
+        System.out.println("your total price paid so far"
+                + " is " + ": " + supportInvestmentPurchaseList.getTotalMoneySpent());
     }
 
-    // EFFECTS: prompts the user to select between proxy purchase list, third party solver purchase list and
+    // EFFECTS: prompts the user to select between proxy purchase list, third party captcha solver purchase list and
     // cook group purchase list
     private SupportEntryList purchaseListTypeSelection() {
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("p") || selection.equals("t") || selection.equals("c"))) {
-            System.out.println("p -> proxyPurchaseList");
-            System.out.println("t -> thirdPartSolverPurchaseList");
-            System.out.println("c -> cookGroupPurchaseList");
+            System.out.println("p -> add to proxyPurchaseList");
+            System.out.println("t -> add to thirdPartyCaptchaSolverPurchaseList");
+            System.out.println("c -> add to  cookGroupPurchaseList");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -98,7 +99,7 @@ public class ProfitOrLossCalculator {
         if (selection.equals("p")) {
             return proxyPurchaseList;
         } else if (selection.equals("t")) {
-            return solversPurchaseList;
+            return thirdPartyCaptchaSolversPurchaseList;
         }
         return cookGroupPurchaseList;
 
@@ -110,11 +111,12 @@ public class ProfitOrLossCalculator {
         SneakerPurchaseList sneakerPurchaseList = sneakerEntrySelection();
         addSneakerEntry(sneakerPurchaseList);
         printList(sneakerPurchaseList);
-        System.out.println("your total price paid is " + ": " + sneakerPurchaseList.getTotalMoneySpent());
+        System.out.println("your total price paid so far is " + ": " + sneakerPurchaseList.getTotalMoneySpent());
     }
 
     //MODIFIES : this
-    //EFFECT: prompts user to enter new sneaker entry adds the newly entered sneaker entry to the list of entries
+    //EFFECT: prompts user to enter new sneaker entry adds the newly entered sneaker entry to the list of entries,
+    //if quantity or price isn't valid, inform the user.
     private void addSneakerEntry(SneakerPurchaseList sneakerPurchaseList) {
         System.out.print("enter name of sneaker: ");
         String entryName = input.next();
@@ -123,20 +125,21 @@ public class ProfitOrLossCalculator {
         System.out.print("enter quantity of sneaker: ");
         int quantity = input.nextInt();
         SneakerEntry entry = new SneakerEntry(entryName, price, quantity);
-        if (entry.getQuantityBought() <= 0) {
-            System.out.println("please enter a valid quantity");
+        if (entry.getQuantityBought() <= 0 || price <= 0) {
+            System.out.println("Please double check your quantity and price to make sure it is valid");
         } else {
             sneakerPurchaseList.addEntry(entry);
             System.out.println("your sneaker entry list has been updated");
         }
     }
 
+
     //EFFECT: prompts the user to press s to access to his/her sneaker purchase list
     private SneakerPurchaseList sneakerEntrySelection() {
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("s"))) {
-            System.out.println("s -> sneakerPurchaseList");
+            System.out.println("s -> select sneakerPurchaseList");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -147,7 +150,7 @@ public class ProfitOrLossCalculator {
 
     //EFFECT: print out the money the user made without their investment taken into account
     private void viewRevenue() {
-        System.out.println("your total revenue is: " + revenueList.calculateTotalRevenue());
+        System.out.println("your total revenue so far is: " + revenueList.calculateTotalRevenue());
     }
 
     //MODIFIES: this
@@ -158,7 +161,7 @@ public class ProfitOrLossCalculator {
         Revenue revenue = new Revenue(revenueMade);
         revenueList.addNewRevenue(revenue);
         System.out.println("your new revenue has been added to your revenue list");
-        System.out.println("your total revenue is now: " + revenueList.calculateTotalRevenue());
+        System.out.println("your total revenue so far is now: " + revenueList.calculateTotalRevenue());
 
     }
 
@@ -170,7 +173,7 @@ public class ProfitOrLossCalculator {
         double moneySpentOnCookGroups = cookGroupPurchaseList.getTotalMoneySpent();
         double moneySpentOnSneakers = sneakerPurchaseList.getTotalMoneySpent();
         double moneySpentOnProxies = proxyPurchaseList.getTotalMoneySpent();
-        double moneySpentOnThirdPartCaptchaSolvers = solversPurchaseList.getTotalMoneySpent();
+        double moneySpentOnThirdPartCaptchaSolvers = thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent();
 
         double revenueMadeInTotal = revenueList.calculateTotalRevenue();
         double moneySpentTotal = moneySpentOnCookGroups
@@ -197,7 +200,7 @@ public class ProfitOrLossCalculator {
         cookGroupPurchaseList = new CookGroupPurchaseList();
         proxyPurchaseList = new ProxyPurchaseList();
         sneakerPurchaseList = new SneakerPurchaseList();
-        solversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
+        thirdPartyCaptchaSolversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
         revenueList = new RevenueList();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
@@ -218,39 +221,55 @@ public class ProfitOrLossCalculator {
 
     //MODIFIES: this
     //EFFECT: PROMTpS the user to enter a NEW third party solver entry and add it to the corresponding purchase list.
-    private void addThirdPartySolverEntry(SupportEntryList<ThirdPartySolverEntry> selectedPurchaseType) {
+    //if  price isn't valid, inform the user.
+    private void addThirdPartySolverEntry(SupportEntryList<ThirdPartyCaptchaSolverEntry> selectedPurchaseType) {
         System.out.print("enter name of Third Party Solver: ");
         String entryName = input.next();
         System.out.println("enter price of Third Party Solver: ");
         double price = input.nextDouble();
-        ThirdPartySolverEntry thirdPartySolverEntry = new ThirdPartySolverEntry(entryName, price);
-        selectedPurchaseType.addEntry(thirdPartySolverEntry);
-        System.out.println("your third party solver entry list has been updated");
+        ThirdPartyCaptchaSolverEntry thirdPartySolverEntry = new ThirdPartyCaptchaSolverEntry(entryName, price);
+        if (price <= 0) {
+            System.out.println("please enter a valid price");
+        } else {
+            selectedPurchaseType.addEntry(thirdPartySolverEntry);
+            System.out.println("your third party solver entry list has been updated");
+        }
     }
 
     //MODIFIES: this
     //EFFECT: PROMTpS the user to enter a NEW cook group entry and add it to the corresponding purchase list
+    //if  price isn't valid, inform the user.
     private void addCookGroupEntry(SupportEntryList<CookGroupSubscriptionEntry> selectedPurchaseType) {
         System.out.print("enter name of Cook Group: ");
         String entryName = input.next();
         System.out.println("enter price of Cook Group: ");
         double price = input.nextDouble();
         CookGroupSubscriptionEntry cg = new CookGroupSubscriptionEntry(entryName, price);
-        selectedPurchaseType.addEntry(cg);
-        System.out.println("your cook group entry list has been updated");
+        if (price <= 0) {
+            System.out.println("please enter a valid price");
+        } else {
+            selectedPurchaseType.addEntry(cg);
+            System.out.println("your cook group entry list has been updated");
+        }
     }
 
     //MODIFIES: this
     //EFFECT: PROMTpS the user to enter a NEW proxy entry and add it to the corresponding purchase list
+    //if  price isn't valid, inform the user.
     private void addProxyEntry(SupportEntryList<ProxyEntry> selectedPurchaseType) {
         System.out.print("enter name of proxy: ");
         String entryName = input.next();
         System.out.println("enter price of proxy: ");
         double price = input.nextDouble();
-        ProxyEntry proxy = new ProxyEntry(entryName, price);
-        selectedPurchaseType.addEntry(proxy);
-        System.out.println("your proxy group entry list has been updated");
+        if (price <= 0) {
+            System.out.println("please enter a valid price");
+        } else {
+            ProxyEntry proxy = new ProxyEntry(entryName, price);
+            selectedPurchaseType.addEntry(proxy);
+            System.out.println("your proxy group entry list has been updated");
+        }
     }
+
 
 
     //EFFECT: print out support purchase list on the screen

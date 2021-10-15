@@ -12,7 +12,6 @@ public class SneakerPurchaseList {
     private List<SneakerEntry> sneakerPurchaseList;
 
 
-
     //EFFECT: Initialize an empty sneaker purchase linked list
     public SneakerPurchaseList() {
         sneakerPurchaseList = new LinkedList<>();
@@ -45,8 +44,10 @@ public class SneakerPurchaseList {
     public boolean addEntry(SneakerEntry entry) {
         List<String> sneakerNames = getSneakerNames();
         String nameOfSneaker = (entry.getName());
-
-        if (sneakerNames.contains(nameOfSneaker)) {
+        if (sneakerPurchaseList.isEmpty()) {
+            sneakerPurchaseList.add(entry);
+            return true;
+        } else if (sneakerNames.contains(nameOfSneaker)) {
             updateQuantityOfExistingSneakerEntry(entry);
             return false;
         } else {
@@ -74,7 +75,7 @@ public class SneakerPurchaseList {
     //helper function
     //MODIFIES: this
     //EFFECT: (for the sneaker entry that the user intends to add in) If this sneaker entry's name is already in the
-    // list, add the quantity of the sneaker entry bought to the existing sneaker entry's quantity.
+    // list, add the quantity of the sneaker entry to the existing sneaker entry's quantity.
     //aka. UPDATING the quantity
     private void updateQuantityOfExistingSneakerEntry(SneakerEntry sneakerEntry) {
         for (SneakerEntry next : sneakerPurchaseList) {

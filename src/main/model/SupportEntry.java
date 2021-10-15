@@ -1,6 +1,7 @@
 package model;
 
-
+//this class represents a super class, it represent support entries such as proxies, Cook groups and Third part
+//captcha solvers
 public class SupportEntry {
     protected String name;
     protected double pricePaid;

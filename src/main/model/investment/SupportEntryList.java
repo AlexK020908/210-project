@@ -7,7 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-//This is a generic class that extends supportEntry, which has proxies, ThirdPartySolvers, and cookGroups as subtypes
+//This is a generic class that extends support Entry, which is extended by proxy entry
+// Third part solver entry, and cookGroup entry as subtypes
 public class SupportEntryList<T extends SupportEntry> {
     private List<T> typePurchaseList;
     private EntryType type;
@@ -30,7 +31,6 @@ public class SupportEntryList<T extends SupportEntry> {
     }
 
 
-
     //EFFECT: get the position of the specified entry in the list, the first element has position 0, if the entry does
     //not exist, simply return -1
     public int indexOf(T entry) {
@@ -42,9 +42,10 @@ public class SupportEntryList<T extends SupportEntry> {
 
     //REQUIRES: parameter to be of type SupportEntry or a subtype of SupportEntry
     //MODIFIES: this
-    //EFFECT: Add the given proxy entry to the end of the proxy Entry list and return TRUE,
-    // if the given list already has the same proxy and same type, simply add the price paid to the existing entry
-    // and return FALSE to indicate that no new entries are added, an entry is simply updated
+    //EFFECT: Add the given entry to the end of the Entry list and return TRUE,
+    // if the given list already has an entry with the same name, simply add the price paid for the entry
+    // to the overlapping entry and return FALSE to indicate that no new entries are added, an entry in the purchase list
+    // is simply updated
     public boolean addEntry(T entry) {
         String name = entry.getName();
         double pricePaid = entry.getPricePaid();

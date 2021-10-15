@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//testing sneaker purchase list
 class SneakerPurchaseListTest {
     SneakerPurchaseList sneakerPurchaseList;
 
@@ -33,7 +34,7 @@ class SneakerPurchaseListTest {
     @Test
     public void testAddEntry(){
         // add one entry
-        sneakerPurchaseList.addEntry(s1);
+        assertTrue(sneakerPurchaseList.addEntry(s1));
         assertEquals(1, sneakerPurchaseList.getLength());
         assertEquals(0, sneakerPurchaseList.indexOf(s1));
 
@@ -146,7 +147,7 @@ class SneakerPurchaseListTest {
     @Test
     public void sneakerEntryToStringTest(){
         //using s1 as main testing sneaker entry again
-        assertEquals(" " + s1.getName() + " , " + s1.getRetailPrice() + " , " + s1.getQuantityBought() + " ,"
+        assertEquals(" " + s1.getName() + " " + s1.getRetailPrice() + " " + s1.getQuantityBought() + ", "
                 , s1.toString());
 
     }
@@ -157,14 +158,14 @@ class SneakerPurchaseListTest {
         assertEquals("", sneakerPurchaseList.toString());
         //List with one sneaker entries
         sneakerPurchaseList.addEntry(s1);
-        assertEquals(" " + s1.getName() + " , " + s1.getRetailPrice() + " , " + s1.getQuantityBought() + " ,"
+        assertEquals(" " + s1.getName() + " " + s1.getRetailPrice() + " " + s1.getQuantityBought() + ", "
         , sneakerPurchaseList.toString());
         //List with some sneaker entries
         sneakerPurchaseList.addEntry(s2);
         sneakerPurchaseList.addEntry(s3);
-        assertEquals(" " + s1.getName() + " , " + s1.getRetailPrice() + " , " + s1.getQuantityBought() + " ,"
-                + " " + s2.getName() + " , " + s2.getRetailPrice() + " , " + s2.getQuantityBought() + " ," +
-                        " " + s3.getName() + " , " + s3.getRetailPrice() + " , " + s3.getQuantityBought() + " ,"
+        assertEquals(" " + s1.getName() + " " + s1.getRetailPrice() + " " + s1.getQuantityBought() + ", "
+                + " " + s2.getName() + " " + s2.getRetailPrice() + " " + s2.getQuantityBought() + ", " +
+                        " " + s3.getName() + " " + s3.getRetailPrice() + " " + s3.getQuantityBought() + ", "
                 , sneakerPurchaseList.toString());
         //List with many sneaker entries
         sneakerPurchaseList.addEntry(s4);
@@ -193,10 +194,6 @@ class SneakerPurchaseListTest {
 
     }
 
-    @Test
-    public void testGetPurchaseList(){
-
-    }
 
 
 }

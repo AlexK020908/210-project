@@ -7,14 +7,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//third party capctcha solver list test
 public class ThirdPartCaptchaSolverListTest {
     ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
 
     //initialize some Cook Group Subscription Entries to test add and remove methods
-    private ThirdPartySolverEntry CapMonster = new ThirdPartySolverEntry("CapMonster", 12);
-    private ThirdPartySolverEntry CapMonsterNegative = new ThirdPartySolverEntry("CapMonster", -12);
-    private ThirdPartySolverEntry TwoCaptcha = new ThirdPartySolverEntry("TwoCaptcha", 10);
-    private ThirdPartySolverEntry AntiCaptcha = new ThirdPartySolverEntry("AntiCaptcha", 15);
+    private ThirdPartyCaptchaSolverEntry CapMonster = new ThirdPartyCaptchaSolverEntry("CapMonster", 12);
+    private ThirdPartyCaptchaSolverEntry CapMonsterNegative = new ThirdPartyCaptchaSolverEntry("CapMonster", -12);
+    private ThirdPartyCaptchaSolverEntry TwoCaptcha = new ThirdPartyCaptchaSolverEntry("TwoCaptcha", 10);
+    private ThirdPartyCaptchaSolverEntry AntiCaptcha = new ThirdPartyCaptchaSolverEntry("AntiCaptcha", 15);
 
     //ONLY three exists right now for third party captcha solvers!
 
