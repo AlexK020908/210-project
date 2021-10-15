@@ -12,7 +12,8 @@ public class ProfitOrLossCalculator {
     private CookGroupPurchaseList cookGroupPurchaseList;
     private ProxyPurchaseList proxyPurchaseList;
     private SneakerPurchaseList sneakerPurchaseList = new SneakerPurchaseList();
-    private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
+    private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList =
+            new ThirdPartyCaptchaSolversPurchaseList();
     private RevenueList revenueList;
     private Scanner input;
 
