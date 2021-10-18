@@ -1,6 +1,10 @@
 package model.investment;
 
 import model.CookGroupSubscriptionEntry;
+import model.EntryType;
+import model.SupportEntry;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import static model.EntryType.CookGroup;
 
@@ -11,4 +15,19 @@ public class CookGroupPurchaseList extends SupportEntryList<CookGroupSubscriptio
         super(CookGroup);
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", CookGroup);
+        jsonObject.put("Cook Group List", cookGroupListToJson());
+        return jsonObject;
+    }
+
+    private JSONArray cookGroupListToJson() {
+        JSONArray array = new JSONArray();
+        for (SupportEntry next : typePurchaseList) {
+            array.put(next.toJson());
+        }
+        return array;
+    }
 }

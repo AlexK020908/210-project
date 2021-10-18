@@ -44,6 +44,7 @@ public class ProxyPurchaseListTest {
     @Test
     public void testAddSecondEntryDifferentType() {
         assertTrue(ProxyPurchaseList.addEntry(Oculus));
+        assertTrue(ProxyPurchaseList.addEntry(Oculus));
         assertTrue(ProxyPurchaseList.addEntry(SmartProxy));
         assertEquals(2, ProxyPurchaseList.getLength());
         assertEquals(59.99 + 17.00,

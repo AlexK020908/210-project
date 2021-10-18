@@ -1,8 +1,11 @@
 package model;
 
+import org.json.JSONObject;
+import persistance.Writable;
+
 //this class represents a super class, it represent support entries such as proxies, Cook groups and Third part
 //captcha solvers
-public class SupportEntry {
+public class SupportEntry implements Writable {
     protected String name;
     protected double pricePaid;
 
@@ -42,4 +45,11 @@ public class SupportEntry {
         return name + " " + pricePaid + " ,";
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("pricePaid", pricePaid);
+        return json;
+    }
 }

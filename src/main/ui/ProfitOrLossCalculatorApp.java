@@ -6,7 +6,7 @@ import model.investment.*;
 import java.util.Scanner;
 
 //Profit or Loss calculator application
-public class ProfitOrLossCalculator {
+public class ProfitOrLossCalculatorApp {
 
     //declare lists that will be used in the profit or loss logger
     private CookGroupPurchaseList cookGroupPurchaseList;
@@ -18,7 +18,7 @@ public class ProfitOrLossCalculator {
     private Scanner input;
 
     // EFFECTS: runs the profit or loss calculator app
-    public ProfitOrLossCalculator() {
+    public ProfitOrLossCalculatorApp() {
         runProfitOrLoss();
     }
 

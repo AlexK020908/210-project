@@ -2,6 +2,9 @@ package model.investment;
 
 import model.EntryType;
 import model.SupportEntry;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistance.Writable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,8 +12,8 @@ import java.util.List;
 
 //This is a generic class that extends support Entry, which is extended by proxy entry
 // Third part solver entry, and cookGroup entry as subtypes
-public class SupportEntryList<T extends SupportEntry> {
-    private List<T> typePurchaseList;
+public abstract class SupportEntryList<T extends SupportEntry> implements Writable {
+    protected List<T> typePurchaseList;
     private EntryType type;
 
 
@@ -99,11 +102,7 @@ public class SupportEntryList<T extends SupportEntry> {
     }
 
 
-
-
-
-
-
-
+    @Override
+    public abstract JSONObject toJson();
 
 }
