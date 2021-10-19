@@ -25,7 +25,7 @@ public class CookGroupPurchaseList extends SupportEntryList<CookGroupSubscriptio
 
     private JSONArray cookGroupListToJson() {
         JSONArray array = new JSONArray();
-        for (SupportEntry next : typePurchaseList) {
+        for (CookGroupSubscriptionEntry next : typePurchaseList) {
             array.put(next.toJson());
         }
         return array;

@@ -1,1 +1,15 @@
-{"empty": false}
+{
+    "sneakers": [
+        {
+            "quantity": 3,
+            "name": "Nike Dunk Low",
+            "retailPrice": 139.99
+        },
+        {
+            "quantity": 5,
+            "name": "yeezy ",
+            "retailPrice": 120
+        }
+    ],
+    "type": "Sneaker"
+}

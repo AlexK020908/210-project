@@ -24,7 +24,7 @@ public class ThirdPartyCaptchaSolversPurchaseList extends SupportEntryList<Third
 
     private JSONArray solversListToJson() {
         JSONArray jsonArray = new JSONArray();
-        for (SupportEntry next : typePurchaseList) {
+        for (ThirdPartyCaptchaSolverEntry next : typePurchaseList) {
             jsonArray.put(next.toJson());
         }
         return jsonArray;

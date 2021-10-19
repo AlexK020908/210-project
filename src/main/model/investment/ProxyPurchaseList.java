@@ -27,7 +27,7 @@ public class ProxyPurchaseList extends SupportEntryList<ProxyEntry> {
 
     private JSONArray proxyPurchaseListTojSON() {
         JSONArray jsonArray = new JSONArray();
-        for (SupportEntry next : typePurchaseList) {
+        for (ProxyEntry next : typePurchaseList) {
             jsonArray.put(next.toJson());
         }
         return jsonArray;

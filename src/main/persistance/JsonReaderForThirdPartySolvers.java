@@ -40,7 +40,8 @@ public class JsonReaderForThirdPartySolvers {
     private void addEntries(ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList,
                             JSONObject jsonObject) {
         //the object here is our string of list
-        JSONArray jsonArray = jsonObject.getJSONArray("proxies"); //we are turning the proxies into an array
+        JSONArray jsonArray = jsonObject.getJSONArray("Third Party Captcha Solver"); //we are turning the proxies
+        // into an array
         //we are getting the array of the string of proxies
         for (Object json : jsonArray) {
             JSONObject nextSolver = (JSONObject) json;

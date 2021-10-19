@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +32,21 @@ public class RevenueList {
             totalRevenue += next.getRevenue();
         }
         return totalRevenue;
+    }
+
+
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("revenues",toJsonRevenueArray());
+        return jsonObject;
+    }
+
+    public JSONArray toJsonRevenueArray() {
+        JSONArray jsonArray = new JSONArray();
+        for (Revenue next : revenues) {
+            jsonArray.put(next.toJson());
+        }
+        return jsonArray;
     }
 
 }

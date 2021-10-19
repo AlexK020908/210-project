@@ -1,4 +1,7 @@
 {
-    "Third Party Captcha Solver": [],
+    "Third Party Captcha Solver": [{
+        "name": "CapMonster",
+        "pricePaid": 13.99
+    }],
     "type": "ThirdPartSolver"
 }

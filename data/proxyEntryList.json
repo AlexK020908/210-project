@@ -1,7 +1,13 @@
 {
-    "proxies": [{
-        "name": "oculus",
-        "pricePaid": 120
-    }],
+    "proxies": [
+        {
+            "name": "Oculus",
+            "pricePaid": 189.99
+        },
+        {
+            "name": "Leaf Proxies",
+            "pricePaid": 170
+        }
+    ],
     "type": "PROXY"
 }

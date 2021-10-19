@@ -1,4 +1,7 @@
 {
-    "Cook Group List": [],
+    "Cook Group List": [{
+        "name": "Forbidden",
+        "pricePaid": 59.99
+    }],
     "type": "CookGroup"
 }

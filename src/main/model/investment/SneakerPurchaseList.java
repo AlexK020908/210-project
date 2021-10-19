@@ -13,11 +13,13 @@ import java.util.stream.Collectors;
 //This class does not extend supportEntryList because this is a sneaker investment, not a support investment
 public class SneakerPurchaseList {
     private List<SneakerEntry> sneakerPurchaseList;
+    private EntryType type;
 
 
     //EFFECT: Initialize an empty sneaker purchase linked list
     public SneakerPurchaseList() {
         sneakerPurchaseList = new LinkedList<>();
+        type = EntryType.Sneaker;
 
     }
 
@@ -113,6 +115,8 @@ public class SneakerPurchaseList {
                 //identifier is the initial value or the RESULT if there is no sneaker entries inside the list.
         return listOfSneakerEntries;
     }
+
+
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", EntryType.Sneaker);
@@ -124,7 +128,7 @@ public class SneakerPurchaseList {
     public JSONArray sneakerToJsonArray() {
         JSONArray array = new JSONArray();
         for (SneakerEntry next : sneakerPurchaseList) {
-            next.toJson();
+            array.put(next.toJson());
         }
         return array;
     }
