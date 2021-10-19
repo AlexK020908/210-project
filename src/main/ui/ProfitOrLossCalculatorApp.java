@@ -2,12 +2,19 @@ package ui;
 
 import model.*;
 import model.investment.*;
+import persistance.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 //Profit or Loss calculator application
 public class ProfitOrLossCalculatorApp {
 
+    public static final String SNEAKER_STORE = "./data/sneakerInvestment.json";
+    public static final String PROXY_STORE = "./data/proxyEntryList.json";
+    public static final String COOK_GROUP_STORE = "./data/cookGroupEntryList.json";
+    public static final String THIRD_PARTY_SOLVER_STORE = "./data/thirdPartySolversEntryList.json";
     //declare lists that will be used in the profit or loss logger
     private CookGroupPurchaseList cookGroupPurchaseList;
     private ProxyPurchaseList proxyPurchaseList;
@@ -16,6 +23,14 @@ public class ProfitOrLossCalculatorApp {
             new ThirdPartyCaptchaSolversPurchaseList();
     private RevenueList revenueList;
     private Scanner input;
+    private JsonWriterForSupportEntries jsonWriterForProxyEntries;
+    private JsonWriterForSupportEntries jsonWriterForCookGroupEntries;
+    private JsonWriterForSupportEntries jsonWriterForThirdPartySolverEntries;
+    private JsonWriteForSneakers jsonWriteForSneakers;
+    private JsonReaderForSneaker jsonReaderForSneaker;
+    private JsonReaderForProxy jsonReaderForProxy;
+    private JsonReaderForCookGroup jsonReaderForCookGroup;
+    private JsonReaderForThirdPartySolvers jsonReaderForThirdPartySolvers;
 
     // EFFECTS: runs the profit or loss calculator app
     public ProfitOrLossCalculatorApp() {
@@ -51,59 +66,100 @@ public class ProfitOrLossCalculatorApp {
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/TellerApp]
     private void processCommand(String command) {
-        if (command.equals("i")) {
-            addSupportInvestment();
-        } else if (command.equals("s")) {
-            addSneakerMainEntry();
-        } else if (command.equals("r")) {
-            runRevenue();
-        } else if (command.equals("v")) {
-            viewRevenue();
-        } else if (command.equals("c")) {
-            calculateProfitOrLoss();
-        } else {
-            System.out.println("Selection not valid...");
+        switch (command) {
+            case "p" : addProxyEntry(proxyPurchaseList);
+            break;
+
+            case"k" : addCookGroupEntry(cookGroupPurchaseList);
+            break;
+
+            case"t" : addThirdPartySolverEntry(thirdPartyCaptchaSolversPurchaseList);
+            break;
+
+            case"s" : addSneakerMainEntry();
+            break;
+
+            case"r" : runRevenue();
+            break;
+
+            case"v" : viewRevenue();
+            break;
+
+            case"c" : calculateProfitOrLoss();
+            break;
+
+            case "save" : saveProgress();
+            break;
+
+            case "load" : loadAllSavedProgress();
+            break;
+
+            default :
+                System.out.println("please enter the correct command");
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: Add a support Investment to the selected support investment purchase list.
-    private void addSupportInvestment() {
-        SupportEntryList supportInvestmentPurchaseList = purchaseListTypeSelection();
-        if (supportInvestmentPurchaseList.getType() == EntryType.PROXY) {
-            addProxyEntry(supportInvestmentPurchaseList);
-        } else if (supportInvestmentPurchaseList.getType() == EntryType.CookGroup) {
-            addCookGroupEntry(supportInvestmentPurchaseList);
-        } else if (supportInvestmentPurchaseList.getType() == EntryType.ThirdPartSolver) {
-            addThirdPartySolverEntry(supportInvestmentPurchaseList);
+    private void loadAllSavedProgress() {
+        try {
+            jsonReaderForProxy.read();
+        } catch (IOException e) {
+            System.out.println("can not load proxy entry list from" + PROXY_STORE);
         }
-
-
-        printList(supportInvestmentPurchaseList);
-        System.out.println("your total price paid so far"
-                + " is " + ": " + supportInvestmentPurchaseList.getTotalMoneySpent());
+        try {
+            jsonReaderForThirdPartySolvers.read();
+        } catch (IOException e) {
+            System.out.println("can not load Third party solver entry list from" + THIRD_PARTY_SOLVER_STORE);
+        }
+        try {
+            jsonReaderForCookGroup.read();
+        } catch (IOException e) {
+            System.out.println("can not load cook group entry list from" + COOK_GROUP_STORE);
+        }
+        try {
+            jsonReaderForSneaker.read();
+        } catch (IOException e) {
+            System.out.println("can not load sneaker entry list from" + COOK_GROUP_STORE);
+        }
     }
 
-    // EFFECTS: prompts the user to select between proxy purchase list, third party captcha solver purchase list and
-    // cook group purchase list
-    private SupportEntryList purchaseListTypeSelection() {
-        String selection = "";  // force entry into loop
-
-        while (!(selection.equals("p") || selection.equals("t") || selection.equals("c"))) {
-            System.out.println("p -> add to proxyPurchaseList");
-            System.out.println("t -> add to thirdPartyCaptchaSolverPurchaseList");
-            System.out.println("c -> add to  cookGroupPurchaseList");
-            selection = input.next();
-            selection = selection.toLowerCase();
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    private void saveProgress() {
+        try {
+            saveFile(proxyPurchaseList);
+            System.out.println("saved your proxy purchase entry list" + "to" + PROXY_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("can not find and write on file  :" + PROXY_STORE);
         }
-
-        if (selection.equals("p")) {
-            return proxyPurchaseList;
-        } else if (selection.equals("t")) {
-            return thirdPartyCaptchaSolversPurchaseList;
+        try {
+            saveFile(thirdPartyCaptchaSolversPurchaseList);
+            System.out.println("saved your COOK group purchase entry list" + "to" + THIRD_PARTY_SOLVER_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("can not find and write on file  :" + THIRD_PARTY_SOLVER_STORE);
         }
-        return cookGroupPurchaseList;
+        try {
+            saveFile(cookGroupPurchaseList);
+            System.out.println("saved your cook group purchase entry list" + "to" + COOK_GROUP_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("can not find and write on file  :" + COOK_GROUP_STORE);
+        }
+        try {
+            saveSneakerList();
+            System.out.println("saved your sneaker purchase entry list" + "to" + SNEAKER_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("can not find and write on file  :" + SNEAKER_STORE);
+        }
+    }
 
+    private void saveSneakerList() throws FileNotFoundException {
+        jsonWriteForSneakers.open();
+        jsonWriteForSneakers.write(sneakerPurchaseList);
+        jsonWriteForSneakers.close();
+    }
+
+    private void saveFile(SupportEntryList<? extends SupportEntry> supportEntryList) throws FileNotFoundException {
+        jsonWriterForProxyEntries.open();
+        jsonWriterForProxyEntries.write(supportEntryList);
+        jsonWriterForProxyEntries.close();
     }
 
     //MODIFIES: this
@@ -205,16 +261,28 @@ public class ProfitOrLossCalculatorApp {
         revenueList = new RevenueList();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriteForSneakers = new JsonWriteForSneakers(SNEAKER_STORE);
+        jsonReaderForSneaker = new JsonReaderForSneaker(SNEAKER_STORE);
+        jsonWriterForProxyEntries = new JsonWriterForSupportEntries(PROXY_STORE);
+        jsonReaderForProxy = new JsonReaderForProxy(PROXY_STORE);
+        jsonWriterForCookGroupEntries = new JsonWriterForSupportEntries(COOK_GROUP_STORE);
+        jsonReaderForCookGroup = new JsonReaderForCookGroup(COOK_GROUP_STORE);
+        jsonWriterForThirdPartySolverEntries = new JsonWriterForSupportEntries(THIRD_PARTY_SOLVER_STORE);
+        jsonReaderForThirdPartySolvers = new JsonReaderForThirdPartySolvers(THIRD_PARTY_SOLVER_STORE);
     }
 
     // EFFECTS: displays menu of options to user.
     private void displayMenu() {
         System.out.println("\nSelect from the following entry list types:");
-        System.out.println("\ti -> add Support Investment");
+        System.out.println("\tp -> add Proxy Investment");
+        System.out.println("\tk -> add cook group Investment");
+        System.out.println("\tt -> add third party solver Investment");
         System.out.println("\ts -> add Sneaker Investment");
         System.out.println("\tr -> add revenue");
         System.out.println("\tv -> view revenue");
         System.out.println("\tc -> calculate Profit or Loss");
+        System.out.println("\tsave -> save progress");
+        System.out.println("\tload -> load progress");
         System.out.println("\tq -> quit");
     }
 
@@ -235,6 +303,9 @@ public class ProfitOrLossCalculatorApp {
             selectedPurchaseType.addEntry(thirdPartySolverEntry);
             System.out.println("your third party solver entry list has been updated");
         }
+        printList(thirdPartyCaptchaSolversPurchaseList);
+        System.out.println("your total price paid so far"
+                + " is " + ": " + thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
     }
 
     //MODIFIES: this
@@ -252,6 +323,9 @@ public class ProfitOrLossCalculatorApp {
             selectedPurchaseType.addEntry(cg);
             System.out.println("your cook group entry list has been updated");
         }
+        printList(cookGroupPurchaseList);
+        System.out.println("your total price paid so far"
+                + " is " + ": " + cookGroupPurchaseList.getTotalMoneySpent());
     }
 
     //MODIFIES: this
@@ -269,13 +343,26 @@ public class ProfitOrLossCalculatorApp {
             selectedPurchaseType.addEntry(proxy);
             System.out.println("your proxy group entry list has been updated");
         }
+        printList(proxyPurchaseList);
+        System.out.println("your total price paid so far"
+                + " is " + ": " + proxyPurchaseList.getTotalMoneySpent());
     }
 
 
 
     //EFFECT: print out support purchase list on the screen
-    private void printList(SupportEntryList selectedPurchaseType) {
-        System.out.println("purchaseList" + ":  " + selectedPurchaseType.toString());
+    private void printList(CookGroupPurchaseList cookGroupPurchaseList) {
+        System.out.println("purchaseList" + ":  " + cookGroupPurchaseList.toString());
+    }
+
+    //EFFECT: print out support purchase list on the screen
+    private void printList(ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList) {
+        System.out.println("purchaseList" + ":  " + thirdPartyCaptchaSolversPurchaseList.toString());
+    }
+
+    //EFFECT: print out support purchase list on the screen
+    private void printList(ProxyPurchaseList proxyPurchaseList) {
+        System.out.println("purchaseList" + ":  " + proxyPurchaseList.toString());
     }
 
     //EFFECT: print out sneaker purchase list on the screen

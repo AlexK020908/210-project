@@ -1,6 +1,8 @@
 package persistance;
 
+import model.SupportEntry;
 import model.investment.ProxyPurchaseList;
+import model.investment.SupportEntryList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,14 +10,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class JsonWriterForProxy {
-    private final int tab = 4;
-    private PrintWriter writer;
-    private String destination;
+public class JsonWriterForSupportEntries {
+    protected final int tab = 4;
+    protected PrintWriter writer;
+    protected String destination;
 
 
     //constructor --> a writer that writes to destination
-    public JsonWriterForProxy(String destination) {
+    public JsonWriterForSupportEntries(String destination) {
         this.destination = destination;
     }
 
@@ -25,19 +27,19 @@ public class JsonWriterForProxy {
         writer = new PrintWriter(new File(destination));
     }
 
-
-    //write json of proxy to file
-    public void write(ProxyPurchaseList ppl) {
-        JSONObject proxyList = ppl.toJson();
-        writer.print(proxyList.toString(tab));
+    public void write(SupportEntryList<? extends SupportEntry> purchaseList) {
+        JSONObject list = purchaseList.toJson();
+        writer.print(list.toString(tab));
     }
-
-
 
     //closing the writer
     public void close() {
         writer.close();
+
     }
+
+
+
 
 
 }

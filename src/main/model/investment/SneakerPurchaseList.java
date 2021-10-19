@@ -1,6 +1,9 @@
 package model.investment;
 
+import model.EntryType;
 import model.SneakerEntry;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -109,6 +112,21 @@ public class SneakerPurchaseList {
                 .reduce("", String::concat); //using reduce to join everything using concat
                 //identifier is the initial value or the RESULT if there is no sneaker entries inside the list.
         return listOfSneakerEntries;
+    }
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", EntryType.Sneaker);
+        jsonObject.put("sneakers",sneakerToJsonArray());
+        return jsonObject;
+
+    }
+
+    public JSONArray sneakerToJsonArray() {
+        JSONArray array = new JSONArray();
+        for (SneakerEntry next : sneakerPurchaseList) {
+            next.toJson();
+        }
+        return array;
     }
 
 }

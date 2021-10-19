@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 //SneakerEntry class, each sneaker entry has a name, retail price and a quantity
 public class SneakerEntry  {
     private String name;
@@ -42,6 +44,16 @@ public class SneakerEntry  {
     //EFFECT: PRINT out the sneaker entry by override the toString method
     public String toString() {
         return  " " + name + " " + retailPrice + " " + quantityBought + ", ";
+    }
+
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("retailPrice", retailPrice);
+        json.put("quantity", quantityBought);
+        return json;
+
     }
 
 }
