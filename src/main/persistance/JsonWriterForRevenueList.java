@@ -8,23 +8,28 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+//Represents a Json writer for revenue List that writes it to file.
 public class JsonWriterForRevenueList {
     private final int tab = 4;
     private PrintWriter writer;
     private String destination;
 
+    //EFFECT: constructs a Json writer for Revenue list at the given destination
     public JsonWriterForRevenueList(String destination) {
         this.destination = destination;
     }
 
-    //open the writer
+    //MODIFIES: this
+    //EFFECT: opens the writer for revenue list at the given destination
+    //        throws fileNotFoundException if file can not be opened
     public void open() throws FileNotFoundException {
         //initialize the writer to a file of destination
         writer = new PrintWriter(new File(destination));
     }
 
 
-    //write on destination file
+    //MODIFIES: this
+    //EFFECT: write the Json representation of revenueList to the file at given location.
     public void write(RevenueList revenueList) {
         //turn the revenue List into a json object
         //then write revenue list as to array on the destination
@@ -33,7 +38,8 @@ public class JsonWriterForRevenueList {
 
     }
 
-    //close writer
+    //MODIFIES: this
+    //EFFECT: closes the writer
     public void close() {
         writer.close();
     }

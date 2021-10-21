@@ -1,0 +1,13 @@
+{
+    "Cook Group List": [
+        {
+            "name": "Forbidden",
+            "pricePaid": 12.99
+        },
+        {
+            "name": "DropAlert",
+            "pricePaid": 16.99
+        }
+    ],
+    "type": "CookGroup"
+}

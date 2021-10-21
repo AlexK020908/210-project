@@ -230,4 +230,37 @@ public class ThirdPartCaptchaSolverListTest {
                         AntiCaptcha.getName() + " " + AntiCaptcha.getPricePaid() + " ,"
                 , thirdPartyCaptchaSolversPurchaseList.toString());
     }
+
+    @Test
+    public void getMethod() {
+        //empty list, throw out of index exception
+        try {
+            thirdPartyCaptchaSolversPurchaseList.get(0);
+            thirdPartyCaptchaSolversPurchaseList.get(1);
+            thirdPartyCaptchaSolversPurchaseList.get(2);
+            fail("can not get index that is out of bound");
+
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+
+
+        //add some elements to the list and test again
+
+        thirdPartyCaptchaSolversPurchaseList.addEntry(CapMonster);
+        thirdPartyCaptchaSolversPurchaseList.addEntry(TwoCaptcha);
+        thirdPartyCaptchaSolversPurchaseList.addEntry(AntiCaptcha);
+        assertEquals(CapMonster, thirdPartyCaptchaSolversPurchaseList.get(0));
+        assertEquals(TwoCaptcha, thirdPartyCaptchaSolversPurchaseList.get(1));
+        assertEquals(AntiCaptcha, thirdPartyCaptchaSolversPurchaseList.get(2));
+
+
+        //test for out of bounds
+        try {
+            thirdPartyCaptchaSolversPurchaseList.get(3);
+            fail("can not get index that is out of bound");
+
+        } catch (IndexOutOfBoundsException e) {
+        }
+    }
 }

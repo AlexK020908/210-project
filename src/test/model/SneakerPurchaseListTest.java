@@ -194,6 +194,29 @@ class SneakerPurchaseListTest {
 
     }
 
+    @Test
+    public void testGetMethodNoSuchEntryExist() {
+        //out of bounds
+        try {
+            sneakerPurchaseList.get(0);
+            sneakerPurchaseList.get(1);
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            //does not exist
+        }
+        sneakerPurchaseList.addEntry(s1);
+        assertEquals(s1, sneakerPurchaseList.get(0));
+
+        try {
+            sneakerPurchaseList.get(2);
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            //does mnot exist
+        }
+
+
+    }
+
 
 
 }

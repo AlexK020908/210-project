@@ -11,7 +11,9 @@ import java.util.List;
 
 
 //This is a generic class that extends support Entry, which is extended by proxy entry
-// Third part solver entry, and cookGroup entry as subtypes
+// Third part solver entry, and cookGroup entry as subtypes.
+//This class implements writable in order to implement the toJson method to turn the support entry list into
+// a JSON object
 public abstract class SupportEntryList<T extends SupportEntry> implements Writable {
     protected List<T> typePurchaseList;
     private EntryType type;
@@ -103,6 +105,12 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
 
 
     @Override
+    //EFFECT: turn the Support Entru List into a Json Object
     public abstract JSONObject toJson();
+
+    //EFFECT: Return the entry at given index
+    public T get(int i) {
+        return typePurchaseList.get(i);
+    }
 
 }

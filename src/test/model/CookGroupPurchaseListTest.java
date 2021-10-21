@@ -228,6 +228,45 @@ public class CookGroupPurchaseListTest {
                 , cookGroupPurchaseList.toString());
     }
 
+    @Test
+    public void getMethod() {
+        //empty list, throw out of index exception
+        try {
+            cookGroupPurchaseList.get(0);
+            cookGroupPurchaseList.get(1);
+            cookGroupPurchaseList.get(2);
+            fail("can not get index that is out of bound");
+
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+
+
+        //add some elements to the list and test again
+
+        cookGroupPurchaseList.addEntry(forbidden);
+        cookGroupPurchaseList.addEntry(DropAlert);
+        cookGroupPurchaseList.addEntry(theNorthCop);
+        assertEquals(forbidden, cookGroupPurchaseList.get(0));
+        assertEquals(DropAlert, cookGroupPurchaseList.get(1));
+        assertEquals(theNorthCop, cookGroupPurchaseList.get(2));
+
+
+
+
+        //test for out of bounds
+        try {
+            cookGroupPurchaseList.get(3);
+            fail("can not get index that is out of bound");
+
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+
+
+
+    }
+
 
 
 }

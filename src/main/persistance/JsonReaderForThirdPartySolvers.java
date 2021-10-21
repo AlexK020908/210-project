@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Represents a reader that reads the Third part solver list from JSON data stored in file
 public class JsonReaderForThirdPartySolvers {
     private String source;
 
@@ -19,30 +20,32 @@ public class JsonReaderForThirdPartySolvers {
         this.source = source;
     }
 
-    // EFFECTS: reads purchase list from file and returns it;
-    // throws IOException if an error occurs reading data from file
+    // EFFECTS: reads Third Party captcha list from file and returns it;
+    //          throws IOException if an error occurs reading data from file
     public ThirdPartyCaptchaSolversPurchaseList read() throws IOException {
-        String jsonData = readFile(source);  //reading the file into a string
-        JSONObject jsonObject = new JSONObject(jsonData);
+        String thirdPartySolverListData = readFile(source);  //reading the file into a string
+        JSONObject thirdPartySolverListJsonObject = new JSONObject(thirdPartySolverListData);
         // turning the string into a json object
-        return parseProxyList(jsonObject); //parsing the object
+        return parseProxyList(thirdPartySolverListJsonObject); //parsing the object
     }
 
-    //parsing means breaking one string into meaning ful parts, like what parsa did with my credit card info
-    private ThirdPartyCaptchaSolversPurchaseList parseProxyList(JSONObject jsonObject)  {
+    //EFFECT: parse the third party captcha Json object into a readable third part captcha solver list
+    private ThirdPartyCaptchaSolversPurchaseList parseProxyList(JSONObject thirdPartySolverListJsonObject)  {
         //parameter is the String of all of our proxy
         ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList =
                 new ThirdPartyCaptchaSolversPurchaseList();
-        addEntries(thirdPartyCaptchaSolversPurchaseList, jsonObject);
+        addEntries(thirdPartyCaptchaSolversPurchaseList, thirdPartySolverListJsonObject);
         return thirdPartyCaptchaSolversPurchaseList;
     }
 
+
+    //MODIFIES: thirdPartyCaptchaSolversPurchaseList
+    //EFFECT: add each third party captcha entry in the thirdPartySolverListJsonObject
+    // to an empty third part captcha solvers list
     private void addEntries(ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList,
                             JSONObject jsonObject) {
         //the object here is our string of list
-        JSONArray jsonArray = jsonObject.getJSONArray("Third Party Captcha Solver"); //we are turning the proxies
-        // into an array
-        //we are getting the array of the string of proxies
+        JSONArray jsonArray = jsonObject.getJSONArray("solvers");
         for (Object json : jsonArray) {
             JSONObject nextSolver = (JSONObject) json;
             addEntry(thirdPartyCaptchaSolversPurchaseList, nextSolver);
@@ -50,12 +53,15 @@ public class JsonReaderForThirdPartySolvers {
         }
     }
 
+    //MODIFIES:  thirdPartyCaptchaSolversPurchaseList
+    //EFFECT; add the next solver (JSON object) to the thirdPartyCaptchaSolversPurchaseList
     private void addEntry(ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList,
                           JSONObject nextSolver) {
         String name = nextSolver.getString("name");
         //for every single proxy entry we are getting the name and price paid
         double pricePaid = nextSolver.getDouble("pricePaid");
-        ThirdPartyCaptchaSolverEntry solverEntry = new ThirdPartyCaptchaSolverEntry(name, pricePaid); //making the instance
+        ThirdPartyCaptchaSolverEntry solverEntry = new
+                ThirdPartyCaptchaSolverEntry(name, pricePaid); //making the instance
         thirdPartyCaptchaSolversPurchaseList.addEntry(solverEntry); //adding it to the purchase list
     }
 

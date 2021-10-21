@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+
+// Represents a reader that reads the proxy entry list from JSON data stored in file
 public class JsonReaderForProxy {
     private String source;
 
@@ -19,25 +21,31 @@ public class JsonReaderForProxy {
         this.source = source;
     }
 
-    // EFFECTS: reads purchase list from file and returns it;
-    // throws IOException if an error occurs reading data from file
+
+    // EFFECTS: reads proxy list from file and returns it;
+    //          throws IOException if an error occurs reading data from file
     public ProxyPurchaseList read() throws IOException {
-        String jsonData = readFile(source);  //reading the file into a string
-        JSONObject jsonObject = new JSONObject(jsonData);
+        String proxyListData = readFile(source);  //reading the file into a string
+        JSONObject proxyListDataJsonObject = new JSONObject(proxyListData);
         // turning the string into a json object
-        return parseProxyList(jsonObject); //parsing the object
+        return parseProxyList(proxyListDataJsonObject); //parsing the object
     }
 
-    //parsing means breaking one string into meaning ful parts, like what parsa did with my credit card info
-    private ProxyPurchaseList parseProxyList(JSONObject jsonObject)  { //parameter is the String of all of our proxy
+    //EFFECT: parse the proxy list Json object into a readable proxy list
+    private ProxyPurchaseList parseProxyList(JSONObject proxyListDataJsonObject)  {
+        //parameter is the String of all of our proxy
         ProxyPurchaseList proxyPurchaseList = new ProxyPurchaseList();
-        addEntries(proxyPurchaseList, jsonObject);
+        addEntries(proxyPurchaseList, proxyListDataJsonObject);
         return proxyPurchaseList;
     }
 
-    private void addEntries(ProxyPurchaseList proxyPurchaseList, JSONObject jsonObject) {
+    //MODIFIES: proxyPurchaseList
+    //EFFECT: add each proxy entry in the  proxyListDataJsonObject
+    // to an empty revenueList.
+    private void addEntries(ProxyPurchaseList proxyPurchaseList, JSONObject proxyListDataJsonObject) {
         //the object here is our string of list
-        JSONArray jsonArray = jsonObject.getJSONArray("proxies"); //we are turning the proxies into an array
+        JSONArray jsonArray = proxyListDataJsonObject.getJSONArray(
+                "proxies"); //we are turning the proxies into an array
         //we are getting the array of the string of proxies
         for (Object json : jsonArray) {
             JSONObject nextProxy = (JSONObject) json;
@@ -46,16 +54,19 @@ public class JsonReaderForProxy {
         }
     }
 
-    private void addEntry(ProxyPurchaseList ppl, JSONObject nextProxy) {
+    //MODIFIES:  proxyPurchaseList
+    //EFFECT; add the next proxy entry (JSON object) to the proxy entry list
+    private void addEntry(ProxyPurchaseList proxyPurchaseList, JSONObject nextProxy) {
         String name = nextProxy.getString("name");
         //for every single proxy entry we are getting the name and price paid
         double pricePaid = nextProxy.getDouble("pricePaid");
-        ProxyEntry proxyEntry = new ProxyEntry(name, pricePaid); //making the instance
-        ppl.addEntry(proxyEntry); //adding it to the purchase list
+        ProxyEntry proxyEntry = new ProxyEntry(name, pricePaid);
+        //making the instance
+        proxyPurchaseList.addEntry(proxyEntry); //adding it to the purchase list
     }
 
     // EFFECTS: reads source file as string and returns it
-    private String readFile(String source) throws  IOException {
+    private String readFile(String source) throws IOException {
         StringBuilder builder = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> builder.append(s));

@@ -4,6 +4,7 @@ import model.EntryType;
 import model.SneakerEntry;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistance.Writable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.stream.Collectors;
 
 //This class focuses on a list of sneaker entries, each having a name, price and quantity.
 //This class does not extend supportEntryList because this is a sneaker investment, not a support investment
-public class SneakerPurchaseList {
+//it implements writable to implement the toJson method to turn a sneaker purchase list into a JsonObject
+public class SneakerPurchaseList implements Writable {
     private List<SneakerEntry> sneakerPurchaseList;
     private EntryType type;
 
@@ -36,6 +38,10 @@ public class SneakerPurchaseList {
     //EFFECT: return the size of the sneakerPurchase List.
     public int getLength() {
         return sneakerPurchaseList.size();
+    }
+
+    public EntryType getType() {
+        return EntryType.Sneaker;
     }
 
 
@@ -117,6 +123,7 @@ public class SneakerPurchaseList {
     }
 
 
+    //EFFECT: returns the sneaker Purchase list as a Json object
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", EntryType.Sneaker);
@@ -125,6 +132,7 @@ public class SneakerPurchaseList {
 
     }
 
+    //EFFECT: return the sneaker purchase list as a Json Array
     public JSONArray sneakerToJsonArray() {
         JSONArray array = new JSONArray();
         for (SneakerEntry next : sneakerPurchaseList) {
@@ -133,4 +141,8 @@ public class SneakerPurchaseList {
         return array;
     }
 
+    //get the sneaker entry at given index
+    public SneakerEntry get(int i) {
+        return sneakerPurchaseList.get(i);
+    }
 }

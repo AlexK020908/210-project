@@ -10,29 +10,35 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+//Represents a writer that writes JSON representation of A support entry list to file
 public class JsonWriterForSupportEntries {
     protected final int tab = 4;
     protected PrintWriter writer;
     protected String destination;
 
 
-    //constructor --> a writer that writes to destination
+    //EFFECT: Constructs a writer for support investment entries with a destination.
     public JsonWriterForSupportEntries(String destination) {
         this.destination = destination;
     }
 
     //MODIFIES: this
-    //EFFECT: open the writer --> make a new writer of the destination file
+    //EFFECT: open the writer with for a support entry list at the destination
+    //        Throws file not found exception if the destination file can not  be opened.
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
     }
 
+    //MODIFIES: this
+    //EFFECT: write JSON representation of support list entries to file
+    //        support entries include: proxy entries, Cook group entries and Third party solver entries
     public void write(SupportEntryList<? extends SupportEntry> purchaseList) {
         JSONObject list = purchaseList.toJson();
         writer.print(list.toString(tab));
     }
 
-    //closing the writer
+    //MODIFIES
+    //EFFECT: closes the writer
     public void close() {
         writer.close();
 

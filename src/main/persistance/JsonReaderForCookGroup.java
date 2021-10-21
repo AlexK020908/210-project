@@ -19,25 +19,30 @@ public class JsonReaderForCookGroup {
         this.source = source;
     }
 
-    // EFFECTS: reads purchase list from file and returns it;
-    // throws IOException if an error occurs reading data from file
+    // EFFECTS: reads cook group entry list from file and returns it;
+    //          throws IOException if an error occurs reading data from file
     public CookGroupPurchaseList read() throws IOException {
-        String jsonData = readFile(source);  //reading the file into a string
-        JSONObject jsonObject = new JSONObject(jsonData); // turning the string into a json object
-        return parseCookGroupList(jsonObject); //parsing the object
+        String cookGroupEntryListString = readFile(source);  //reading the file into a string
+        JSONObject cookGroupEntryListJsonObject =
+                new JSONObject(cookGroupEntryListString); // turning the string into a json object
+        return parseCookGroupList(cookGroupEntryListJsonObject); //parsing the object
     }
 
-    //parsing means breaking one string into meaning ful parts, like what parsa did with my credit card info
-    private CookGroupPurchaseList parseCookGroupList(JSONObject jsonObject)  {
+    //EFFECT: parse the cook group Json object into a readable cook group list
+    private CookGroupPurchaseList parseCookGroupList(JSONObject cookGroupEntryListJsonObject)  {
         //parameter is the String of all of our proxy
         CookGroupPurchaseList cookGroupPurchaseList = new CookGroupPurchaseList();
-        addEntries(cookGroupPurchaseList, jsonObject);
+        addEntries(cookGroupPurchaseList, cookGroupEntryListJsonObject);
         return cookGroupPurchaseList;
     }
 
-    private void addEntries(CookGroupPurchaseList cookGroupPurchaseList, JSONObject jsonObject) {
+    //MODIFIES: cookGroupPurchaseList
+    //EFFECT: add each cook group entry in the  cookGroupEntryListJsonObject
+    // to an empty cook group entry list.
+    private void addEntries(CookGroupPurchaseList cookGroupPurchaseList, JSONObject cookGroupEntryListJsonObject) {
         //the object here is our string of list
-        JSONArray jsonArray = jsonObject.getJSONArray("Cook Group List"); //we are turning the proxies into an array
+        JSONArray jsonArray = cookGroupEntryListJsonObject.getJSONArray("Cook Group List");
+        //we are turning the proxies into an array
         //we are getting the array of the string of proxies
         for (Object json : jsonArray) {
             JSONObject nextCookGroup = (JSONObject) json;
@@ -46,6 +51,8 @@ public class JsonReaderForCookGroup {
         }
     }
 
+    //MODIFIES:  cookGroupPurchaseList
+    //EFFECT; add the next cook group entry (JSON object) to the cook group purchase entry list
     private void addEntry(CookGroupPurchaseList cookGroupPurchaseList, JSONObject nextCookGroup) {
         String name = nextCookGroup.getString("name");
         //for every single proxy entry we are getting the name and price paid

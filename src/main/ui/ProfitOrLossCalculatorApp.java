@@ -102,24 +102,26 @@ public class ProfitOrLossCalculatorApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECT: load all support entry lists, sneaker purchase list and revenue list from files.
     private void loadAllSavedProgress() {
         try {
-            tryReadingProxyEntryList();
+            readingProxyEntryList();
         } catch (IOException e) {
             System.out.println("can not load proxy entry list from" + PROXY_STORE);
         }
         try {
-            tryReadingThirdPartySolverEntryList();
+            readingThirdPartySolverEntryList();
         } catch (IOException e) {
             System.out.println("can not load Third party solver entry list from" + THIRD_PARTY_SOLVER_STORE);
         }
         try {
-            tryReadingCookGroupEntryList();
+            readingCookGroupEntryList();
         } catch (IOException e) {
             System.out.println("can not load cook group entry list from" + COOK_GROUP_STORE);
         }
         try {
-            tryReadingSneakersEntryList();
+            readingSneakersEntryList();
         } catch (IOException e) {
             System.out.println("can not load sneaker entry list from" + COOK_GROUP_STORE);
         }
@@ -127,6 +129,9 @@ public class ProfitOrLossCalculatorApp {
 
     }
 
+    //MODIFIES: this
+    //EFFECT: try reading the Revenue list from file , tell the user can not load from its file location if
+    //file can not be read
     private void tryReadingRevenueList() {
         try {
             readRevenueList();
@@ -135,39 +140,43 @@ public class ProfitOrLossCalculatorApp {
         }
     }
 
+    //EFFECT: read revenue list from file and assign it as a revenue list
     private void readRevenueList() throws IOException {
         revenueList = jsonReaderForRevenueList.read();
         System.out.println("your revenue List has been loaded from : " + REVENUE_STORE);
         System.out.println("your revenue total is : " + revenueList.calculateTotalRevenue());
     }
 
-
-
-    private void tryReadingSneakersEntryList() throws IOException {
+    //EFFECT: read sneaker list from file and assign it as a sneaker purchase list
+    private void readingSneakersEntryList() throws IOException {
         sneakerPurchaseList = jsonReaderForSneaker.read();
         System.out.println("your sneaker entry list  has been loaded from  " + SNEAKER_STORE);
         printList(sneakerPurchaseList);
     }
 
-    private void tryReadingCookGroupEntryList() throws IOException {
+    //EFFECT: read cook group purchase list from file and assign it as a cook group purchase list
+    private void readingCookGroupEntryList() throws IOException {
         cookGroupPurchaseList = jsonReaderForCookGroup.read(); // need to assign the result to the parameter
         System.out.println("your Cook group entry list  has been loaded from " + COOK_GROUP_STORE);
         printList(cookGroupPurchaseList);
     }
 
-    private void tryReadingThirdPartySolverEntryList() throws IOException {
+    //EFFECT: read third part solver purchase list from file and assign it as a third part solver entry list
+    private void readingThirdPartySolverEntryList() throws IOException {
         thirdPartyCaptchaSolversPurchaseList =  jsonReaderForThirdPartySolvers.read();
         System.out.println("your Third part solver list has been loaded from " + THIRD_PARTY_SOLVER_STORE);
         printList(thirdPartyCaptchaSolversPurchaseList);
     }
 
-    private void tryReadingProxyEntryList() throws IOException {
+    //EFFECT: read proxy entry purchase list from file and assign it as a proxy purchjase list
+    private void readingProxyEntryList() throws IOException {
         proxyPurchaseList = jsonReaderForProxy.read();
         System.out.println("your proxy entry list has been loaded from " + PROXY_STORE);
         printList(proxyPurchaseList);
     }
 
 
+    //EFFECT: write all progress in support invesmtnet, sneaker investment and revenue to corresponding files
     private void saveProgress() {
         try {
             saveFile(proxyPurchaseList);
@@ -185,22 +194,24 @@ public class ProfitOrLossCalculatorApp {
             System.out.println("can not find and write on file  :" + COOK_GROUP_STORE);
         }
         try {
-            saveSneakerList();
+            saveFile(sneakerPurchaseList);
         } catch (FileNotFoundException e) {
             System.out.println("can not find and write on file  :" + SNEAKER_STORE);
         }
         tryToSaveRevenueList();
     }
 
+    //EFFECT: trying to write revenue list to the corresponding file destination
     private void tryToSaveRevenueList() {
         try {
-            saveRevenueList();
+            saveFile(revenueList);
         } catch (FileNotFoundException e) {
             System.out.println("can not find and write on file  :" + REVENUE_STORE);
         }
     }
 
-    private void saveRevenueList() throws FileNotFoundException {
+    //EFFECT: writing revenue List to the corresponding file
+    private void saveFile(RevenueList revenueList) throws FileNotFoundException {
         jsonWriterForRevenueList.open();
         jsonWriterForRevenueList.write(revenueList);
         jsonWriterForRevenueList.close();
@@ -208,13 +219,15 @@ public class ProfitOrLossCalculatorApp {
 
     }
 
-    private void saveSneakerList() throws FileNotFoundException {
+    //EFFECT: writing sneaker List to the corresponding file
+    private void saveFile(SneakerPurchaseList sneakerPurchaseList) throws FileNotFoundException {
         jsonWriteForSneakers.open();
         jsonWriteForSneakers.write(sneakerPurchaseList);
         jsonWriteForSneakers.close();
         System.out.println("saved your sneaker purchase entry list" + "to" + SNEAKER_STORE);
     }
 
+    //EFFECT: writing proxy entry List to the corresponding file
     private void saveFile(ProxyPurchaseList proxyPurchaseList) throws FileNotFoundException {
         jsonWriterForProxyEntries.open();
         jsonWriterForProxyEntries.write(proxyPurchaseList);
@@ -222,6 +235,7 @@ public class ProfitOrLossCalculatorApp {
         System.out.println("saved your proxy purchase entry list" + "to" + PROXY_STORE);
     }
 
+    //EFFECT: writing cook group entry List to the corresponding file
     private void saveFile(CookGroupPurchaseList cookGroupPurchaseList) throws FileNotFoundException {
         jsonWriterForCookGroupEntries.open();
         jsonWriterForCookGroupEntries.write(cookGroupPurchaseList);
@@ -230,6 +244,7 @@ public class ProfitOrLossCalculatorApp {
 
     }
 
+    //EFFECT: writing third pary solver entry List to the corresponding file
     private void saveFile(ThirdPartyCaptchaSolversPurchaseList
                                   thirdPartyCaptchaSolversPurchaseList) throws FileNotFoundException {
         jsonWriterForThirdPartySolverEntries.open();

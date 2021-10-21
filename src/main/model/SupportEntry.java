@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import persistance.Writable;
 
 //this class represents a super class, it represent support entries such as proxies, Cook groups and Third part
-//captcha solvers
+//captcha solvers, it implements Writable as it is needed for it to implement the toJSON method
 public class SupportEntry implements Writable {
     protected String name;
     protected double pricePaid;
@@ -46,6 +46,7 @@ public class SupportEntry implements Writable {
     }
 
     @Override
+    //EFFECT: Return the support Entry as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

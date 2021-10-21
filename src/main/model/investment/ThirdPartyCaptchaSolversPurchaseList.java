@@ -14,14 +14,16 @@ public class ThirdPartyCaptchaSolversPurchaseList extends SupportEntryList<Third
     }
 
     @Override
+    //EFFECT: return the Third Party purchase list as a Json object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("type", EntryType.ThirdPartSolver);
-        json.put("Third Party Captcha Solver", solversListToJson());
+        json.put("solvers", solversListToJson());
         return json;
 
     }
 
+    //EFFECT: return the Third Party purchase list as a Json array
     private JSONArray solversListToJson() {
         JSONArray jsonArray = new JSONArray();
         for (ThirdPartyCaptchaSolverEntry next : typePurchaseList) {

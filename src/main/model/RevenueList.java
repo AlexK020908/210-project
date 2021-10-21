@@ -2,12 +2,13 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistance.Writable;
 
 import java.util.LinkedList;
 import java.util.List;
 
-//All the revenues in a list
-public class RevenueList {
+//All the revenues in a list, implements writable to implement the toJson method to turn a revenuelist into a JsonObject
+public class RevenueList implements Writable {
     private List<Revenue> revenues;
 
     public RevenueList() {
@@ -35,12 +36,14 @@ public class RevenueList {
     }
 
 
+    //EFFECT: return the Revenue List as JSON object
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("revenues",toJsonRevenueArray());
         return jsonObject;
     }
 
+    //EFFECT: return the revenue List as a JSON array
     public JSONArray toJsonRevenueArray() {
         JSONArray jsonArray = new JSONArray();
         for (Revenue next : revenues) {

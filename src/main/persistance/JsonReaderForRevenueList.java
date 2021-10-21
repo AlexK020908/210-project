@@ -11,13 +11,18 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+
+// Represents a reader that reads the sneaker entry list from JSON data stored in file
 public class JsonReaderForRevenueList {
     private String source;
 
+    //EFFECT: constructs reader to read from source file
     public JsonReaderForRevenueList(String source) {
         this.source = source;
     }
 
+    // EFFECTS: reads revenue list from file and returns it;
+    //          throws IOException if an error occurs reading data from file
     public RevenueList read() throws IOException {
         //first turn the file into a stream of string
         String revenueStream = readFile(source);
@@ -28,12 +33,16 @@ public class JsonReaderForRevenueList {
 
     }
 
+    //EFFECT: parse the revenue list Json object into a readable revenue list
     private RevenueList parseJsonObject(JSONObject jsonObjectRevenues) {
         RevenueList revenueList = new RevenueList();
         addEntries(revenueList, jsonObjectRevenues);
         return revenueList;
     }
 
+    //MODIFIES: revenueList
+    //EFFECT: add each revenue entry in the  jsonObjectRevenues
+    // to an empty revenueList.
     private RevenueList addEntries(RevenueList revenueList, JSONObject jsonObjectRevenues) {
         JSONArray revenuesJsonObjectInArray = jsonObjectRevenues.getJSONArray("revenues");
 
@@ -44,12 +53,15 @@ public class JsonReaderForRevenueList {
         return revenueList;
     }
 
+    //MODIFIES:  revenueList
+    //EFFECT; add the next revenue entry (JSON object) to the revenueList
     private void addEntry(JSONObject jsonObjectRevenue, RevenueList revenueList) {
         double revenue = jsonObjectRevenue.getDouble("revenue");
         Revenue newRevenue = new Revenue(revenue);
         revenueList.addNewRevenue(newRevenue);
     }
 
+    //EFFECT: reads source file for revenue list as a single string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder builder = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {

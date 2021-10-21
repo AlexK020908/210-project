@@ -1,0 +1,13 @@
+{
+    "type": "ThirdPartSolver",
+    "solvers": [
+        {
+            "name": "CapMonster",
+            "pricePaid": 13.99
+        },
+        {
+            "name": "AntiCaptcha",
+            "pricePaid": 13.99
+        }
+    ]
+}

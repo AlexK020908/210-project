@@ -17,6 +17,7 @@ public class ProxyPurchaseList extends SupportEntryList<ProxyEntry> {
 
 
     @Override
+    //EFFECT: return proxy purchase list as a json object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("type", EntryType.PROXY);
@@ -25,6 +26,7 @@ public class ProxyPurchaseList extends SupportEntryList<ProxyEntry> {
 
     }
 
+    //EFFECT: return the proxy purchase list as a json array.
     private JSONArray proxyPurchaseListTojSON() {
         JSONArray jsonArray = new JSONArray();
         for (ProxyEntry next : typePurchaseList) {

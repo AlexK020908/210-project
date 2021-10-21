@@ -16,6 +16,7 @@ public class CookGroupPurchaseList extends SupportEntryList<CookGroupSubscriptio
     }
 
     @Override
+    //EFFECT: returns the cook group purchase list as a Json object
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", CookGroup);
@@ -23,6 +24,7 @@ public class CookGroupPurchaseList extends SupportEntryList<CookGroupSubscriptio
         return jsonObject;
     }
 
+    //EFFECT: returns the cook group purchase list as a json array
     private JSONArray cookGroupListToJson() {
         JSONArray array = new JSONArray();
         for (CookGroupSubscriptionEntry next : typePurchaseList) {

@@ -11,16 +11,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Represents a reader that reads the sneaker entry list from JSON data stored in file
 public class JsonReaderForSneaker {
-    //you are reading it from an existing detination or source
-
     private String source;
 
+    //EFFECT: constructs reader to read from source file
     public JsonReaderForSneaker(String source) {
         this.source = source;
     }
 
-    //read a file and returning it
+    // EFFECTS: reads sneaker entry list from file and returns it;
+    //          throws IOException if an error occurs reading data from file
     public SneakerPurchaseList read() throws IOException {
         String sneakerList = readFile(source);
         //after reading the file into a string containing all the list, we need to turn it into  JSON
@@ -29,6 +30,7 @@ public class JsonReaderForSneaker {
         return parseSneakerJsonObject(sneakerEntryListJsonObject);
     }
 
+    //EFFECT: parse the sneaker list Json object into a readable sneaker purchase entry list
     private SneakerPurchaseList parseSneakerJsonObject(JSONObject sneakerEntryListJsonObject) {
         //in order to parse we need to create a new sneaker purchase list that we are putting the object in
         SneakerPurchaseList sneakerPurchaseList = new SneakerPurchaseList();
@@ -36,6 +38,9 @@ public class JsonReaderForSneaker {
         return sneakerPurchaseList;
     }
 
+    //MODIFIES: sneakerPurchaseList
+    //EFFECT: add each sneaker entry in the  sneakerEntryListJsonObject entry
+    // to an empty sneaker purchase list.
     private SneakerPurchaseList addSneakerEntries(SneakerPurchaseList sneakerPurchaseList, JSONObject sneakerEntryListJsonObject) {
         JSONArray listOfSneakerEntriesArray = sneakerEntryListJsonObject.getJSONArray("sneakers");
         for (Object next : listOfSneakerEntriesArray) {
@@ -45,15 +50,18 @@ public class JsonReaderForSneaker {
         return sneakerPurchaseList;
     }
 
+    //MODIFIES:  SneakerPurchaseList
+    //EFFECT; add the next sneaker entry (JSON object) to the thirdPartyCaptchaSolversPurchaseList
     private void addSneakerEntry(JSONObject nextSneaker, SneakerPurchaseList sneakerPurchaseList) {
         String name = nextSneaker.getString("name");
-        Double price = nextSneaker.getDouble("retailPrice");
+        double price = nextSneaker.getDouble("retailPrice");
         int quantityBought = nextSneaker.getInt("quantity");
         SneakerEntry sneakerEntry = new SneakerEntry(name, price, quantityBought);
         sneakerPurchaseList.addEntry(sneakerEntry);
     }
 
 
+    // EFFECTS: reads source file for sneaker entry list as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder builder = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {

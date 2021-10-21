@@ -1,9 +1,11 @@
 package model;
 
 import org.json.JSONObject;
+import persistance.Writable;
 
 //SneakerEntry class, each sneaker entry has a name, retail price and a quantity
-public class SneakerEntry  {
+//Implements writable method so it can implement the toJson method to turn a sneakerEntry into a JSON object
+public class SneakerEntry implements Writable {
     private String name;
     private double retailPrice;
     private int quantityBought;
@@ -31,6 +33,7 @@ public class SneakerEntry  {
         return quantityBought;
     }
 
+
     //REQUIRES: AMOUNT > 0
     //MODIFIES: this
     //EFFECT: increase the quantities bought of that sneaker by the specified amount
@@ -47,6 +50,9 @@ public class SneakerEntry  {
     }
 
 
+
+    @Override
+    //EFFECT: return the sneaker entry as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
