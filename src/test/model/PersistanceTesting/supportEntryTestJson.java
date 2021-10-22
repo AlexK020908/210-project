@@ -1,6 +1,5 @@
-package PersistanceTesting;
+package model.PersistanceTesting;
 
-import model.ProxyEntry;
 import model.SupportEntry;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

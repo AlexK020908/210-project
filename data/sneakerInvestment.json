@@ -1,4 +1,8 @@
 {
-    "sneakers": [],
+    "sneakers": [{
+        "quantity": 20,
+        "name": "nike dunk low",
+        "retailPrice": 130.99
+    }],
     "type": "Sneaker"
 }

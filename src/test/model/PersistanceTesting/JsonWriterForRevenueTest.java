@@ -1,14 +1,9 @@
-package PersistanceTesting;
+package model.PersistanceTesting;
 
-import model.EntryType;
 import model.Revenue;
 import model.RevenueList;
-import model.SneakerEntry;
-import model.investment.SneakerPurchaseList;
 import org.junit.jupiter.api.Test;
 import persistance.JsonReaderForRevenueList;
-import persistance.JsonReaderForSneaker;
-import persistance.JsonWriteForSneakers;
 import persistance.JsonWriterForRevenueList;
 
 import java.io.FileNotFoundException;

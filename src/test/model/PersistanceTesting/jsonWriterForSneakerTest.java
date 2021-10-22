@@ -1,12 +1,8 @@
-package PersistanceTesting;
+package model.PersistanceTesting;
 
 import model.EntryType;
-import model.ProxyEntry;
 import model.SneakerEntry;
-import model.investment.ProxyPurchaseList;
 import model.investment.SneakerPurchaseList;
-import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistance.JsonReaderForSneaker;
 import persistance.JsonWriteForSneakers;

@@ -1,4 +1,4 @@
-package PersistanceTesting;
+package model.PersistanceTesting;
 
 import model.*;
 import model.investment.*;
