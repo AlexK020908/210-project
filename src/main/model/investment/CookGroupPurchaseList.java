@@ -11,6 +11,7 @@ import static model.EntryType.CookGroup;
 //this class focuses on the cook group purchases and put them in a list, it extends the generic class SupportEntryList
 public class CookGroupPurchaseList extends SupportEntryList<CookGroupSubscriptionEntry> {
 
+    //EFFECT: Create an empty cook group purchase list
     public CookGroupPurchaseList() {
         super(CookGroup);
     }

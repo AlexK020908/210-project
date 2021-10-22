@@ -11,11 +11,12 @@ import java.util.List;
 public class RevenueList implements Writable {
     private List<Revenue> revenues;
 
+    //EFFECT: CREATE an empty Revenue list
     public RevenueList() {
         revenues = new LinkedList<>();
     }
 
-
+    //Get the length of the revenue List
     public int getLength() {
         return revenues.size();
     }
