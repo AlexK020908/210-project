@@ -49,7 +49,8 @@ public class JsonReaderForSneakerTest extends SneakerTestJson {
     @Test
     void testReaderGeneralSneakerFile() {
         //read from current file
-        JsonReaderForSneaker jsonReaderForSneakerTest = new JsonReaderForSneaker("./data/generalSneakerTest.json");
+        JsonReaderForSneaker jsonReaderForSneakerTest = new JsonReaderForSneaker(
+                "./data/generalSneakerTest.json");
         try {
             sneakerPurchaseList = jsonReaderForSneakerTest.read();
             assertEquals(2, sneakerPurchaseList.getLength());

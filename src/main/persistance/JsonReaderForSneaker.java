@@ -41,7 +41,8 @@ public class JsonReaderForSneaker {
     //MODIFIES: sneakerPurchaseList
     //EFFECT: add each sneaker entry in the  sneakerEntryListJsonObject entry
     // to an empty sneaker purchase list.
-    private SneakerPurchaseList addSneakerEntries(SneakerPurchaseList sneakerPurchaseList, JSONObject sneakerEntryListJsonObject) {
+    private SneakerPurchaseList addSneakerEntries(
+            SneakerPurchaseList sneakerPurchaseList, JSONObject sneakerEntryListJsonObject) {
         JSONArray listOfSneakerEntriesArray = sneakerEntryListJsonObject.getJSONArray("sneakers");
         for (Object next : listOfSneakerEntriesArray) {
             JSONObject nextSneaker = (JSONObject) next;
