@@ -32,7 +32,8 @@ public class JsonReaderForThirdPartySolvers {
     }
 
     //EFFECT: parse the third party captcha Json object into a readable third part captcha solver list
-    private ThirdPartyCaptchaSolversPurchaseList parseThirdPartySolverPurchaseList(JSONObject thirdPartySolverListJsonObject)  {
+    private ThirdPartyCaptchaSolversPurchaseList parseThirdPartySolverPurchaseList(
+            JSONObject thirdPartySolverListJsonObject)  {
         //parameter is the String of all of our third party entries
         ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList =
                 new ThirdPartyCaptchaSolversPurchaseList();
