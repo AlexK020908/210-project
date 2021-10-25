@@ -1,7 +1,4 @@
 {
     "type": "ThirdPartSolver",
-    "solvers": [{
-        "name": "capMonster",
-        "pricePaid": 12.99
-    }]
+    "solvers": []
 }

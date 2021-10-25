@@ -35,6 +35,7 @@ solver list
 - as a user I want to be able to view net profits
 - as a user I want to be able to view my total amount of money spent on each support investment everytime I add a new 
 entry
+- as a user, I want to be able to keep the list size of purchases list the same if an entry with existing name is added.
 - as a user I want to be able to view my total money spent on Sneaker investments everytime I add a new entry.
 - as a user, I want to be able to save my purchased proxy list to file 
 - as a user, I want to be able to save my purchased cook group list to file
@@ -46,6 +47,7 @@ entry
 - as a user, I want to be able to load my sneaker entry list from file
 - as a user, I want to be able to save my revenue list to file
 - as a user, I want to be able to load my revenue list from file
+
 
 
 

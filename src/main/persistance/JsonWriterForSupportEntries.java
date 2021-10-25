@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 //Represents a writer that writes JSON representation of A support entry list to file
+// This [class] references code from GitHub
+// Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
 public class JsonWriterForSupportEntries {
     protected final int tab = 4;
     protected PrintWriter writer;

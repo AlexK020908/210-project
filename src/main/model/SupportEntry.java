@@ -47,6 +47,8 @@ public class SupportEntry implements Writable {
 
     @Override
     //EFFECT: Return the support Entry as a JSON object
+    // This [method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // Represents a reader that reads the sneaker entry list from JSON data stored in file
+// This [class] references code from GitHub
+// Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
 public class JsonReaderForSneaker {
     private String source;
 

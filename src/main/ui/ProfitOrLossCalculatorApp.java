@@ -30,7 +30,7 @@ public class ProfitOrLossCalculatorApp {
     private JsonWriteForSneakers jsonWriteForSneakers;
     private JsonReaderForSneaker jsonReaderForSneaker;
     private JsonReaderForProxy jsonReaderForProxy;
-    private JsonReaderForCookGroup jsonReaderForCookGroup;
+    private JsonReaderForCookGroupList jsonReaderForCookGroup;
     private JsonReaderForThirdPartySolvers jsonReaderForThirdPartySolvers;
     private JsonWriterForRevenueList jsonWriterForRevenueList;
     private JsonReaderForRevenueList jsonReaderForRevenueList;
@@ -104,6 +104,8 @@ public class ProfitOrLossCalculatorApp {
 
     //MODIFIES: this
     //EFFECT: load all support entry lists, sneaker purchase list and revenue list from files.
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void loadAllSavedProgress() {
         try {
             readingProxyEntryList();
@@ -132,6 +134,8 @@ public class ProfitOrLossCalculatorApp {
     //MODIFIES: this
     //EFFECT: try reading the Revenue list from file , tell the user can not load from its file location if
     //file can not be read
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void tryReadingRevenueList() {
         try {
             readRevenueList();
@@ -141,6 +145,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: read revenue list from file and assign it as a revenue list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readRevenueList() throws IOException {
         revenueList = jsonReaderForRevenueList.read();
         System.out.println("your revenue List has been loaded from : " + REVENUE_STORE);
@@ -148,6 +154,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: read sneaker list from file and assign it as a sneaker purchase list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingSneakersEntryList() throws IOException {
         sneakerPurchaseList = jsonReaderForSneaker.read();
         System.out.println("your sneaker entry list  has been loaded from  " + SNEAKER_STORE);
@@ -155,6 +163,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: read cook group purchase list from file and assign it as a cook group purchase list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingCookGroupEntryList() throws IOException {
         cookGroupPurchaseList = jsonReaderForCookGroup.read(); // need to assign the result to the parameter
         System.out.println("your Cook group entry list  has been loaded from " + COOK_GROUP_STORE);
@@ -162,6 +172,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: read third part solver purchase list from file and assign it as a third part solver entry list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingThirdPartySolverEntryList() throws IOException {
         thirdPartyCaptchaSolversPurchaseList =  jsonReaderForThirdPartySolvers.read();
         System.out.println("your Third part solver list has been loaded from " + THIRD_PARTY_SOLVER_STORE);
@@ -169,6 +181,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: read proxy entry purchase list from file and assign it as a proxy purchjase list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingProxyEntryList() throws IOException {
         proxyPurchaseList = jsonReaderForProxy.read();
         System.out.println("your proxy entry list has been loaded from " + PROXY_STORE);
@@ -177,6 +191,8 @@ public class ProfitOrLossCalculatorApp {
 
 
     //EFFECT: write all progress in support invesmtnet, sneaker investment and revenue to corresponding files
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void saveProgress() {
         try {
             saveFile(proxyPurchaseList);
@@ -202,6 +218,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: trying to write revenue list to the corresponding file destination
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void tryToSaveRevenueList() {
         try {
             saveFile(revenueList);
@@ -211,6 +229,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: writing revenue List to the corresponding file
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void saveFile(RevenueList revenueList) throws FileNotFoundException {
         jsonWriterForRevenueList.open();
         jsonWriterForRevenueList.write(revenueList);
@@ -220,6 +240,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: writing sneaker List to the corresponding file
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void saveFile(SneakerPurchaseList sneakerPurchaseList) throws FileNotFoundException {
         jsonWriteForSneakers.open();
         jsonWriteForSneakers.write(sneakerPurchaseList);
@@ -228,6 +250,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: writing proxy entry List to the corresponding file
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void saveFile(ProxyPurchaseList proxyPurchaseList) throws FileNotFoundException {
         jsonWriterForProxyEntries.open();
         jsonWriterForProxyEntries.write(proxyPurchaseList);
@@ -236,6 +260,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: writing cook group entry List to the corresponding file
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void saveFile(CookGroupPurchaseList cookGroupPurchaseList) throws FileNotFoundException {
         jsonWriterForCookGroupEntries.open();
         jsonWriterForCookGroupEntries.write(cookGroupPurchaseList);
@@ -245,6 +271,8 @@ public class ProfitOrLossCalculatorApp {
     }
 
     //EFFECT: writing third pary solver entry List to the corresponding file
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void saveFile(ThirdPartyCaptchaSolversPurchaseList
                                   thirdPartyCaptchaSolversPurchaseList) throws FileNotFoundException {
         jsonWriterForThirdPartySolverEntries.open();
@@ -358,7 +386,7 @@ public class ProfitOrLossCalculatorApp {
         jsonWriterForProxyEntries = new JsonWriterForSupportEntries(PROXY_STORE);
         jsonReaderForProxy = new JsonReaderForProxy(PROXY_STORE);
         jsonWriterForCookGroupEntries = new JsonWriterForSupportEntries(COOK_GROUP_STORE);
-        jsonReaderForCookGroup = new JsonReaderForCookGroup(COOK_GROUP_STORE);
+        jsonReaderForCookGroup = new JsonReaderForCookGroupList(COOK_GROUP_STORE);
         jsonWriterForThirdPartySolverEntries = new JsonWriterForSupportEntries(THIRD_PARTY_SOLVER_STORE);
         jsonReaderForThirdPartySolvers = new JsonReaderForThirdPartySolvers(THIRD_PARTY_SOLVER_STORE);
         jsonWriterForRevenueList = new JsonWriterForRevenueList(REVENUE_STORE);

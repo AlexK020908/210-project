@@ -11,11 +11,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class JsonReaderForCookGroup {
+//This class represents a Json Reader for cook group purchase list
+// This [class] references code from GitHub
+// Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
+public class JsonReaderForCookGroupList {
     private String source;
 
     //EFFECT: constructs reader to read from source file
-    public JsonReaderForCookGroup(String source) {
+    public JsonReaderForCookGroupList(String source) {
         this.source = source;
     }
 
@@ -30,7 +33,7 @@ public class JsonReaderForCookGroup {
 
     //EFFECT: parse the cook group Json object into a readable cook group list
     private CookGroupPurchaseList parseCookGroupList(JSONObject cookGroupEntryListJsonObject)  {
-        //parameter is the String of all of our proxy
+        //parameter is the String of all of our cook group entries
         CookGroupPurchaseList cookGroupPurchaseList = new CookGroupPurchaseList();
         addEntries(cookGroupPurchaseList, cookGroupEntryListJsonObject);
         return cookGroupPurchaseList;
@@ -47,7 +50,6 @@ public class JsonReaderForCookGroup {
         for (Object json : jsonArray) {
             JSONObject nextCookGroup = (JSONObject) json;
             addEntry(cookGroupPurchaseList, nextCookGroup);
-            //for every json object in the proxy array, we are adding the each object to the proxyPurchaseList
         }
     }
 

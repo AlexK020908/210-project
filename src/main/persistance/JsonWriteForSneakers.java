@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 //Represents a writer that writes JSON representation of sneaker entry list to file
+// This [class] references code from GitHub
+// Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
 public class JsonWriteForSneakers {
     private final int tab = 4;
     private PrintWriter writer;

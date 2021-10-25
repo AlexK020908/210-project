@@ -38,6 +38,8 @@ public class RevenueList implements Writable {
 
 
     //EFFECT: return the Revenue List as JSON object
+    // This [method] references code from GitHub
+     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("revenues",toJsonRevenueArray());
@@ -45,6 +47,8 @@ public class RevenueList implements Writable {
     }
 
     //EFFECT: return the revenue List as a JSON array
+    // This [Method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public JSONArray toJsonRevenueArray() {
         JSONArray jsonArray = new JSONArray();
         for (Revenue next : revenues) {

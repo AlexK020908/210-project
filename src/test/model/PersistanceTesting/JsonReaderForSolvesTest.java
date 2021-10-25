@@ -11,6 +11,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+//json reader test for third part solver entries
 public class JsonReaderForSolvesTest extends supportEntryTestJson{
     ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
 

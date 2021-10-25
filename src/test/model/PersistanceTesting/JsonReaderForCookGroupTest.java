@@ -4,13 +4,14 @@ import model.EntryType;
 import model.investment.CookGroupPurchaseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import persistance.JsonReaderForCookGroup;
+import persistance.JsonReaderForCookGroupList;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+//json reader test for cook hroup test
 public class JsonReaderForCookGroupTest extends supportEntryTestJson{
     CookGroupPurchaseList cookGroupPurchaseList;
 
@@ -22,7 +23,7 @@ public class JsonReaderForCookGroupTest extends supportEntryTestJson{
 
     @Test
     void testReaderNonExistentFile() {
-        JsonReaderForCookGroup jsonReaderForCookGroup = new JsonReaderForCookGroup
+        JsonReaderForCookGroupList jsonReaderForCookGroup = new JsonReaderForCookGroupList
                 ("./data/noSuchFile.json");
         try {
             cookGroupPurchaseList = jsonReaderForCookGroup.read();
@@ -35,7 +36,7 @@ public class JsonReaderForCookGroupTest extends supportEntryTestJson{
 
     @Test
     void testReaderEmptySolversFile() {
-        JsonReaderForCookGroup jsonReaderForCookGroup = new JsonReaderForCookGroup
+        JsonReaderForCookGroupList jsonReaderForCookGroup = new JsonReaderForCookGroupList
                 ("./data/emptyCookGroupEntryListTest.json");
         try {
             cookGroupPurchaseList = jsonReaderForCookGroup.read();
@@ -51,7 +52,7 @@ public class JsonReaderForCookGroupTest extends supportEntryTestJson{
     @Test
     void testReaderGeneralSolversFile() {
         //read from current file
-        JsonReaderForCookGroup jsonReaderForCookGroup = new JsonReaderForCookGroup
+        JsonReaderForCookGroupList jsonReaderForCookGroup = new JsonReaderForCookGroupList
                 ("./data/generalCookGroupEntryListTest.json");
         try {
             cookGroupPurchaseList = jsonReaderForCookGroup.read();

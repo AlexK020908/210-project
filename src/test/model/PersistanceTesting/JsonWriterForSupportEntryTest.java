@@ -18,7 +18,7 @@ public class JsonWriterForSupportEntryTest extends supportEntryTestJson {
     ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
     JsonWriterForSupportEntries jsonWriterForSupportEntries;
     JsonReaderForProxy jsonReaderForProxy;
-    JsonReaderForCookGroup jsonReaderForCookGroup;
+    JsonReaderForCookGroupList jsonReaderForCookGroup;
     JsonReaderForThirdPartySolvers jsonReaderForThirdPartySolvers;
 
 
@@ -87,7 +87,7 @@ public class JsonWriterForSupportEntryTest extends supportEntryTestJson {
                     ("./data/emptyCookGroupEntryListTest.json");
             openWriteAndCloseWriter(cookGroupPurchaseList);
 
-            jsonReaderForCookGroup = new JsonReaderForCookGroup("./data/emptyCookGroupEntryListTest.json");
+            jsonReaderForCookGroup = new JsonReaderForCookGroupList("./data/emptyCookGroupEntryListTest.json");
             jsonReaderForCookGroup.read();
             assertEquals(cookGroupPurchaseList.getType(), EntryType.CookGroup);
             assertEquals(cookGroupPurchaseList.getLength(), 0);
@@ -156,7 +156,7 @@ public class JsonWriterForSupportEntryTest extends supportEntryTestJson {
                     ("./data/generalCookGroupEntryListTest.json");
             openWriteAndCloseWriter(cookGroupPurchaseList);
 
-            jsonReaderForCookGroup = new JsonReaderForCookGroup("./data/generalCookGroupEntryListTest.json");
+            jsonReaderForCookGroup = new JsonReaderForCookGroupList("./data/generalCookGroupEntryListTest.json");
             jsonReaderForCookGroup.read();
             assertEquals(cookGroupPurchaseList.getType(), EntryType.CookGroup);
             assertEquals(cookGroupPurchaseList.getLength(), 2);

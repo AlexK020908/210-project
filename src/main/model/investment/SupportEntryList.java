@@ -35,6 +35,11 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
         return typePurchaseList.size();
     }
 
+    //EFFECT: Return the entry at given index
+    public T get(int i) {
+        return typePurchaseList.get(i);
+    }
+
 
     //EFFECT: get the position of the specified entry in the list, the first element has position 0, if the entry does
     //not exist, simply return -1
@@ -105,12 +110,10 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
 
 
     @Override
-    //EFFECT: turn the Support Entru List into a Json Object
+    //EFFECT: turn the Support entry List into a Json Object
+    // This [method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public abstract JSONObject toJson();
 
-    //EFFECT: Return the entry at given index
-    public T get(int i) {
-        return typePurchaseList.get(i);
-    }
 
 }

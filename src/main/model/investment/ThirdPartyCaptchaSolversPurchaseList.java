@@ -15,6 +15,8 @@ public class ThirdPartyCaptchaSolversPurchaseList extends SupportEntryList<Third
 
     @Override
     //EFFECT: return the Third Party purchase list as a Json object
+    // This [method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("type", EntryType.ThirdPartSolver);
@@ -24,6 +26,8 @@ public class ThirdPartyCaptchaSolversPurchaseList extends SupportEntryList<Third
     }
 
     //EFFECT: return the Third Party purchase list as a Json array
+    // This [method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private JSONArray solversListToJson() {
         JSONArray jsonArray = new JSONArray();
         for (ThirdPartyCaptchaSolverEntry next : typePurchaseList) {

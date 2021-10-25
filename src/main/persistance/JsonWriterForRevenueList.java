@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 //Represents a Json writer for revenue List that writes it to file.
+// This [class] references code from GitHub
+// Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
 public class JsonWriterForRevenueList {
     private final int tab = 4;
     private PrintWriter writer;

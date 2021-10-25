@@ -1,7 +1,4 @@
 {
-    "proxies": [{
-        "name": "oculus",
-        "pricePaid": 120
-    }],
+    "proxies": [],
     "type": "PROXY"
 }

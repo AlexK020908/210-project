@@ -40,8 +40,15 @@ public class SneakerPurchaseList implements Writable {
         return sneakerPurchaseList.size();
     }
 
+    //Effect: return the type of the entry
     public EntryType getType() {
         return EntryType.Sneaker;
+    }
+
+
+    //get the sneaker entry at given index
+    public SneakerEntry get(int i) {
+        return sneakerPurchaseList.get(i);
     }
 
 
@@ -71,6 +78,7 @@ public class SneakerPurchaseList implements Writable {
         }
     }
 
+    //Effect: return the total money spent on the sneakers
     public double getTotalMoneySpent() {
         double sum = 0;
         if (sneakerPurchaseList.isEmpty()) {
@@ -124,6 +132,8 @@ public class SneakerPurchaseList implements Writable {
 
 
     //EFFECT: returns the sneaker Purchase list as a Json object
+    // This [method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", EntryType.Sneaker);
@@ -133,6 +143,8 @@ public class SneakerPurchaseList implements Writable {
     }
 
     //EFFECT: return the sneaker purchase list as a Json Array
+    // This [method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public JSONArray sneakerToJsonArray() {
         JSONArray array = new JSONArray();
         for (SneakerEntry next : sneakerPurchaseList) {
@@ -141,8 +153,4 @@ public class SneakerPurchaseList implements Writable {
         return array;
     }
 
-    //get the sneaker entry at given index
-    public SneakerEntry get(int i) {
-        return sneakerPurchaseList.get(i);
-    }
 }
