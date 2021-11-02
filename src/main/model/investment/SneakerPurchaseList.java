@@ -61,15 +61,12 @@ public class SneakerPurchaseList implements Writable {
      of its quantity.
      */
 
-    // NOTE that we do not have to compare the price as the sneaker with the same name SHOULD have
-    // the same price
+
     public boolean addEntry(SneakerEntry entry) {
-        List<String> sneakerNames = getSneakerNames();
-        String nameOfSneaker = (entry.getName());
         if (sneakerPurchaseList.isEmpty()) {
             sneakerPurchaseList.add(entry);
             return true;
-        } else if (sneakerNames.contains(nameOfSneaker)) {
+        } else if (sneakerPurchaseList.contains(entry)) {
             updateQuantityOfExistingSneakerEntry(entry);
             return false;
         } else {
@@ -102,21 +99,12 @@ public class SneakerPurchaseList implements Writable {
     //aka. UPDATING the quantity
     private void updateQuantityOfExistingSneakerEntry(SneakerEntry sneakerEntry) {
         for (SneakerEntry next : sneakerPurchaseList) {
-            if (next.getName().equals(sneakerEntry.getName())) {
+            if (next.equals(sneakerEntry)) {
                 next.increaseQuantityBought(sneakerEntry.getQuantityBought());
             }
         }
     }
 
-
-    //EFFECT: returns all the sneaker names in form of a list of Strings
-    private List<String> getSneakerNames() {
-        List<String> names = new LinkedList<>();
-        for (SneakerEntry next : sneakerPurchaseList) {
-            names.add(next.getName());
-        }
-        return names;
-    }
 
     @Override
     //EFFECT: LIST all the sneaker entries as a string
@@ -126,7 +114,7 @@ public class SneakerPurchaseList implements Writable {
         String listOfSneakerEntries = sneakerPurchaseList.stream() //making it into a stream of string
                 .map(sneakerEntry -> sneakerEntry.toString()) //for every sneaker entry, using toString method
                 .reduce("", String::concat); //using reduce to join everything using concat
-                //identifier is the initial value or the RESULT if there is no sneaker entries inside the list.
+        //identifier is the initial value or the RESULT if there is no sneaker entries inside the list.
         return listOfSneakerEntries;
     }
 

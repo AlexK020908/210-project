@@ -43,9 +43,8 @@ class SneakerPurchaseListTest {
         assertEquals(1, sneakerPurchaseList.getLength());
         assertEquals(15,
                 s1.getQuantityBought());
-        assertEquals(-1, sneakerPurchaseList.indexOf(s11));
-        //the reason why we passed s1.getQuantityBought is because since s11 an s1 have the same name, only the
-        //quantity is updated, so the name stays the same.
+        assertEquals(0, sneakerPurchaseList.indexOf(s11));
+
 
         //adding a negative quantity sneaker that is  of the same name as s11 and s1
         assertFalse(sneakerPurchaseList.addEntry(s11NegativeQuantity));
@@ -62,7 +61,7 @@ class SneakerPurchaseListTest {
         assertEquals(0, sneakerPurchaseList.indexOf(s1));
         assertEquals(2, sneakerPurchaseList.indexOf(s3));
         assertEquals(3, sneakerPurchaseList.indexOf(s4));
-        assertEquals(-1, sneakerPurchaseList.indexOf(s11));
+        assertEquals(0, sneakerPurchaseList.indexOf(s11));
 
         //add the remaining entries
         sneakerPurchaseList.addEntry(s5);
@@ -73,7 +72,7 @@ class SneakerPurchaseListTest {
         assertEquals(7, sneakerPurchaseList.getLength());
         assertEquals(0, sneakerPurchaseList.indexOf(s1));
         assertEquals(4, sneakerPurchaseList.indexOf(s5));
-        assertEquals(-1, sneakerPurchaseList.indexOf(s44));
+        assertEquals(3, sneakerPurchaseList.indexOf(s44));
         assertEquals(16, //16 is the sum of s2 and s22's quantity
                 s2.getQuantityBought());
 

@@ -3,6 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistance.Writable;
 
+import java.util.Objects;
+
 //SneakerEntry class, each sneaker entry has a name, retail price and a quantity
 //Implements writable method so it can implement the toJson method to turn a sneakerEntry into a JSON object
 public class SneakerEntry implements Writable {
@@ -64,4 +66,22 @@ public class SneakerEntry implements Writable {
 
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null || !(o instanceof SneakerEntry)) {
+            return false;
+        }
+        SneakerEntry s = (SneakerEntry) o;
+
+        return (s.getName() == this.getName() && s.getRetailPrice() == this.getRetailPrice()) ? true : false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, retailPrice);
+    }
 }
