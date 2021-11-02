@@ -72,7 +72,7 @@ public class SneakerEntry implements Writable {
         if (o == this) {
             return true;
         }
-        if (o == null || !(o instanceof SneakerEntry)) {
+        if (o == null || !(o.getClass() == this.getClass())) {
             return false;
         }
         SneakerEntry s = (SneakerEntry) o;
