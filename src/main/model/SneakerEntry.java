@@ -77,7 +77,7 @@ public class SneakerEntry implements Writable {
         }
         SneakerEntry s = (SneakerEntry) o;
 
-        return (s.getName() == this.getName() && s.getRetailPrice() == this.getRetailPrice()) ? true : false;
+        return (s.getName().equals(this.getName()) && s.getRetailPrice() == (this.getRetailPrice())) ? true : false;
     }
 
     @Override
