@@ -40,10 +40,6 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
         return typePurchaseList.get(i);
     }
 
-    public List<T> getEntries() {
-        return typePurchaseList;
-    }
-
 
     //EFFECT: get the position of the specified entry in the list, the first element has position 0, if the entry does
     //not exist, simply return -1
