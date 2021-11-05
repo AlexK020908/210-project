@@ -41,7 +41,6 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
     }
 
 
-
     //EFFECT: get the position of the specified entry in the list, the first element has position 0, if the entry does
     //not exist, simply return -1
     public int indexOf(T entry) {

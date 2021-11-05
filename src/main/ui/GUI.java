@@ -1,7 +1,7 @@
 package ui;
 
 
-import model.SupportEntry;
+import model.*;
 import model.investment.CookGroupPurchaseList;
 import model.investment.ProxyPurchaseList;
 import model.investment.SupportEntryList;
@@ -24,6 +24,7 @@ public class GUI extends JPanel implements ListSelectionListener {
     private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
 
 
+
     @Override
     public void valueChanged(ListSelectionEvent e) {
 
@@ -44,7 +45,8 @@ public class GUI extends JPanel implements ListSelectionListener {
     }
 
 
-    private void initializeNewPanel(SupportEntryList supportEntryList, String typeOfEntry, JPanel mainPanel) {
+    private void initializeNewPanel(SupportEntryList<? extends SupportEntry> supportEntryList, String typeOfEntry,
+                                                             JPanel mainPanel) {
         DefaultListModel<SupportEntry> defaultListModel = new DefaultListModel<>();
         //make the default list model defaultListModel into a jlist
         JList<SupportEntry> entryJlist = new JList<>(defaultListModel);
@@ -80,20 +82,43 @@ public class GUI extends JPanel implements ListSelectionListener {
         });
     }
 
-    private void addNewEntry(String entryName, SupportEntryList supportEntryList,
+    private <T extends SupportEntry> void addNewEntry(String entryName, SupportEntryList<T> supportEntryList,
                              DefaultListModel<SupportEntry> defaultListModel) {
         double entryPrice = Double.parseDouble(JOptionPane.showInputDialog(null, entryName + "'s price?",
                 "Enter price", JOptionPane.QUESTION_MESSAGE));
-        SupportEntry supportEntry = new SupportEntry(entryName, entryPrice);
-        if (supportEntryList.addEntry(supportEntry)) {
-            defaultListModel.addElement(supportEntry);
+
+        switch (supportEntryList.getType()) {
+            case PROXY:
+                ProxyEntry proxyEntry = new ProxyEntry(entryName, entryPrice);
+                entryHelper(supportEntryList, proxyEntry, defaultListModel);
+                break;
+
+            case CookGroup:
+                CookGroupSubscriptionEntry cookEntry = new CookGroupSubscriptionEntry(entryName, entryPrice);
+                entryHelper(supportEntryList, cookEntry, defaultListModel);
+                break;
+
+            case ThirdPartSolver: ThirdPartyCaptchaSolverEntry solverEntry =
+                    new ThirdPartyCaptchaSolverEntry(entryName, entryPrice);
+                entryHelper(supportEntryList, solverEntry, defaultListModel);
+            break;
         }
+
     }
+
+
     //either it is true or not, the expression inside
     //the if statement is operated --> this means if it is true, one needs to add the new entry
     //to the defaultListModel(using addElement), otherwise if it returns false, it means that the
     //object whose quantity has  been updated changed the reference object inb the defaultListModel
     //default list, and so we do not need to do anything at all
+
+    private <T extends SupportEntry> void entryHelper(SupportEntryList<T> supportEntryList, SupportEntry supportEntry,
+                                                      DefaultListModel<SupportEntry> defaultListModel) {
+        if (supportEntryList.addEntry((T)supportEntry)) {
+            defaultListModel.addElement(supportEntry);
+        }
+    }
 
 
 
