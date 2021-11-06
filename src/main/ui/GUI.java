@@ -60,32 +60,51 @@ public class GUI extends JPanel implements ListSelectionListener {
         //but this doesnt work why> entryPanel.add(proxyEntryJlist)
         //adding button to pannel
         entryPanel.add(addEntryButton, Component.BOTTOM_ALIGNMENT);
-
         entryPanel.setBorder(BorderFactory.createTitledBorder(typeOfEntry + " " + "Entries"));
-
         entryPanel.setPreferredSize(new Dimension(400, 200));
         mainPanel.add(entryPanel);
         entryPanel.add(entryJlist);
-        entryPanel.add(new JScrollPane(entryJlist,VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED));
+        entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
-        addEntryButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String entryName = JOptionPane.showInputDialog(null, typeOfEntry + " " + "name?",
-                        "Enter" + " " + typeOfEntry + " " + "name", JOptionPane.QUESTION_MESSAGE);
-                if (entryName == null || entryName.length() == 0) {
-                    JOptionPane.showMessageDialog(entryPanel, "please enter a valid name");
-                } else {
-                    addNewEntry(entryName, supportEntryList, defaultListModel);
+        addEntryButton.addActionListener(new EntryListener(typeOfEntry, supportEntryList, defaultListModel,
+                entryPanel));
+    }
 
-                }
+    class EntryListener implements ActionListener {
+        String typeOfEntry;
+        SupportEntryList<? extends SupportEntry> supportEntryList;
+        DefaultListModel<SupportEntry> defaultListModel;
+        JPanel entryPanel;
+
+        public EntryListener(String typeOfEntry, SupportEntryList<? extends SupportEntry> supportEntryList,
+                             DefaultListModel<SupportEntry> defaultListModel, JPanel entryPanel) {
+            this.typeOfEntry = typeOfEntry;
+            this.supportEntryList = supportEntryList;
+            this.defaultListModel = defaultListModel;
+            this.entryPanel = entryPanel;
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String entryName = JOptionPane.showInputDialog(null, typeOfEntry + " " + "name?",
+                    "Enter" + " " + typeOfEntry + " " + "name", JOptionPane.QUESTION_MESSAGE);
+            if (entryName == null || entryName.length() == 0) {
+                JOptionPane.showMessageDialog(entryPanel, "please enter a valid name");
+            } else {
+                addNewEntry(entryName, supportEntryList, defaultListModel, entryPanel);
+
             }
-        });
+        }
     }
 
     private <T extends SupportEntry> void addNewEntry(String entryName, SupportEntryList<T> supportEntryList,
-                             DefaultListModel<SupportEntry> defaultListModel) {
+                             DefaultListModel<SupportEntry> defaultListModel, JPanel entryPanel) {
         double entryPrice = Double.parseDouble(JOptionPane.showInputDialog(null, entryName + "'s price?",
                 "Enter price", JOptionPane.QUESTION_MESSAGE));
+        if (entryPrice == 0) {
+            JOptionPane.showMessageDialog(entryPanel, "please enter a valid price");
+        }
 
         switch (supportEntryList.getType()) {
             case PROXY:
@@ -107,18 +126,17 @@ public class GUI extends JPanel implements ListSelectionListener {
     }
 
 
-    //either it is true or not, the expression inside
-    //the if statement is operated --> this means if it is true, one needs to add the new entry
-    //to the defaultListModel(using addElement), otherwise if it returns false, it means that the
-    //object whose quantity has  been updated changed the reference object inb the defaultListModel
-    //default list, and so we do not need to do anything at all
-
     private <T extends SupportEntry> void entryHelper(SupportEntryList<T> supportEntryList, SupportEntry supportEntry,
                                                       DefaultListModel<SupportEntry> defaultListModel) {
         if (supportEntryList.addEntry((T)supportEntry)) {
             defaultListModel.addElement(supportEntry);
         }
     }
+    //either it is true or not, the expression inside
+    //the if statement is operated --> this means if it is true, one needs to add the new entry
+    //to the defaultListModel(using addElement), otherwise if it returns false, it means that the
+    //object whose quantity has  been updated changed the reference object inb the defaultListModel
+    //default list, and so we do not need to do anything at all
 
 
 
@@ -165,3 +183,4 @@ public class GUI extends JPanel implements ListSelectionListener {
 
     }
 }
+
