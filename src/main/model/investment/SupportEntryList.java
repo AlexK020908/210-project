@@ -76,7 +76,7 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
     //REQUIRES: the entry is already in the list
     //MODIFIES:THIS
     //EFFECT: remove the specified entry from the given list and return true, if the entry does not exist, return FALSE
-    public Boolean removeEntry(T entry) {
+    public Boolean removeEntry(SupportEntry entry) {
         if (typePurchaseList.contains(entry)) {
             typePurchaseList.remove(entry);
             return true;

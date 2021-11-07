@@ -6,11 +6,9 @@ import model.investment.*;
 
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 
 import static javax.swing.ScrollPaneConstants.*;
@@ -22,8 +20,6 @@ public class GUI extends JPanel {
     private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
     private SneakerPurchaseList sneakerPurchaseList;
     private RevenueList revenueList;
-
-    private SneakerEntry s1 = new SneakerEntry("nike dunk low", 12, 4);
 
 
 
@@ -46,33 +42,65 @@ public class GUI extends JPanel {
 
         sneakerPurchaseList = new SneakerPurchaseList();
         initializeNewSneakerPanel(sneakerPurchaseList, "sneaker", mainPanel);
+
         revenueList = new RevenueList();
+        initializeNewRevenuePanel(revenueList, mainPanel);
+
+    }
+
+    private void initializeNewRevenuePanel(RevenueList revenueList, JPanel mainPanel) {
+        DefaultListModel<Revenue> defaultListModel = new DefaultListModel<>();
+        JList<Revenue> revenueJList = new JList<>(defaultListModel);
+        revenueJList.setFixedCellHeight(5);
+        revenueJList.setFixedCellWidth(60);
+        JPanel revenuePanel = new JPanel(new BorderLayout());
+        revenuePanel.setPreferredSize(new Dimension(500, 200));
+        JPanel buttonPanel = new JPanel();
+        revenuePanel.setBorder(BorderFactory.createTitledBorder("revenue"));
+        mainPanel.add(revenuePanel);
+        revenuePanel.add(buttonPanel, BorderLayout.SOUTH);
+        JButton addRevenueButton = new JButton("add revenue");
+        JButton removeRevenueButton = new JButton("subtract revenue");
+        JButton viewOverallRevenue = new JButton("view revenue");
+        buttonPanel.add(addRevenueButton);
+        buttonPanel.add(removeRevenueButton);
+        buttonPanel.add(viewOverallRevenue);
+        revenuePanel.add(revenueJList);
+        revenuePanel.add(new JScrollPane(revenueJList, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
+
+        addRevenueButton.addActionListener(new AddRevenueListener());
+        addRevenueButton.addActionListener(new RemoveButtonListener());
+        addRevenueButton.addActionListener(new ViewButtonListener());
 
 
     }
 
     private void initializeNewSneakerPanel(SneakerPurchaseList sneakerPurchaseList, String sneaker, JPanel mainPanel) {
         DefaultListModel<SneakerEntry> defaultListModelSneaker = new DefaultListModel<>();
-        defaultListModelSneaker.addElement(s1);
         JList<SneakerEntry> sneakerEntryJList = new JList<>(defaultListModelSneaker);
         sneakerEntryJList.setCellRenderer(new SneakerCellRenderer());
-        sneakerEntryJList.setFixedCellWidth(100);
+        sneakerEntryJList.setFixedCellWidth(300);
         sneakerEntryJList.setFixedCellHeight(10);
 
-        JPanel sneakerPanel = new JPanel();
-        sneakerPanel.setPreferredSize(new Dimension(400, 200));
+        JPanel sneakerPanel = new JPanel(new BorderLayout());
+        sneakerPanel.setPreferredSize(new Dimension(600, 200));
         sneakerPanel.setBorder(BorderFactory.createTitledBorder("sneaker enrty"));
-
+        JPanel buttonPanel = new JPanel();
         JButton addSneakerEntryButton = new JButton("add" + " " + sneaker + " " + "entry");
         JButton removeSneakerEntryButton = new JButton("remove" + " " + sneaker + " " + "entry");
+        removeSneakerEntryButton.setEnabled(false);
 
         mainPanel.add(sneakerPanel);
+        buttonPanel.add(addSneakerEntryButton);
+        buttonPanel.add(removeSneakerEntryButton);
+        sneakerPanel.add(buttonPanel, BorderLayout.SOUTH);
         sneakerPanel.add(sneakerEntryJList);
-        sneakerPanel.add(addSneakerEntryButton, Component.TOP_ALIGNMENT);
         sneakerPanel.add(new JScrollPane(sneakerEntryJList, VERTICAL_SCROLLBAR_ALWAYS,
-                HORIZONTAL_SCROLLBAR_ALWAYS));
-        sneakerPanel.add(removeSneakerEntryButton, Component.TOP_ALIGNMENT);
-
+                HORIZONTAL_SCROLLBAR_AS_NEEDED));
+        addSneakerEntryButton.addActionListener(new AddSneakerListener(sneakerPurchaseList,
+                mainPanel, sneaker, defaultListModelSneaker, removeSneakerEntryButton));
+        removeSneakerEntryButton.addActionListener(new RemoveSneakerListener(defaultListModelSneaker, sneakerEntryJList,
+                removeSneakerEntryButton, sneakerPurchaseList));
 
 
     }
@@ -98,21 +126,24 @@ public class GUI extends JPanel {
         //all the panels
         JButton removeEntryButton = new JButton("remove" + typeOfEntry + "entry");
         removeEntryButton.setEnabled(false);
-        JPanel entryPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        JPanel entryPanel = new JPanel(new BorderLayout());
         //but this doesnt work why> entryPanel.add(proxyEntryJlist)
         //adding button to pannel
-        entryPanel.add(addEntryButton, Component.BOTTOM_ALIGNMENT);
-        entryPanel.add(removeEntryButton, Component.BOTTOM_ALIGNMENT);
+        entryPanel.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(addEntryButton);
+        buttonPanel.add(removeEntryButton);
         entryPanel.setBorder(BorderFactory.createTitledBorder(typeOfEntry + " " + "Entries"));
-        entryPanel.setPreferredSize(new Dimension(400, 200));
+        entryPanel.setPreferredSize(new Dimension(600, 200));
         mainPanel.add(entryPanel);
         entryPanel.add(entryJlist);
-        entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_ALWAYS));
+        entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
 
         addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList, defaultListModel,
                 entryPanel, removeEntryButton));
-        removeEntryButton.addActionListener(new RemoveListener(defaultListModel, entryJlist, removeEntryButton));
+        removeEntryButton.addActionListener(new RemoveListener(defaultListModel,
+                entryJlist, removeEntryButton, supportEntryList));
     }
 
 

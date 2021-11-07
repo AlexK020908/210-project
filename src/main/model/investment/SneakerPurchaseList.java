@@ -52,6 +52,17 @@ public class SneakerPurchaseList implements Writable {
     }
 
 
+
+    //MODIFIES: this
+    //EFFECT: remove the specified sneaker entry in the list
+    public boolean removeEntry(SneakerEntry sneakerEntry) {
+        if (sneakerPurchaseList.contains(sneakerEntry)) {
+            sneakerPurchaseList.remove(sneakerEntry);
+            return true;
+        } else {
+            return false;
+        }
+    }
     //
     //MODIFIES: this
     /*
