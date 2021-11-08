@@ -3,6 +3,7 @@ package ui;
 
 import model.*;
 import model.investment.*;
+import persistance.JsonWriterForRevenueList;
 
 
 import javax.swing.*;
@@ -10,18 +11,22 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 
-
+import static java.awt.event.KeyEvent.VK_A;
 import static javax.swing.ScrollPaneConstants.*;
 
 //this class represents the GUI of this project
 public class GUI extends JPanel {
-    private ProxyPurchaseList proxyPurchaseList;
-    private CookGroupPurchaseList cookGroupPurchaseList;
-    private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
-    private SneakerPurchaseList sneakerPurchaseList;
-    private RevenueList revenueList;
+    private static ProxyPurchaseList proxyPurchaseList;
+    private static CookGroupPurchaseList cookGroupPurchaseList;
+    private static ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
+    private static SneakerPurchaseList sneakerPurchaseList;
+    private static RevenueList revenueList;
+
 
 
 
@@ -54,6 +59,8 @@ public class GUI extends JPanel {
         calculateButton.setPreferredSize(new Dimension(800, 100));
 
         mainPanel.add(calculateButton);
+        calculateButton.addActionListener(new CalculateListener(cookGroupPurchaseList, proxyPurchaseList,
+                thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList));
 
     }
 
@@ -145,7 +152,7 @@ public class GUI extends JPanel {
         buttonPanel.add(addEntryButton);
         buttonPanel.add(removeEntryButton);
         entryPanel.setBorder(BorderFactory.createTitledBorder(typeOfEntry + " " + "Entries"));
-        entryPanel.setPreferredSize(new Dimension(600, 200));
+        entryPanel.setPreferredSize(new Dimension(400, 200));
         mainPanel.add(entryPanel);
         entryPanel.add(entryJlist);
         entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
@@ -167,15 +174,21 @@ public class GUI extends JPanel {
      * EFFECT:  Create the GUI and show it.
      */
     static void createAndShowGUI() {
+
         //Create and set up the window.
         JFrame frame = new JFrame("Profit or Loss calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JMenuBar menubar = new JMenuBar();
-        JMenuItem item = new JMenuItem("Calculate");
-        item.setOpaque(true);
-        item.setBackground(Color.WHITE);
-        menubar.add(item);
+        JMenu file = new JMenu("file");
+        menubar.setBackground(Color.WHITE);
+        menubar.add(file);
         frame.setJMenuBar(menubar);
+        JMenuItem saveButton = new JMenuItem("save");
+        JMenuItem loadButton = new JMenuItem("load");
+        file.add(saveButton);
+        file.add(loadButton);
+
+
 
         //initalizing the gui and adding it to eh window
         JComponent newContentPane = new GUI();
@@ -187,6 +200,9 @@ public class GUI extends JPanel {
         frame.setVisible(true);
 
     }
+
+
+
 
 
     //This
