@@ -57,4 +57,12 @@ public class RevenueList implements Writable {
         return jsonArray;
     }
 
+    //MODIFIES: this
+    //EFFECT: REMOVE the specified revenue from the revenue list if it does contain the given revenue
+    public void removeRevenue(Revenue revenue) {
+        if (revenues.contains(revenue)) {
+            revenues.remove(revenue);
+        }
+
+    }
 }

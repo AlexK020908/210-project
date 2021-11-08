@@ -25,8 +25,10 @@ public class RemoveSneakerListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int index = sneakersJlist.getSelectedIndex();
-        sneakerPurchaseList.removeEntry(defaultListModel.get(index));
-        defaultListModel.remove(index);
+        if (index != -1) {
+            sneakerPurchaseList.removeEntry(defaultListModel.get(index));
+            defaultListModel.remove(index);
+        }
 
         int size = defaultListModel.size();
         if (size == 0) {

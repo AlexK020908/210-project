@@ -6,6 +6,8 @@ import model.investment.*;
 
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
 
@@ -35,8 +37,10 @@ public class GUI extends JPanel {
         proxyPurchaseList = new ProxyPurchaseList();
         setLayout(new GridLayout(1, 5));
         initializeNewPanel(proxyPurchaseList, "Proxy", mainPanel);
+
         cookGroupPurchaseList = new CookGroupPurchaseList();
         initializeNewPanel(cookGroupPurchaseList, "Cook group", mainPanel);
+
         thirdPartyCaptchaSolversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
         initializeNewPanel(thirdPartyCaptchaSolversPurchaseList, "Third party captcha solver", mainPanel);
 
@@ -46,31 +50,39 @@ public class GUI extends JPanel {
         revenueList = new RevenueList();
         initializeNewRevenuePanel(revenueList, mainPanel);
 
+        JButton calculateButton = new JButton("calculate profit or loss");
+        calculateButton.setPreferredSize(new Dimension(800, 100));
+
+        mainPanel.add(calculateButton);
+
     }
 
     private void initializeNewRevenuePanel(RevenueList revenueList, JPanel mainPanel) {
         DefaultListModel<Revenue> defaultListModel = new DefaultListModel<>();
         JList<Revenue> revenueJList = new JList<>(defaultListModel);
-        revenueJList.setFixedCellHeight(5);
-        revenueJList.setFixedCellWidth(60);
+        revenueJList.setCellRenderer(new RevenueCellRenderer());
+        revenueJList.setVisibleRowCount(3);
+
         JPanel revenuePanel = new JPanel(new BorderLayout());
-        revenuePanel.setPreferredSize(new Dimension(500, 200));
+        revenuePanel.setPreferredSize(new Dimension(700, 200));
         JPanel buttonPanel = new JPanel();
         revenuePanel.setBorder(BorderFactory.createTitledBorder("revenue"));
         mainPanel.add(revenuePanel);
         revenuePanel.add(buttonPanel, BorderLayout.SOUTH);
         JButton addRevenueButton = new JButton("add revenue");
-        JButton removeRevenueButton = new JButton("subtract revenue");
-        JButton viewOverallRevenue = new JButton("view revenue");
+        JButton removeRevenueButton = new JButton("remove revenue");
+        removeRevenueButton.setEnabled(false);
+        JButton viewOverallRevenueButton = new JButton("view revenue");
         buttonPanel.add(addRevenueButton);
         buttonPanel.add(removeRevenueButton);
-        buttonPanel.add(viewOverallRevenue);
+        buttonPanel.add(viewOverallRevenueButton);
         revenuePanel.add(revenueJList);
         revenuePanel.add(new JScrollPane(revenueJList, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
+        addRevenueButton.addActionListener(new AddRevenueListener(revenueList, defaultListModel, removeRevenueButton));
+        removeRevenueButton.addActionListener(new RemoveButtonListener(revenueJList, defaultListModel, revenueList,
+                removeRevenueButton));
+        viewOverallRevenueButton.addActionListener(new ViewRevenueListener(revenueList));
 
-        addRevenueButton.addActionListener(new AddRevenueListener());
-        addRevenueButton.addActionListener(new RemoveButtonListener());
-        addRevenueButton.addActionListener(new ViewButtonListener());
 
 
     }
@@ -79,11 +91,10 @@ public class GUI extends JPanel {
         DefaultListModel<SneakerEntry> defaultListModelSneaker = new DefaultListModel<>();
         JList<SneakerEntry> sneakerEntryJList = new JList<>(defaultListModelSneaker);
         sneakerEntryJList.setCellRenderer(new SneakerCellRenderer());
-        sneakerEntryJList.setFixedCellWidth(300);
-        sneakerEntryJList.setFixedCellHeight(10);
+        sneakerEntryJList.setVisibleRowCount(3);
 
         JPanel sneakerPanel = new JPanel(new BorderLayout());
-        sneakerPanel.setPreferredSize(new Dimension(600, 200));
+        sneakerPanel.setPreferredSize(new Dimension(700, 200));
         sneakerPanel.setBorder(BorderFactory.createTitledBorder("sneaker enrty"));
         JPanel buttonPanel = new JPanel();
         JButton addSneakerEntryButton = new JButton("add" + " " + sneaker + " " + "entry");
@@ -176,6 +187,7 @@ public class GUI extends JPanel {
         frame.setVisible(true);
 
     }
+
 
     //This
     //EFFECT: This class represents each support entry as its string

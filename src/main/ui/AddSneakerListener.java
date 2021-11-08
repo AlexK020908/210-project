@@ -30,27 +30,28 @@ public class AddSneakerListener implements ActionListener {
                 null);
         if (sneakerName == null) {
             JOptionPane.showMessageDialog(null, "Please try entering the name again");
-        }
-        double sneakerPrice = Double.parseDouble(JOptionPane.showInputDialog(null,
+        } else {
+            double sneakerPrice = Double.parseDouble(JOptionPane.showInputDialog(null,
                     "Please enter the price", null));
-        if (sneakerPrice == 0 || sneakerPrice < 0) {
-            JOptionPane.showMessageDialog(null, "you entered an invalid price");
-        }
-        int quantity = Integer.parseInt(JOptionPane.showInputDialog(null,
-                "how many" + " " + sneakerName + " " + "did you buy", null));
-        if (quantity == 0 || quantity < 0) {
-            JOptionPane.showMessageDialog(null, "you entered an invalid quantity");
-        }
-        SneakerEntry sneakerEntry = new SneakerEntry(sneakerName, sneakerPrice, quantity);
 
-        if (sneakerPurchaseList.addEntry(sneakerEntry)) {
-            defaultListModel.addElement(sneakerEntry);
+            if (sneakerPrice == 0 || sneakerPrice < 0) {
+                JOptionPane.showMessageDialog(null, "you entered an invalid price");
+            } else {
+                int quantity = Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "how many" + " " + sneakerName + " " + "did you buy", null));
+                if (quantity == 0 || quantity < 0) {
+                    JOptionPane.showMessageDialog(null, "you entered an invalid quantity");
+                } else {
+                    SneakerEntry sneakerEntry = new SneakerEntry(sneakerName, sneakerPrice, quantity);
+                    if (sneakerPurchaseList.addEntry(sneakerEntry)) {
+                        defaultListModel.addElement(sneakerEntry);
+                    }
+                    int size = defaultListModel.size();
+                    if (size > 0) {
+                        removeButton.setEnabled(true);
+                    }
+                }
+            }
         }
-        int size = defaultListModel.size();
-        if (size > 0) {
-            removeButton.setEnabled(true);
-        }
-
-
     }
 }

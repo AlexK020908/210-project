@@ -216,6 +216,38 @@ class SneakerPurchaseListTest {
 
     }
 
+    @Test
+    public void testRemoveEntryDoesNotExist() {
+        assertFalse(sneakerPurchaseList.removeEntry(s1));
+
+        //add an entry
+        sneakerPurchaseList.addEntry(s2);
+        assertFalse(sneakerPurchaseList.removeEntry(s1));
+        assertEquals(1, sneakerPurchaseList.getLength());
+        assertEquals(0, sneakerPurchaseList.indexOf(s2));
+    }
+
+    @Test
+    public void testRemoveEntryExists() {
+        //one entry exist
+        sneakerPurchaseList.addEntry(s1);
+        assertTrue(sneakerPurchaseList.removeEntry(s1));
+        assertEquals(0, sneakerPurchaseList.getLength());
+
+        //many entries exist
+        sneakerPurchaseList.addEntry(s1);
+        sneakerPurchaseList.addEntry(s2);
+        sneakerPurchaseList.addEntry(s3);
+        sneakerPurchaseList.addEntry(s4);
+        sneakerPurchaseList.addEntry(s5);
+
+        assertTrue(sneakerPurchaseList.removeEntry(s1));
+        assertTrue(sneakerPurchaseList.removeEntry(s2));
+        assertEquals(3, sneakerPurchaseList.getLength());
+        assertEquals(-1, sneakerPurchaseList.indexOf(s1));
+
+    }
+
 
 
 }

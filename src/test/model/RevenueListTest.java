@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RevenueListTest {
     RevenueList Revenues;
     private Revenue r1 = new Revenue(20.00);
+    private Revenue r11 = new Revenue(20.00);
     private Revenue r2 = new Revenue(120.00);
     private Revenue r3 = new Revenue(21.00);
     private Revenue r4 = new Revenue(10.00);
@@ -76,6 +77,24 @@ public class RevenueListTest {
                 , Revenues.calculateTotalRevenue());
 
 
+    }
+
+    @Test
+    public void testRemoveDoesNotExist() {
+        Revenues.addNewRevenue(r2);
+        Revenues.removeRevenue(r1);
+        assertEquals(1, Revenues.getLength());
+    }
+
+    @Test
+    public void testRemoveExists() {
+        Revenues.addNewRevenue(r1);
+        Revenues.removeRevenue(r1);
+        assertEquals(0, Revenues.getLength());
+
+        Revenues.addNewRevenue(r1);
+        Revenues.removeRevenue(r11);
+        assertEquals(0, Revenues.getLength());
     }
 
 
