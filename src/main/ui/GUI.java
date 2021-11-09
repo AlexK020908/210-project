@@ -7,35 +7,26 @@ import persistance.JsonWriterForRevenueList;
 
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 
-import static java.awt.event.KeyEvent.VK_A;
 import static javax.swing.ScrollPaneConstants.*;
 
 //this class represents the GUI of this project
 public class GUI extends JPanel {
-    private static ProxyPurchaseList proxyPurchaseList;
-    private static CookGroupPurchaseList cookGroupPurchaseList;
-    private static ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
-    private static SneakerPurchaseList sneakerPurchaseList;
-    private static RevenueList revenueList;
-
-
-
-
+    private ProxyPurchaseList proxyPurchaseList;
+    private CookGroupPurchaseList cookGroupPurchaseList;
+    private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
+    private SneakerPurchaseList sneakerPurchaseList;
+    private RevenueList revenueList;
 
 
     //EFFECT: constructs a mainPanel where JPnale will be attached to; initialize a proxy, cook group , third
     //        party solver , sneakers and revenue panels that will be the part of the main panel.
     //        components should be laid out horizontally from left to right.
     public GUI() {
+
         JPanel mainPanel = new JPanel(new FlowLayout());
         add(mainPanel);
         mainPanel.setBorder(BorderFactory.createTitledBorder("Support Entries"));
@@ -62,6 +53,7 @@ public class GUI extends JPanel {
         calculateButton.addActionListener(new CalculateListener(cookGroupPurchaseList, proxyPurchaseList,
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList));
 
+
     }
 
     private void initializeNewRevenuePanel(RevenueList revenueList, JPanel mainPanel) {
@@ -71,7 +63,7 @@ public class GUI extends JPanel {
         revenueJList.setVisibleRowCount(3);
 
         JPanel revenuePanel = new JPanel(new BorderLayout());
-        revenuePanel.setPreferredSize(new Dimension(700, 200));
+        revenuePanel.setPreferredSize(new Dimension(600, 200));
         JPanel buttonPanel = new JPanel();
         revenuePanel.setBorder(BorderFactory.createTitledBorder("revenue"));
         mainPanel.add(revenuePanel);
@@ -101,7 +93,7 @@ public class GUI extends JPanel {
         sneakerEntryJList.setVisibleRowCount(3);
 
         JPanel sneakerPanel = new JPanel(new BorderLayout());
-        sneakerPanel.setPreferredSize(new Dimension(700, 200));
+        sneakerPanel.setPreferredSize(new Dimension(600, 200));
         sneakerPanel.setBorder(BorderFactory.createTitledBorder("sneaker enrty"));
         JPanel buttonPanel = new JPanel();
         JButton addSneakerEntryButton = new JButton("add" + " " + sneaker + " " + "entry");
@@ -179,6 +171,8 @@ public class GUI extends JPanel {
         JFrame frame = new JFrame("Profit or Loss calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JMenuBar menubar = new JMenuBar();
+        menubar.setOpaque(true);
+        menubar.setBackground(Color.WHITE);
         JMenu file = new JMenu("file");
         menubar.setBackground(Color.WHITE);
         menubar.add(file);
