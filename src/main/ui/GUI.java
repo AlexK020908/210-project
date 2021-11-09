@@ -60,12 +60,29 @@ public class GUI extends JPanel {
         menubar.setBackground(Color.WHITE);
         //Create and set up the window.
         JFrame frame = initializeJFrame();
+        frame.setJMenuBar(menubar);
         JPanel mainPanel = initializePanel();
         initializeAllEntries(mainPanel);
-        addSaveLoadMenu(frame);
-        addSupportEntriesMenu(frame);
+        addSaveLoadMenu();
+        addSupportEntriesMenu();
+        addSneakerEntriesMenu();
+        addRevenueMenu();
 
 
+    }
+
+    private void addRevenueMenu() {
+        JMenu revenue = new JMenu("revenues");
+        JMenuItem addNewRevenue = new JMenuItem("add new revenue");
+        menubar.add(revenue);
+        revenue.add(addNewRevenue);
+    }
+
+    private void addSneakerEntriesMenu() {
+        JMenu sneakers = new JMenu("sneaker entries");
+        JMenuItem addSneakerEntry = new JMenuItem("add new sneaker entry");
+        sneakers.add(addSneakerEntry);
+        menubar.add(sneakers);
     }
 
 
@@ -112,7 +129,7 @@ public class GUI extends JPanel {
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList));
     }
 
-    private void addSupportEntriesMenu(JFrame frame) {
+    private void addSupportEntriesMenu() {
         JMenu supportEntries = new JMenu("Support entries");
         menubar.add(supportEntries);
         JMenuItem addProxy = new JMenuItem("add proxy entry");
@@ -123,11 +140,10 @@ public class GUI extends JPanel {
         supportEntries.add(addThirdPartySolver);
     }
 
-    private void addSaveLoadMenu(JFrame frame) {
+    private void addSaveLoadMenu() {
         JMenu file = new JMenu("file");
         menubar.setBackground(Color.WHITE);
         menubar.add(file);
-        frame.setJMenuBar(menubar);
         JMenuItem saveButton = new JMenuItem("save");
         JMenuItem loadButton = new JMenuItem("load");
         file.add(saveButton);
@@ -233,7 +249,8 @@ public class GUI extends JPanel {
         entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
 
-        addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList, defaultListModelForSupportEntries,
+        addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList,
+                defaultListModelForSupportEntries,
                 entryPanel, removeEntryButton));
         removeEntryButton.addActionListener(new RemoveListener(defaultListModelForSupportEntries,
                 entryJlist, removeEntryButton, supportEntryList));
