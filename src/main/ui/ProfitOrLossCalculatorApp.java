@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+
+
 //Profit or Loss calculator application
 public class ProfitOrLossCalculatorApp {
 

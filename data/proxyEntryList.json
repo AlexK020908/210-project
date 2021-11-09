@@ -1,4 +1,7 @@
 {
-    "proxies": [],
+    "proxies": [{
+        "name": "save1",
+        "pricePaid": 2
+    }],
     "type": "PROXY"
 }

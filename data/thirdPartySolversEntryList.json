@@ -1,4 +1,7 @@
 {
     "type": "ThirdPartSolver",
-    "solvers": []
+    "solvers": [{
+        "name": "save3",
+        "pricePaid": 13
+    }]
 }

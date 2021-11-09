@@ -1,4 +1,8 @@
 {
-    "sneakers": [],
+    "sneakers": [{
+        "quantity": 69,
+        "name": "save4",
+        "retailPrice": 20
+    }],
     "type": "Sneaker"
 }

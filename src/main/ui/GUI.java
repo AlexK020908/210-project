@@ -3,7 +3,7 @@ package ui;
 
 import model.*;
 import model.investment.*;
-import persistance.JsonWriterForRevenueList;
+import persistance.*;
 
 
 import javax.swing.*;
@@ -15,21 +15,79 @@ import static javax.swing.ScrollPaneConstants.*;
 
 //this class represents the GUI of this project
 public class GUI extends JPanel {
+
+    public static final String SNEAKER_STORE = "./data/sneakerInvestment.json";
+    public static final String PROXY_STORE = "./data/proxyEntryList.json";
+    public static final String COOK_GROUP_STORE = "./data/cookGroupEntryList.json";
+    public static final String THIRD_PARTY_SOLVER_STORE = "./data/thirdPartySolversEntryList.json";
+    public static final String REVENUE_STORE = "./data/revenueEntryList.json";
     private ProxyPurchaseList proxyPurchaseList;
     private CookGroupPurchaseList cookGroupPurchaseList;
     private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
     private SneakerPurchaseList sneakerPurchaseList;
     private RevenueList revenueList;
+    private JsonWriterForSupportEntries jsonWriterForProxyEntries;
+    private JsonWriterForSupportEntries jsonWriterForCookGroupEntries;
+    private JsonWriterForSupportEntries jsonWriterForThirdPartySolverEntries;
+    private JsonWriteForSneakers jsonWriteForSneakers;
+    private JsonReaderForSneaker jsonReaderForSneaker;
+    private JsonReaderForProxy jsonReaderForProxy;
+    private JsonReaderForCookGroupList jsonReaderForCookGroup;
+    private JsonReaderForThirdPartySolvers jsonReaderForThirdPartySolvers;
+    private JsonWriterForRevenueList jsonWriterForRevenueList;
+    private JsonReaderForRevenueList jsonReaderForRevenueList;
+    JMenuBar menubar;
 
+    DefaultListModel<SupportEntry> defaultListModelForSupportEntries;
 
     //EFFECT: constructs a mainPanel where JPnale will be attached to; initialize a proxy, cook group , third
     //        party solver , sneakers and revenue panels that will be the part of the main panel.
     //        components should be laid out horizontally from left to right.
     public GUI() {
+        jsonWriteForSneakers = new JsonWriteForSneakers(SNEAKER_STORE);
+        jsonReaderForSneaker = new JsonReaderForSneaker(SNEAKER_STORE);
+        jsonWriterForProxyEntries = new JsonWriterForSupportEntries(PROXY_STORE);
+        jsonReaderForProxy = new JsonReaderForProxy(PROXY_STORE);
+        jsonWriterForCookGroupEntries = new JsonWriterForSupportEntries(COOK_GROUP_STORE);
+        jsonReaderForCookGroup = new JsonReaderForCookGroupList(COOK_GROUP_STORE);
+        jsonWriterForThirdPartySolverEntries = new JsonWriterForSupportEntries(THIRD_PARTY_SOLVER_STORE);
+        jsonReaderForThirdPartySolvers = new JsonReaderForThirdPartySolvers(THIRD_PARTY_SOLVER_STORE);
+        jsonWriterForRevenueList = new JsonWriterForRevenueList(REVENUE_STORE);
+        jsonReaderForRevenueList = new JsonReaderForRevenueList(REVENUE_STORE);
 
+        menubar = new JMenuBar();
+        menubar.setOpaque(true);
+        menubar.setBackground(Color.WHITE);
+        //Create and set up the window.
+        JFrame frame = initializeJFrame();
+        JPanel mainPanel = initializePanel();
+        initializeAllEntries(mainPanel);
+        addSaveLoadMenu(frame);
+        addSupportEntriesMenu(frame);
+
+
+    }
+
+
+    private JPanel initializePanel() {
         JPanel mainPanel = new JPanel(new FlowLayout());
         add(mainPanel);
         mainPanel.setBorder(BorderFactory.createTitledBorder("Support Entries"));
+        return mainPanel;
+    }
+
+    private JFrame initializeJFrame() {
+        JFrame frame = new JFrame("Profit or Loss calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setOpaque(true); //content panes must be opaque
+        frame.setContentPane(this);
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+        return frame;
+    }
+
+    private void initializeAllEntries(JPanel mainPanel) {
         proxyPurchaseList = new ProxyPurchaseList();
         setLayout(new GridLayout(1, 5));
         initializeNewPanel(proxyPurchaseList, "Proxy", mainPanel);
@@ -52,8 +110,33 @@ public class GUI extends JPanel {
         mainPanel.add(calculateButton);
         calculateButton.addActionListener(new CalculateListener(cookGroupPurchaseList, proxyPurchaseList,
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList));
+    }
 
+    private void addSupportEntriesMenu(JFrame frame) {
+        JMenu supportEntries = new JMenu("Support entries");
+        menubar.add(supportEntries);
+        JMenuItem addProxy = new JMenuItem("add proxy entry");
+        JMenuItem addCookGroup = new JMenuItem("add cook group entry entry");
+        JMenuItem addThirdPartySolver = new JMenuItem("add third party solver entry");
+        supportEntries.add(addProxy);
+        supportEntries.add(addCookGroup);
+        supportEntries.add(addThirdPartySolver);
+    }
 
+    private void addSaveLoadMenu(JFrame frame) {
+        JMenu file = new JMenu("file");
+        menubar.setBackground(Color.WHITE);
+        menubar.add(file);
+        frame.setJMenuBar(menubar);
+        JMenuItem saveButton = new JMenuItem("save");
+        JMenuItem loadButton = new JMenuItem("load");
+        file.add(saveButton);
+        file.add(loadButton);
+        saveButton.addActionListener(new SaveActionListener(proxyPurchaseList, cookGroupPurchaseList,
+                thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList, jsonWriterForProxyEntries,
+                jsonWriterForCookGroupEntries, jsonWriterForThirdPartySolverEntries,
+                jsonWriteForSneakers, jsonWriterForRevenueList));
+        loadButton.addActionListener(new LoadActionListener());
     }
 
     private void initializeNewRevenuePanel(RevenueList revenueList, JPanel mainPanel) {
@@ -123,9 +206,9 @@ public class GUI extends JPanel {
     //        If the user enters an empty name , a pop-up message should notify the user to fix their name input.
     private void initializeNewPanel(SupportEntryList<? extends SupportEntry> supportEntryList, String typeOfEntry,
                                                              JPanel mainPanel) {
-        DefaultListModel<SupportEntry> defaultListModel = new DefaultListModel<>();
-        //make the default list model defaultListModel into a jlist
-        JList<SupportEntry> entryJlist = new JList<>(defaultListModel);
+        DefaultListModel<SupportEntry> defaultListModelForSupportEntries = new DefaultListModel<>();
+        //make the default list model defaultListModelForSupportEntries into a jlist
+        JList<SupportEntry> entryJlist = new JList<>(defaultListModelForSupportEntries);
         //show how it is rendered, in this case it is string
         entryJlist.setCellRenderer(new SupportEntryCellRenderer());
         entryJlist.setFixedCellHeight(10);
@@ -150,9 +233,9 @@ public class GUI extends JPanel {
         entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
 
-        addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList, defaultListModel,
+        addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList, defaultListModelForSupportEntries,
                 entryPanel, removeEntryButton));
-        removeEntryButton.addActionListener(new RemoveListener(defaultListModel,
+        removeEntryButton.addActionListener(new RemoveListener(defaultListModelForSupportEntries,
                 entryJlist, removeEntryButton, supportEntryList));
     }
 
@@ -160,40 +243,6 @@ public class GUI extends JPanel {
 
 
 
-
-    /**
-     * MODIFIES : this
-     * EFFECT:  Create the GUI and show it.
-     */
-    static void createAndShowGUI() {
-
-        //Create and set up the window.
-        JFrame frame = new JFrame("Profit or Loss calculator");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JMenuBar menubar = new JMenuBar();
-        menubar.setOpaque(true);
-        menubar.setBackground(Color.WHITE);
-        JMenu file = new JMenu("file");
-        menubar.setBackground(Color.WHITE);
-        menubar.add(file);
-        frame.setJMenuBar(menubar);
-        JMenuItem saveButton = new JMenuItem("save");
-        JMenuItem loadButton = new JMenuItem("load");
-        file.add(saveButton);
-        file.add(loadButton);
-
-
-
-        //initalizing the gui and adding it to eh window
-        JComponent newContentPane = new GUI();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-
-    }
 
 
 

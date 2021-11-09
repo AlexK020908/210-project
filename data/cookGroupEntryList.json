@@ -1,4 +1,7 @@
 {
-    "Cook Group List": [],
+    "Cook Group List": [{
+        "name": "save2",
+        "pricePaid": 12
+    }],
     "type": "CookGroup"
 }
