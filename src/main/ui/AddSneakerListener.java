@@ -9,16 +9,12 @@ import java.awt.event.ActionListener;
 
 public class AddSneakerListener implements ActionListener {
     SneakerPurchaseList sneakerPurchaseList;
-    JPanel mainPanel;
-    String sneaker;
     DefaultListModel<SneakerEntry> defaultListModel;
     JButton removeButton;
 
-    public AddSneakerListener(SneakerPurchaseList sneakerPurchaseList, JPanel mainPanel, String sneaker,
+    public AddSneakerListener(SneakerPurchaseList sneakerPurchaseList,
                               DefaultListModel<SneakerEntry> defaultListModelSneaker, JButton removeButton) {
-        this.sneakerPurchaseList = sneakerPurchaseList;
-        this.mainPanel = mainPanel;
-        this.sneaker = sneaker;
+        this.sneakerPurchaseList = sneakerPurchaseList;;
         this.defaultListModel = defaultListModelSneaker;
         this.removeButton = removeButton;
 

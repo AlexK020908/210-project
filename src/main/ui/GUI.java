@@ -38,7 +38,15 @@ public class GUI extends JPanel {
     private JsonReaderForRevenueList jsonReaderForRevenueList;
     JMenuBar menubar;
 
-    DefaultListModel<SupportEntry> defaultListModelForSupportEntries;
+    DefaultListModel<SneakerEntry> defaultListModelSneaker;
+    JList<SneakerEntry> sneakerEntryJList;
+    JPanel sneakerPanel;
+    JButton addSneakerEntryButton;
+    JButton removeSneakerEntryButton;
+
+    DefaultListModel<Revenue> revenueListModel;
+    JList<Revenue> revenueJList;
+    JButton removeRevenueButton;
 
     //EFFECT: constructs a mainPanel where JPnale will be attached to; initialize a proxy, cook group , third
     //        party solver , sneakers and revenue panels that will be the part of the main panel.
@@ -69,20 +77,28 @@ public class GUI extends JPanel {
         addRevenueMenu();
 
 
+
     }
 
     private void addRevenueMenu() {
         JMenu revenue = new JMenu("revenues");
         JMenuItem addNewRevenue = new JMenuItem("add new revenue");
+        JMenuItem viewRevenue = new JMenuItem("view current revenue");
         menubar.add(revenue);
         revenue.add(addNewRevenue);
+        addNewRevenue.addActionListener(new AddRevenueListener(revenueList, revenueListModel, removeRevenueButton));
+        revenue.add(viewRevenue);
+        viewRevenue.addActionListener(new ViewRevenueListener(revenueList));
     }
+
 
     private void addSneakerEntriesMenu() {
         JMenu sneakers = new JMenu("sneaker entries");
         JMenuItem addSneakerEntry = new JMenuItem("add new sneaker entry");
         sneakers.add(addSneakerEntry);
         menubar.add(sneakers);
+        addSneakerEntry.addActionListener(new AddSneakerListener(sneakerPurchaseList, defaultListModelSneaker,
+                removeSneakerEntryButton));
     }
 
 
@@ -155,9 +171,9 @@ public class GUI extends JPanel {
         loadButton.addActionListener(new LoadActionListener());
     }
 
-    private void initializeNewRevenuePanel(RevenueList revenueList, JPanel mainPanel) {
-        DefaultListModel<Revenue> defaultListModel = new DefaultListModel<>();
-        JList<Revenue> revenueJList = new JList<>(defaultListModel);
+    private void initializeNewRevenuePanel(RevenueList revenues, JPanel mainPanel) {
+        revenueListModel = new DefaultListModel<>();
+        revenueJList = new JList<>();
         revenueJList.setCellRenderer(new RevenueCellRenderer());
         revenueJList.setVisibleRowCount(3);
 
@@ -168,7 +184,7 @@ public class GUI extends JPanel {
         mainPanel.add(revenuePanel);
         revenuePanel.add(buttonPanel, BorderLayout.SOUTH);
         JButton addRevenueButton = new JButton("add revenue");
-        JButton removeRevenueButton = new JButton("remove revenue");
+        removeRevenueButton = new JButton("remove revenue");
         removeRevenueButton.setEnabled(false);
         JButton viewOverallRevenueButton = new JButton("view revenue");
         buttonPanel.add(addRevenueButton);
@@ -176,27 +192,27 @@ public class GUI extends JPanel {
         buttonPanel.add(viewOverallRevenueButton);
         revenuePanel.add(revenueJList);
         revenuePanel.add(new JScrollPane(revenueJList, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
-        addRevenueButton.addActionListener(new AddRevenueListener(revenueList, defaultListModel, removeRevenueButton));
-        removeRevenueButton.addActionListener(new RemoveButtonListener(revenueJList, defaultListModel, revenueList,
-                removeRevenueButton));
-        viewOverallRevenueButton.addActionListener(new ViewRevenueListener(revenueList));
+        addRevenueButton.addActionListener(new AddRevenueListener(revenues, revenueListModel, removeRevenueButton));
+        removeRevenueButton.addActionListener(new RemoveButtonListener(revenueJList, revenueListModel,
+                revenues, removeRevenueButton));
+        viewOverallRevenueButton.addActionListener(new ViewRevenueListener(revenues));
 
 
 
     }
 
     private void initializeNewSneakerPanel(SneakerPurchaseList sneakerPurchaseList, String sneaker, JPanel mainPanel) {
-        DefaultListModel<SneakerEntry> defaultListModelSneaker = new DefaultListModel<>();
-        JList<SneakerEntry> sneakerEntryJList = new JList<>(defaultListModelSneaker);
+        defaultListModelSneaker = new DefaultListModel<>();
+        sneakerEntryJList = new JList<>(defaultListModelSneaker);
         sneakerEntryJList.setCellRenderer(new SneakerCellRenderer());
         sneakerEntryJList.setVisibleRowCount(3);
 
-        JPanel sneakerPanel = new JPanel(new BorderLayout());
+        sneakerPanel = new JPanel(new BorderLayout());
         sneakerPanel.setPreferredSize(new Dimension(600, 200));
         sneakerPanel.setBorder(BorderFactory.createTitledBorder("sneaker enrty"));
         JPanel buttonPanel = new JPanel();
-        JButton addSneakerEntryButton = new JButton("add" + " " + sneaker + " " + "entry");
-        JButton removeSneakerEntryButton = new JButton("remove" + " " + sneaker + " " + "entry");
+        addSneakerEntryButton = new JButton("add" + " " + sneaker + " " + "entry");
+        removeSneakerEntryButton = new JButton("remove" + " " + sneaker + " " + "entry");
         removeSneakerEntryButton.setEnabled(false);
 
         mainPanel.add(sneakerPanel);
@@ -207,7 +223,7 @@ public class GUI extends JPanel {
         sneakerPanel.add(new JScrollPane(sneakerEntryJList, VERTICAL_SCROLLBAR_ALWAYS,
                 HORIZONTAL_SCROLLBAR_AS_NEEDED));
         addSneakerEntryButton.addActionListener(new AddSneakerListener(sneakerPurchaseList,
-                mainPanel, sneaker, defaultListModelSneaker, removeSneakerEntryButton));
+                defaultListModelSneaker, removeSneakerEntryButton));
         removeSneakerEntryButton.addActionListener(new RemoveSneakerListener(defaultListModelSneaker, sneakerEntryJList,
                 removeSneakerEntryButton, sneakerPurchaseList));
 
