@@ -1,1 +1,4 @@
-{"revenues": [{"revenue": 1900}]}
+{"revenues": [
+    {"revenue": 1900},
+    {"revenue": 1700}
+]}

@@ -1,7 +1,17 @@
 {
-    "proxies": [{
-        "name": "save1",
-        "pricePaid": 2
-    }],
+    "proxies": [
+        {
+            "name": "proxy",
+            "pricePaid": 4
+        },
+        {
+            "name": "Leaf proxies",
+            "pricePaid": 2
+        },
+        {
+            "name": "oculus ",
+            "pricePaid": 6
+        }
+    ],
     "type": "PROXY"
 }

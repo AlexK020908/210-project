@@ -6,10 +6,13 @@ import model.investment.SneakerPurchaseList;
 import model.investment.SupportEntryList;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RemoveListener implements ActionListener {
+public class RemoveListener implements ActionListener, ListSelectionListener {
     private DefaultListModel<SupportEntry> defaultListModel;
     private JList<SupportEntry> entryJList;
     private JButton removeButton;
@@ -30,8 +33,8 @@ public class RemoveListener implements ActionListener {
         supportEntryList.removeEntry(defaultListModel.get(index));
         defaultListModel.remove(index);
         //getting index of the selected index
-        int size = defaultListModel.size();
         //if size is equal to zero --> disable the button
+        int size = defaultListModel.size();
         if (size == 0) {
             removeButton.setEnabled(false);
         } else {
@@ -40,5 +43,15 @@ public class RemoveListener implements ActionListener {
     }
 
 
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting() == false) {
+            if (entryJList.getSelectedIndex() == -1) {
+                removeButton.setEnabled(false);
+            } else {
+                removeButton.setEnabled(true);
+            }
+        }
+    }
 }
 

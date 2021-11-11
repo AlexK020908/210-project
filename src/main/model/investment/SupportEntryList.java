@@ -116,4 +116,7 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
     public abstract JSONObject toJson();
 
 
+    public List<T> getEntries() {
+        return typePurchaseList;
+    }
 }

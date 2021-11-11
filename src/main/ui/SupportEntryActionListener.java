@@ -24,12 +24,10 @@ public class SupportEntryActionListener implements ActionListener {
     //Constructs an action listener with the specified support entry list, name of the support entry, a default list
     // model and an entry panel for this type of entry
     public SupportEntryActionListener(String typeOfEntry, SupportEntryList<? extends SupportEntry> supportEntryList,
-                                      DefaultListModel<SupportEntry> defaultListModel, JPanel entryPanel,
-                                      JButton removeButton) {
+                                      DefaultListModel<SupportEntry> defaultListModel, JButton removeButton) {
         this.typeOfEntry = typeOfEntry;
         this.supportEntryList = supportEntryList;
         this.defaultListModel = defaultListModel;
-        this.entryPanel = entryPanel;
         this.removeButton = removeButton;
 
     }
@@ -95,8 +93,6 @@ public class SupportEntryActionListener implements ActionListener {
             if (size > 0) {
                 removeButton.setEnabled(true);
             }
-
-
         }
     }
 

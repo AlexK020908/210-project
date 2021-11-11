@@ -61,6 +61,7 @@ public class SaveActionListener implements ActionListener {
             jsonWriteForSneakers.open();
             jsonWriteForSneakers.write(sneakerPurchaseList);
             jsonWriteForSneakers.close();
+            JOptionPane.showMessageDialog(null, "your sneaker entry list has been saved");
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "no file was found for sneaker entries");
         }
@@ -71,6 +72,7 @@ public class SaveActionListener implements ActionListener {
             jsonWriterForCookGroupEntries.open();
             jsonWriterForCookGroupEntries.write(cookGroupPurchaseList);
             jsonWriterForCookGroupEntries.close();
+            JOptionPane.showMessageDialog(null, "your cook group entry list has been saved");
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "no file was found for cook group entries");
         }
@@ -81,6 +83,7 @@ public class SaveActionListener implements ActionListener {
             jsonWriterForThirdPartySolverEntries.open();
             jsonWriterForThirdPartySolverEntries.write(thirdPartyCaptchaSolversPurchaseList);
             jsonWriterForThirdPartySolverEntries.close();
+            JOptionPane.showMessageDialog(null, "your third party entry list has been saved");
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "no file was found for third party entries");
         }
@@ -91,6 +94,7 @@ public class SaveActionListener implements ActionListener {
             jsonWriterForProxyEntries.open();
             jsonWriterForProxyEntries.write(proxyPurchaseList);
             jsonWriterForProxyEntries.close();
+            JOptionPane.showMessageDialog(null, "your proxy list has been saved");
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "no file was found for proxy entries");
         }

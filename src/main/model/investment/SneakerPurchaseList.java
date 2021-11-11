@@ -152,4 +152,7 @@ public class SneakerPurchaseList implements Writable {
         return array;
     }
 
+    public List<SneakerEntry> getEntries() {
+        return sneakerPurchaseList;
+    }
 }

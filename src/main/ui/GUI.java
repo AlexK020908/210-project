@@ -9,6 +9,9 @@ import persistance.*;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 
 import static javax.swing.ScrollPaneConstants.*;
@@ -36,17 +39,23 @@ public class GUI extends JPanel {
     private JsonReaderForThirdPartySolvers jsonReaderForThirdPartySolvers;
     private JsonWriterForRevenueList jsonWriterForRevenueList;
     private JsonReaderForRevenueList jsonReaderForRevenueList;
-    JMenuBar menubar;
+    private JMenuBar menubar;
 
-    DefaultListModel<SneakerEntry> defaultListModelSneaker;
-    JList<SneakerEntry> sneakerEntryJList;
-    JPanel sneakerPanel;
-    JButton addSneakerEntryButton;
-    JButton removeSneakerEntryButton;
+    private DefaultListModel<SneakerEntry> defaultListModelSneaker;
+    private JList<SneakerEntry> sneakerEntryJList;
+    private JPanel sneakerPanel;
+    private JButton addSneakerEntryButton;
+    private JButton removeSneakerEntryButton;
 
-    DefaultListModel<Revenue> revenueListModel;
-    JList<Revenue> revenueJList;
-    JButton removeRevenueButton;
+    private DefaultListModel<Revenue> revenueListModel;
+    private JList<Revenue> revenueJList;
+    private JButton removeRevenueButton;
+    private DefaultListModel<SupportEntry> proxyDefualtPurchaseList;
+    private DefaultListModel<SupportEntry> cookDefaultPurchaseList;
+    private DefaultListModel<SupportEntry> thirdPartyDefaultPurchaseList;
+    private JButton proxyRemoveButton;
+    private JButton cookRemoveButton;
+    private JButton thirdPartyRemoveButton;
 
     //EFFECT: constructs a mainPanel where JPnale will be attached to; initialize a proxy, cook group , third
     //        party solver , sneakers and revenue panels that will be the part of the main panel.
@@ -154,6 +163,12 @@ public class GUI extends JPanel {
         supportEntries.add(addProxy);
         supportEntries.add(addCookGroup);
         supportEntries.add(addThirdPartySolver);
+        addProxy.addActionListener(new SupportEntryActionListener("proxy", proxyPurchaseList,
+                proxyDefualtPurchaseList, proxyRemoveButton));
+        addCookGroup.addActionListener(new SupportEntryActionListener("cook group", cookGroupPurchaseList,
+                cookDefaultPurchaseList, cookRemoveButton));
+        addThirdPartySolver.addActionListener(new SupportEntryActionListener("Third party Solver",
+                cookGroupPurchaseList, cookDefaultPurchaseList, thirdPartyRemoveButton));
     }
 
     private void addSaveLoadMenu() {
@@ -168,14 +183,115 @@ public class GUI extends JPanel {
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList, jsonWriterForProxyEntries,
                 jsonWriterForCookGroupEntries, jsonWriterForThirdPartySolverEntries,
                 jsonWriteForSneakers, jsonWriterForRevenueList));
-        loadButton.addActionListener(new LoadActionListener());
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadAllSavedProgress();
+            }
+        });
     }
+
+    private void loadAllSavedProgress() {
+        try {
+            readingProxyEntryList();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,"can not load proxy entry list from" + PROXY_STORE);
+        }
+        try {
+            readingThirdPartySolverEntryList();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,"can not load third party solver entry list from"
+                    + THIRD_PARTY_SOLVER_STORE);
+        }
+        try {
+            readingCookGroupEntryList();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,"can not load cook group entry list from" + COOK_GROUP_STORE);
+        }
+        try {
+            readingSneakersEntryList();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,"can not load sneaker entry list from" + COOK_GROUP_STORE);
+        }
+        tryReadingRevenueList();
+
+    }
+
+    //MODIFIES: this
+    //EFFECT: try reading the Revenue list from file , tell the user can not load from its file location if
+    //file can not be read
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
+    private void tryReadingRevenueList() {
+        try {
+            readRevenueList();
+        } catch (IOException e) {
+            System.out.println("can not load sneaker entry list from" + REVENUE_STORE);
+        }
+    }
+
+    //EFFECT: read revenue list from file and assign it as a revenue list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
+    private void readRevenueList() throws IOException {
+        revenueList = jsonReaderForRevenueList.read();
+        for (Revenue r : revenueList.getRevenues()) {
+            revenueListModel.addElement(r);
+        }
+        JOptionPane.showMessageDialog(null, "your revenue entry list has been loaded");
+    }
+
+    //EFFECT: read sneaker list from file and assign it as a sneaker purchase list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
+    private void readingSneakersEntryList() throws IOException {
+        sneakerPurchaseList = jsonReaderForSneaker.read();
+        for (SneakerEntry e : sneakerPurchaseList.getEntries()) {
+            defaultListModelSneaker.addElement(e);
+        }
+        JOptionPane.showMessageDialog(null, "your sneaker entry list has been loaded");
+    }
+
+    //EFFECT: read cook group purchase list from file and assign it as a cook group purchase list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
+    private void readingCookGroupEntryList() throws IOException {
+        cookGroupPurchaseList = jsonReaderForCookGroup.read(); // need to assign the result to the parameter
+        for (SupportEntry e : cookGroupPurchaseList.getEntries()) {
+            cookDefaultPurchaseList.addElement(e);
+        }
+        JOptionPane.showMessageDialog(null, "your cook group entry list has been loaded");
+    }
+
+    //EFFECT: read third part solver purchase list from file and assign it as a third part solver entry list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
+    private void readingThirdPartySolverEntryList() throws IOException {
+        thirdPartyCaptchaSolversPurchaseList =  jsonReaderForThirdPartySolvers.read();
+        for (SupportEntry e : thirdPartyCaptchaSolversPurchaseList.getEntries()) {
+            thirdPartyDefaultPurchaseList.addElement(e);
+        }
+        JOptionPane.showMessageDialog(null, "your third party solver entry list has been loaded");
+    }
+
+    //EFFECT: read proxy entry purchase list from file and assign it as a proxy purchjase list
+    // This [class/method] references code from GitHub
+    // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
+    private void readingProxyEntryList() throws IOException {
+        proxyPurchaseList = jsonReaderForProxy.read();
+        for (SupportEntry e : proxyPurchaseList.getEntries()) {
+            proxyDefualtPurchaseList.addElement(e);
+        }
+        JOptionPane.showMessageDialog(null, "your proxy entry list has been loaded");
+
+    }
+
 
     private void initializeNewRevenuePanel(RevenueList revenues, JPanel mainPanel) {
         revenueListModel = new DefaultListModel<>();
-        revenueJList = new JList<>();
+        revenueJList = new JList<>(revenueListModel);
         revenueJList.setCellRenderer(new RevenueCellRenderer());
-        revenueJList.setVisibleRowCount(3);
+        revenueJList.setVisibleRowCount(2);
 
         JPanel revenuePanel = new JPanel(new BorderLayout());
         revenuePanel.setPreferredSize(new Dimension(600, 200));
@@ -185,7 +301,6 @@ public class GUI extends JPanel {
         revenuePanel.add(buttonPanel, BorderLayout.SOUTH);
         JButton addRevenueButton = new JButton("add revenue");
         removeRevenueButton = new JButton("remove revenue");
-        removeRevenueButton.setEnabled(false);
         JButton viewOverallRevenueButton = new JButton("view revenue");
         buttonPanel.add(addRevenueButton);
         buttonPanel.add(removeRevenueButton);
@@ -213,7 +328,6 @@ public class GUI extends JPanel {
         JPanel buttonPanel = new JPanel();
         addSneakerEntryButton = new JButton("add" + " " + sneaker + " " + "entry");
         removeSneakerEntryButton = new JButton("remove" + " " + sneaker + " " + "entry");
-        removeSneakerEntryButton.setEnabled(false);
 
         mainPanel.add(sneakerPanel);
         buttonPanel.add(addSneakerEntryButton);
@@ -239,6 +353,13 @@ public class GUI extends JPanel {
     private void initializeNewPanel(SupportEntryList<? extends SupportEntry> supportEntryList, String typeOfEntry,
                                                              JPanel mainPanel) {
         DefaultListModel<SupportEntry> defaultListModelForSupportEntries = new DefaultListModel<>();
+        if (supportEntryList.getType() == EntryType.PROXY) {
+            proxyDefualtPurchaseList = defaultListModelForSupportEntries;
+        } else if (supportEntryList.getType() == EntryType.CookGroup) {
+            cookDefaultPurchaseList = defaultListModelForSupportEntries;
+        } else {
+            thirdPartyDefaultPurchaseList = defaultListModelForSupportEntries;
+        }
         //make the default list model defaultListModelForSupportEntries into a jlist
         JList<SupportEntry> entryJlist = new JList<>(defaultListModelForSupportEntries);
         //show how it is rendered, in this case it is string
@@ -249,8 +370,14 @@ public class GUI extends JPanel {
         JButton addEntryButton = new JButton("add" + " " + typeOfEntry + " " + "entry");
         //how big is it? may use addEntryButton.setbounds(), but if u have manager, no need to do it.
         //all the panels
-        JButton removeEntryButton = new JButton("remove" + typeOfEntry + "entry");
-        removeEntryButton.setEnabled(false);
+        JButton removeEntryButton = new JButton("remove" + " " + "entry");
+        if (supportEntryList.getType() == EntryType.PROXY) {
+            proxyRemoveButton = removeEntryButton;
+        } else if (supportEntryList.getType() == EntryType.CookGroup) {
+            cookRemoveButton = removeEntryButton;
+        } else {
+            thirdPartyRemoveButton = removeEntryButton;
+        }
         JPanel buttonPanel = new JPanel();
         JPanel entryPanel = new JPanel(new BorderLayout());
         //but this doesnt work why> entryPanel.add(proxyEntryJlist)
@@ -266,17 +393,10 @@ public class GUI extends JPanel {
 
 
         addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList,
-                defaultListModelForSupportEntries,
-                entryPanel, removeEntryButton));
+                 defaultListModelForSupportEntries, removeEntryButton));
         removeEntryButton.addActionListener(new RemoveListener(defaultListModelForSupportEntries,
                 entryJlist, removeEntryButton, supportEntryList));
     }
-
-
-
-
-
-
 
 
 

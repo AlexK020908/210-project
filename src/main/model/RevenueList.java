@@ -65,4 +65,8 @@ public class RevenueList implements Writable {
         }
 
     }
+
+    public List<Revenue> getRevenues() {
+        return revenues;
+    }
 }
