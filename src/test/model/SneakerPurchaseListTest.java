@@ -1,6 +1,6 @@
 package model;
 
-import jdk.jfr.StackTrace;
+
 import model.investment.SneakerPurchaseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
