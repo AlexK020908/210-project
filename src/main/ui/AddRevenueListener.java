@@ -1,6 +1,5 @@
 package ui;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import model.Revenue;
 import model.RevenueList;
 
