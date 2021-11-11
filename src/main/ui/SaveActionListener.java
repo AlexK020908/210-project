@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+//This class represents an action listener for the save button
 public class SaveActionListener implements ActionListener {
 
     private ProxyPurchaseList proxyPurchaseList;
@@ -25,6 +26,7 @@ public class SaveActionListener implements ActionListener {
     private JsonWriteForSneakers jsonWriteForSneakers;
     private JsonWriterForRevenueList jsonWriterForRevenueList;
 
+    //EFFECT: initializes the save action listener constructor
     public SaveActionListener(ProxyPurchaseList proxyPurchaseList,
                               CookGroupPurchaseList cookGroupPurchaseList,
                               ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList,
@@ -46,6 +48,8 @@ public class SaveActionListener implements ActionListener {
         this.jsonWriterForRevenueList = jsonWriterForRevenueList;
     }
 
+    //MODIFIES: this
+    //EFFECT: save each entry to Json fle
     @Override
     public void actionPerformed(ActionEvent e) {
         saveProxyList();
@@ -56,6 +60,8 @@ public class SaveActionListener implements ActionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECT: save and write the sneaker entry list into the corresponding json file.
     private void saveSneakersList() {
         try {
             jsonWriteForSneakers.open();
@@ -67,6 +73,8 @@ public class SaveActionListener implements ActionListener {
         }
     }
 
+    //MODIFIES: this
+    //EFFECT: save and write the COOK GROUP entry list into the corresponding json file.
     private void saveCookGroupList() {
         try {
             jsonWriterForCookGroupEntries.open();
@@ -78,6 +86,8 @@ public class SaveActionListener implements ActionListener {
         }
     }
 
+    //MODIFIES: this
+    //EFFECT: save and write the third part solver entry list into the corresponding json file.
     private void saveThirdPartySolversList() {
         try {
             jsonWriterForThirdPartySolverEntries.open();
@@ -89,6 +99,8 @@ public class SaveActionListener implements ActionListener {
         }
     }
 
+    //MODIFIES: this
+    //EFFECT: save and write the proxy entry list into the corresponding json file.
     private void saveProxyList() {
         try {
             jsonWriterForProxyEntries.open();
@@ -100,6 +112,8 @@ public class SaveActionListener implements ActionListener {
         }
     }
 
+    //MODIFIES: this
+    //EFFECT: save and write the revenue  list into the corresponding json file.
     private void saveRevenueList() {
         try {
             jsonWriterForRevenueList.open();

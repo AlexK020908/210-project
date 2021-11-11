@@ -78,7 +78,7 @@ public class GUI extends JPanel {
         //Create and set up the window.
         JFrame frame = initializeJFrame();
         frame.setJMenuBar(menubar);
-        JPanel mainPanel = initializePanel();
+        JPanel mainPanel = initializeMainPanel();
         initializeAllEntries(mainPanel);
         addSaveLoadMenu();
         addSupportEntriesMenu();
@@ -89,6 +89,8 @@ public class GUI extends JPanel {
 
     }
 
+    //MODIFIES: THIS
+    //EFFECT: add the revenue menu to the menu bar, a revenue menu should have the option to add a new revenue entry
     private void addRevenueMenu() {
         JMenu revenue = new JMenu("revenues");
         JMenuItem addNewRevenue = new JMenuItem("add new revenue");
@@ -100,7 +102,8 @@ public class GUI extends JPanel {
         viewRevenue.addActionListener(new ViewRevenueListener(revenueList));
     }
 
-
+    //MODIFIES:this
+    //EFFECT: add the sneaker menu to the menu bar, a sneaker menu should have the option to add a new sneaker entry
     private void addSneakerEntriesMenu() {
         JMenu sneakers = new JMenu("sneaker entries");
         JMenuItem addSneakerEntry = new JMenuItem("add new sneaker entry");
@@ -110,14 +113,59 @@ public class GUI extends JPanel {
                 removeSneakerEntryButton));
     }
 
+    //MODIFIES: this
+    //EFFECT: initialize a support entry menu item where the user can add a new entry that's part of the three
+    //        support entries
+    private void addSupportEntriesMenu() {
+        JMenu supportEntries = new JMenu("Support entries");
+        menubar.add(supportEntries);
+        JMenuItem addProxy = new JMenuItem("add proxy entry");
+        JMenuItem addCookGroup = new JMenuItem("add cook group entry entry");
+        JMenuItem addThirdPartySolver = new JMenuItem("add third party solver entry");
+        supportEntries.add(addProxy);
+        supportEntries.add(addCookGroup);
+        supportEntries.add(addThirdPartySolver);
+        addProxy.addActionListener(new SupportEntryActionListener("proxy", proxyPurchaseList,
+                proxyDefualtPurchaseList, proxyRemoveButton));
+        addCookGroup.addActionListener(new SupportEntryActionListener("cook group", cookGroupPurchaseList,
+                cookDefaultPurchaseList, cookRemoveButton));
+        addThirdPartySolver.addActionListener(new SupportEntryActionListener("Third party Solver",
+                cookGroupPurchaseList, cookDefaultPurchaseList, thirdPartyRemoveButton));
+    }
 
-    private JPanel initializePanel() {
+    //MODIFIES: this
+    //EFFECT: create a new menu item on the menu bar that allows the user to load and save the progress they made
+    private void addSaveLoadMenu() {
+        JMenu file = new JMenu("file");
+        menubar.setBackground(Color.WHITE);
+        menubar.add(file);
+        JMenuItem saveButton = new JMenuItem("save");
+        JMenuItem loadButton = new JMenuItem("load");
+        file.add(saveButton);
+        file.add(loadButton);
+        saveButton.addActionListener(new SaveActionListener(proxyPurchaseList, cookGroupPurchaseList,
+                thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList, jsonWriterForProxyEntries,
+                jsonWriterForCookGroupEntries, jsonWriterForThirdPartySolverEntries,
+                jsonWriteForSneakers, jsonWriterForRevenueList));
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadAllSavedProgress();
+            }
+        });
+    }
+
+    //MODIFIES: this
+    //EFFECT: create main PANEL where all component entries will pasted on to
+    private JPanel initializeMainPanel() {
         JPanel mainPanel = new JPanel(new FlowLayout());
         add(mainPanel);
-        mainPanel.setBorder(BorderFactory.createTitledBorder("Support Entries"));
+        mainPanel.setBorder(BorderFactory.createTitledBorder("All Entries"));
         return mainPanel;
     }
 
+    //MODIFIES: this
+    //EFFECT: create a new Jframe with the title "profit or Loss calculator.
     private JFrame initializeJFrame() {
         JFrame frame = new JFrame("Profit or Loss calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -129,6 +177,8 @@ public class GUI extends JPanel {
         return frame;
     }
 
+    //MODIFIES: this
+    //EFFECT: all type of entries with its own corresponding JList, panel, scroll pane and Default list Model
     private void initializeAllEntries(JPanel mainPanel) {
         proxyPurchaseList = new ProxyPurchaseList();
         setLayout(new GridLayout(1, 5));
@@ -154,43 +204,9 @@ public class GUI extends JPanel {
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList));
     }
 
-    private void addSupportEntriesMenu() {
-        JMenu supportEntries = new JMenu("Support entries");
-        menubar.add(supportEntries);
-        JMenuItem addProxy = new JMenuItem("add proxy entry");
-        JMenuItem addCookGroup = new JMenuItem("add cook group entry entry");
-        JMenuItem addThirdPartySolver = new JMenuItem("add third party solver entry");
-        supportEntries.add(addProxy);
-        supportEntries.add(addCookGroup);
-        supportEntries.add(addThirdPartySolver);
-        addProxy.addActionListener(new SupportEntryActionListener("proxy", proxyPurchaseList,
-                proxyDefualtPurchaseList, proxyRemoveButton));
-        addCookGroup.addActionListener(new SupportEntryActionListener("cook group", cookGroupPurchaseList,
-                cookDefaultPurchaseList, cookRemoveButton));
-        addThirdPartySolver.addActionListener(new SupportEntryActionListener("Third party Solver",
-                cookGroupPurchaseList, cookDefaultPurchaseList, thirdPartyRemoveButton));
-    }
 
-    private void addSaveLoadMenu() {
-        JMenu file = new JMenu("file");
-        menubar.setBackground(Color.WHITE);
-        menubar.add(file);
-        JMenuItem saveButton = new JMenuItem("save");
-        JMenuItem loadButton = new JMenuItem("load");
-        file.add(saveButton);
-        file.add(loadButton);
-        saveButton.addActionListener(new SaveActionListener(proxyPurchaseList, cookGroupPurchaseList,
-                thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList, jsonWriterForProxyEntries,
-                jsonWriterForCookGroupEntries, jsonWriterForThirdPartySolverEntries,
-                jsonWriteForSneakers, jsonWriterForRevenueList));
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadAllSavedProgress();
-            }
-        });
-    }
-
+    //MODIFIES: this
+    //EFFECT: load all saved progress into the gui, and allow the user to see how much they spent in each entry
     private void loadAllSavedProgress() {
         try {
             readingProxyEntryList();
@@ -225,8 +241,10 @@ public class GUI extends JPanel {
     private void tryReadingRevenueList() {
         try {
             readRevenueList();
+            JOptionPane.showMessageDialog(null, "your revenues have been loaded, you currently have"
+                    + " " + revenueList.calculateTotalRevenue() + " " + "dollars");
         } catch (IOException e) {
-            System.out.println("can not load sneaker entry list from" + REVENUE_STORE);
+            JOptionPane.showMessageDialog(null, "can not load sneaker entry list from" + REVENUE_STORE);
         }
     }
 
@@ -249,7 +267,8 @@ public class GUI extends JPanel {
         for (SneakerEntry e : sneakerPurchaseList.getEntries()) {
             defaultListModelSneaker.addElement(e);
         }
-        JOptionPane.showMessageDialog(null, "your sneaker entry list has been loaded");
+        JOptionPane.showMessageDialog(null, "your sneaker entry list has been loaded, your total money spent comes to "
+                + sneakerPurchaseList.getTotalMoneySpent());
     }
 
     //EFFECT: read cook group purchase list from file and assign it as a cook group purchase list
@@ -260,7 +279,8 @@ public class GUI extends JPanel {
         for (SupportEntry e : cookGroupPurchaseList.getEntries()) {
             cookDefaultPurchaseList.addElement(e);
         }
-        JOptionPane.showMessageDialog(null, "your cook group entry list has been loaded");
+        JOptionPane.showMessageDialog(null, "your cook group entry list has been loaded, "
+                + "your total moeny spent comes to" + " " + cookGroupPurchaseList.getTotalMoneySpent());
     }
 
     //EFFECT: read third part solver purchase list from file and assign it as a third part solver entry list
@@ -271,7 +291,8 @@ public class GUI extends JPanel {
         for (SupportEntry e : thirdPartyCaptchaSolversPurchaseList.getEntries()) {
             thirdPartyDefaultPurchaseList.addElement(e);
         }
-        JOptionPane.showMessageDialog(null, "your third party solver entry list has been loaded");
+        JOptionPane.showMessageDialog(null, "your third party solver entry list has been loaded"
+                + " " + "your total money spent comes to " + thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
     }
 
     //EFFECT: read proxy entry purchase list from file and assign it as a proxy purchjase list
@@ -282,11 +303,14 @@ public class GUI extends JPanel {
         for (SupportEntry e : proxyPurchaseList.getEntries()) {
             proxyDefualtPurchaseList.addElement(e);
         }
-        JOptionPane.showMessageDialog(null, "your proxy entry list has been loaded");
+        JOptionPane.showMessageDialog(null, "your proxy entry list has been loaded, your total money spent is "
+                + proxyPurchaseList.getTotalMoneySpent());
 
     }
 
-
+    //MODIFIES: this
+    //EFFECT: create a new revenue panel on the main panel. On the Revenue Panel, there should be a remove and add entry
+    // button, and a place to show all the existing revenue entries
     private void initializeNewRevenuePanel(RevenueList revenues, JPanel mainPanel) {
         revenueListModel = new DefaultListModel<>();
         revenueJList = new JList<>(revenueListModel);
@@ -312,10 +336,11 @@ public class GUI extends JPanel {
                 revenues, removeRevenueButton));
         viewOverallRevenueButton.addActionListener(new ViewRevenueListener(revenues));
 
-
-
     }
 
+    //MODIFIES: this
+    //EFFECT: create a new sneaker panel on the main panel. On the Revenue Panel, there should be a remove and add entry
+    // button, and a place to show all the existing sneaker entries
     private void initializeNewSneakerPanel(SneakerPurchaseList sneakerPurchaseList, String sneaker, JPanel mainPanel) {
         defaultListModelSneaker = new DefaultListModel<>();
         sneakerEntryJList = new JList<>(defaultListModelSneaker);
@@ -353,13 +378,7 @@ public class GUI extends JPanel {
     private void initializeNewPanel(SupportEntryList<? extends SupportEntry> supportEntryList, String typeOfEntry,
                                                              JPanel mainPanel) {
         DefaultListModel<SupportEntry> defaultListModelForSupportEntries = new DefaultListModel<>();
-        if (supportEntryList.getType() == EntryType.PROXY) {
-            proxyDefualtPurchaseList = defaultListModelForSupportEntries;
-        } else if (supportEntryList.getType() == EntryType.CookGroup) {
-            cookDefaultPurchaseList = defaultListModelForSupportEntries;
-        } else {
-            thirdPartyDefaultPurchaseList = defaultListModelForSupportEntries;
-        }
+        assignAppropriatePurchaseList(supportEntryList, defaultListModelForSupportEntries);
         //make the default list model defaultListModelForSupportEntries into a jlist
         JList<SupportEntry> entryJlist = new JList<>(defaultListModelForSupportEntries);
         //show how it is rendered, in this case it is string
@@ -371,13 +390,7 @@ public class GUI extends JPanel {
         //how big is it? may use addEntryButton.setbounds(), but if u have manager, no need to do it.
         //all the panels
         JButton removeEntryButton = new JButton("remove" + " " + "entry");
-        if (supportEntryList.getType() == EntryType.PROXY) {
-            proxyRemoveButton = removeEntryButton;
-        } else if (supportEntryList.getType() == EntryType.CookGroup) {
-            cookRemoveButton = removeEntryButton;
-        } else {
-            thirdPartyRemoveButton = removeEntryButton;
-        }
+        assignAppropriateRemoveButton(supportEntryList, removeEntryButton);
         JPanel buttonPanel = new JPanel();
         JPanel entryPanel = new JPanel(new BorderLayout());
         //but this doesnt work why> entryPanel.add(proxyEntryJlist)
@@ -398,10 +411,35 @@ public class GUI extends JPanel {
                 entryJlist, removeEntryButton, supportEntryList));
     }
 
+    //MODIFIES: this
+    //EFFECT: assign the remove button corresponding type of the support entry list as each type needs its own remove
+    //button
+    private void assignAppropriateRemoveButton(SupportEntryList<? extends SupportEntry> supportEntryList,
+                                               JButton removeEntryButton) {
+        if (supportEntryList.getType() == EntryType.PROXY) {
+            proxyRemoveButton = removeEntryButton;
+        } else if (supportEntryList.getType() == EntryType.CookGroup) {
+            cookRemoveButton = removeEntryButton;
+        } else {
+            thirdPartyRemoveButton = removeEntryButton;
+        }
+    }
+
+    //Modifies: this
+    //EFFECT: assign the corresponding purchase list that has the same type as the support entry list.
+    private void assignAppropriatePurchaseList(SupportEntryList<? extends SupportEntry> supportEntryList,
+                                               DefaultListModel<SupportEntry> defaultListModelForSupportEntries) {
+        if (supportEntryList.getType() == EntryType.PROXY) {
+            proxyDefualtPurchaseList = defaultListModelForSupportEntries;
+        } else if (supportEntryList.getType() == EntryType.CookGroup) {
+            cookDefaultPurchaseList = defaultListModelForSupportEntries;
+        } else {
+            thirdPartyDefaultPurchaseList = defaultListModelForSupportEntries;
+        }
+    }
 
 
-
-    //This
+    //MODIFIES: this
     //EFFECT: This class represents each support entry as its string
     private static class SupportEntryCellRenderer extends DefaultListCellRenderer {
         @Override

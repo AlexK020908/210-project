@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//This class represents an action listener for the calculate button
 public class CalculateListener implements ActionListener {
     CookGroupPurchaseList cookGroupPurchaseList;
     ProxyPurchaseList proxyPurchaseList;
@@ -17,6 +18,7 @@ public class CalculateListener implements ActionListener {
     SneakerPurchaseList sneakerPurchaseList;
     RevenueList revenueList;
 
+    //EFFECT: initlaize a calculate listener constructor
     public CalculateListener(CookGroupPurchaseList cookGroupPurchaseList, ProxyPurchaseList proxyPurchaseList,
                              ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList,
                              SneakerPurchaseList sneakerPurchaseList, RevenueList revenueList) {
@@ -28,6 +30,12 @@ public class CalculateListener implements ActionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECT: if total money spent is greater than revenue, prompts the user with the notifcation that he/she is losing
+    // money and also specify how much they are losing
+    //        if total money spent = revenue, notify the user that they are breaking even
+    //        If total money < revenue , notify the user that they are making positive income, and also how much
+    //         MONEY they are making
     @Override
     public void actionPerformed(ActionEvent e) {
         double moneySpentOnCookGroups = cookGroupPurchaseList.getTotalMoneySpent();

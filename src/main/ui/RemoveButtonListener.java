@@ -9,12 +9,14 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//This class reprsents an action listener for the remove button for revenue list
 public class RemoveButtonListener implements ActionListener, ListSelectionListener {
     JList<Revenue> revenueJList;
     DefaultListModel<Revenue> defaultListModel;
     RevenueList revenueList;
     JButton removeButton;
 
+    //EFFECT: initialize a remove button listiner construtor
     public RemoveButtonListener(JList<Revenue> revenueJList, DefaultListModel<Revenue> defaultListModel,
                                 RevenueList revenueList, JButton removeButton) {
         this.revenueJList =  revenueJList;
@@ -23,6 +25,9 @@ public class RemoveButtonListener implements ActionListener, ListSelectionListen
         this.removeButton = removeButton;
     }
 
+    //MODIFIES: this
+    //EFFECT: get the selected index and remve that index from the list model and list. If size then is = 0 ;
+    //        make the remove button false
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -41,6 +46,9 @@ public class RemoveButtonListener implements ActionListener, ListSelectionListen
 
     }
 
+    //MODIFIES: this
+    //EFFECT: if the user is not changing their selection;
+    //         if list has no remaining entry, set remove button to false --> otherwise set it to true
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {

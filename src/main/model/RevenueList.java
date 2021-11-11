@@ -60,8 +60,10 @@ public class RevenueList implements Writable {
     //MODIFIES: this
     //EFFECT: REMOVE the specified revenue from the revenue list if it does contain the given revenue
     public void removeRevenue(Revenue revenue) {
-        if (revenues.contains(revenue)) {
-            revenues.remove(revenue);
+        for (Revenue next : revenues) {
+            if (next.getRevenue() == revenue.getRevenue()) {
+                revenues.remove(next);
+            }
         }
 
     }

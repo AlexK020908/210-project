@@ -1,8 +1,11 @@
 package model;
 
+import jdk.jfr.StackTrace;
 import model.investment.SneakerPurchaseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +34,24 @@ class SneakerPurchaseListTest {
         sneakerPurchaseList = new SneakerPurchaseList();
     }
 
+
+    @Test
+    public void testGetSneakers() {
+       List<SneakerEntry> emptyList = sneakerPurchaseList.getEntries();
+       assertEquals(0, emptyList.size());
+       assertTrue(sneakerPurchaseList.addEntry(s1));
+       sneakerPurchaseList.addEntry(s2);
+       sneakerPurchaseList.addEntry(s3);
+       sneakerPurchaseList.addEntry(s4);
+       sneakerPurchaseList.addEntry(s5);
+       List<SneakerEntry> sneakerEntries = sneakerPurchaseList.getEntries();
+       assertEquals(s1, sneakerEntries.get(0));
+       assertEquals(s2, sneakerEntries.get(1));
+       assertEquals(s3, sneakerEntries.get(2));
+       assertEquals(s4, sneakerEntries.get(3));
+       assertEquals(s5, sneakerEntries.get(4));
+
+    }
     @Test
     public void testAddEntry(){
         // add one entry

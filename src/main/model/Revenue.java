@@ -2,6 +2,8 @@ package model;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 //class for revenue
 public class Revenue {
     private double revenue;
@@ -21,5 +23,24 @@ public class Revenue {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("revenue", revenue);
         return jsonObject;
+    }
+
+    //EFFECT: compare the two objects by overriding equals, two objects are equal if they have the same revenue
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Revenue revenue1 = (Revenue) o;
+        return Double.compare(revenue1.revenue, revenue) == 0;
+    }
+
+    //EFFECT: hascode method
+    @Override
+    public int hashCode() {
+        return Objects.hash(revenue);
     }
 }

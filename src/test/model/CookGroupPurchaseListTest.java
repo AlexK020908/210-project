@@ -29,6 +29,22 @@ public class CookGroupPurchaseListTest {
     }
 
     @Test
+    public void testGetEntries() {
+        List<CookGroupSubscriptionEntry> empty = cookGroupPurchaseList.getEntries();
+        assertEquals(0, empty.size());
+        cookGroupPurchaseList.addEntry(forbidden);
+        cookGroupPurchaseList.addEntry((theNorthCop));
+        cookGroupPurchaseList.addEntry(DropAlert);
+        cookGroupPurchaseList.addEntry(secretSauce);
+        List<CookGroupSubscriptionEntry> entries =  cookGroupPurchaseList.getEntries();
+        assertEquals(4, entries.size());
+        assertEquals(forbidden, entries.get(0));
+        assertEquals(theNorthCop, entries.get(1));
+        assertEquals(DropAlert, entries.get(2));
+        assertEquals(secretSauce, entries.get(3));
+    }
+
+    @Test
     public void testAddOneEntry() {
         assertTrue(cookGroupPurchaseList.addEntry(forbidden));
         assertEquals(1,cookGroupPurchaseList.getLength());

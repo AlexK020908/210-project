@@ -3,7 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
+import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,15 +20,14 @@ public class RevenueListTest {
 
      //INITIALIZING
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         Revenues = new RevenueList();
     }
 
-    /*
     @Test
     public void testGetRevenues(){
-        //no revenues in the list
-        assertEquals(Revenues, Revenues.getRevenues());
+
+
         //add one revenue
         Revenues.addNewRevenue(r1);
 
@@ -37,10 +37,20 @@ public class RevenueListTest {
         Revenues.addNewRevenue(r4);
         Revenues.addNewRevenue(r5);
 
+        List<Revenue> revenues = Revenues.getRevenues();
+        assertEquals(5, revenues.size());
+        assertEquals(r1, revenues.get(0));
+        assertEquals(r2, revenues.get(1));
+        assertEquals(r3, revenues.get(2));
+        assertEquals(r4, revenues.get(3));
+        assertEquals(r5, revenues.get(4));
+
+
+
 
     }
 
-     */
+
     @Test
     public void testAddRevenue() {
         //add one revenue

@@ -6,7 +6,10 @@ import model.SneakerEntry;
 import javax.swing.*;
 import java.awt.*;
 
+//This class represents a cell renderer for revenue list
 public class RevenueCellRenderer extends DefaultListCellRenderer {
+
+    //EFFECT: show each revenue entry as its number in terms of double
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
                                                   boolean cellHasFocus) {
