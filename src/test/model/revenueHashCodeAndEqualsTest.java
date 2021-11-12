@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class revenueTestHashCodeAndEquals {
+public class revenueHashCodeAndEqualsTest {
     private Revenue r1;
     private Revenue r2;
     private Revenue r3;
