@@ -79,8 +79,8 @@ public class GUI extends JPanel {
         JFrame frame = initializeJFrame();
         frame.setJMenuBar(menubar);
         JPanel mainPanel = initializeMainPanel();
-        initializeAllEntries(mainPanel);
         addSaveLoadMenu();
+        initializeAllEntries(mainPanel);
         addSupportEntriesMenu();
         addSneakerEntriesMenu();
         addRevenueMenu();
@@ -181,19 +181,20 @@ public class GUI extends JPanel {
     //EFFECT: all type of entries with its own corresponding JList, panel, scroll pane and Default list Model
     private void initializeAllEntries(JPanel mainPanel) {
         proxyPurchaseList = new ProxyPurchaseList();
+        cookGroupPurchaseList = new CookGroupPurchaseList();
+        thirdPartyCaptchaSolversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
+        sneakerPurchaseList = new SneakerPurchaseList();
+        revenueList = new RevenueList();
+
         setLayout(new GridLayout(1, 5));
         initializeNewPanel(proxyPurchaseList, "Proxy", mainPanel);
 
-        cookGroupPurchaseList = new CookGroupPurchaseList();
         initializeNewPanel(cookGroupPurchaseList, "Cook group", mainPanel);
 
-        thirdPartyCaptchaSolversPurchaseList = new ThirdPartyCaptchaSolversPurchaseList();
         initializeNewPanel(thirdPartyCaptchaSolversPurchaseList, "Third party captcha solver", mainPanel);
 
-        sneakerPurchaseList = new SneakerPurchaseList();
         initializeNewSneakerPanel(sneakerPurchaseList, "sneaker", mainPanel);
 
-        revenueList = new RevenueList();
         initializeNewRevenuePanel(revenueList, mainPanel);
 
         JButton calculateButton = new JButton("calculate profit or loss");
@@ -252,7 +253,10 @@ public class GUI extends JPanel {
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readRevenueList() throws IOException {
-        revenueList = jsonReaderForRevenueList.read();
+        RevenueList revenueList2 = jsonReaderForRevenueList.read();
+        for (Revenue next : revenueList2.getRevenues()) {
+            revenueList.addNewRevenue(next);
+        }
         for (Revenue r : revenueList.getRevenues()) {
             revenueListModel.addElement(r);
         }
@@ -263,21 +267,37 @@ public class GUI extends JPanel {
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingSneakersEntryList() throws IOException {
-        sneakerPurchaseList = jsonReaderForSneaker.read();
-        for (SneakerEntry e : sneakerPurchaseList.getEntries()) {
-            defaultListModelSneaker.addElement(e);
+        SneakerPurchaseList sneakerPurchaseList2 = jsonReaderForSneaker.read();
+       //sneakerPurchaseList = jsonReaderForSneaker.read();
+        for (SneakerEntry next : sneakerPurchaseList2.getEntries()) {
+            sneakerPurchaseList.addEntry(next);
         }
+        for (SneakerEntry e : sneakerPurchaseList.getEntries()) {
+            if (!(defaultListModelSneaker.contains(e))) {
+                defaultListModelSneaker.addElement(e);
+            }
+        }
+        //we can check if it is already in the lsit since it is the same object, the proxy purchase list
+        //may have pruned the existing entry but list odel does not know how to to that.
+        // if the same object reference exist simply do not do anything
         JOptionPane.showMessageDialog(null, "your sneaker entry list has been loaded, your total money spent comes to "
                 + sneakerPurchaseList.getTotalMoneySpent());
+
     }
 
     //EFFECT: read cook group purchase list from file and assign it as a cook group purchase list
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingCookGroupEntryList() throws IOException {
-        cookGroupPurchaseList = jsonReaderForCookGroup.read(); // need to assign the result to the parameter
-        for (SupportEntry e : cookGroupPurchaseList.getEntries()) {
-            cookDefaultPurchaseList.addElement(e);
+        CookGroupPurchaseList cookGroupPurchaseList2 = jsonReaderForCookGroup.read();
+        for (CookGroupSubscriptionEntry next : cookGroupPurchaseList2.getEntries()) {
+            cookGroupPurchaseList.addEntry(next);
+        }
+        //cookGroupPurchaseList = jsonReaderForCookGroup.read();  need to assign the result to the parameter
+        for (CookGroupSubscriptionEntry e : cookGroupPurchaseList.getEntries()) {
+            if (!(cookDefaultPurchaseList.contains(e))) {
+                cookDefaultPurchaseList.addElement(e);
+            }
         }
         JOptionPane.showMessageDialog(null, "your cook group entry list has been loaded, "
                 + "your total moeny spent comes to" + " " + cookGroupPurchaseList.getTotalMoneySpent());
@@ -287,9 +307,18 @@ public class GUI extends JPanel {
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingThirdPartySolverEntryList() throws IOException {
-        thirdPartyCaptchaSolversPurchaseList =  jsonReaderForThirdPartySolvers.read();
-        for (SupportEntry e : thirdPartyCaptchaSolversPurchaseList.getEntries()) {
-            thirdPartyDefaultPurchaseList.addElement(e);
+        ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList2
+                = jsonReaderForThirdPartySolvers.read();
+        for (ThirdPartyCaptchaSolverEntry next : thirdPartyCaptchaSolversPurchaseList2.getEntries()) {
+            thirdPartyCaptchaSolversPurchaseList.addEntry(next);
+        }
+
+        //thirdPartyCaptchaSolversPurchaseList =  jsonReaderForThirdPartySolvers.read();
+        // go to offic hour and see why this doesnt work
+        for (ThirdPartyCaptchaSolverEntry e : thirdPartyCaptchaSolversPurchaseList.getEntries()) {
+            if (!(thirdPartyDefaultPurchaseList.contains(e))) {
+                thirdPartyDefaultPurchaseList.addElement(e);
+            }
         }
         JOptionPane.showMessageDialog(null, "your third party solver entry list has been loaded"
                 + " " + "your total money spent comes to " + thirdPartyCaptchaSolversPurchaseList.getTotalMoneySpent());
@@ -299,9 +328,14 @@ public class GUI extends JPanel {
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     private void readingProxyEntryList() throws IOException {
-        proxyPurchaseList = jsonReaderForProxy.read();
-        for (SupportEntry e : proxyPurchaseList.getEntries()) {
-            proxyDefualtPurchaseList.addElement(e);
+        ProxyPurchaseList proxyPurchaseList2 = jsonReaderForProxy.read();
+        for (ProxyEntry e : proxyPurchaseList2.getEntries()) {
+            proxyPurchaseList.addEntry(e);
+        }
+        for (ProxyEntry e : proxyPurchaseList.getEntries()) {
+            if (!(proxyDefualtPurchaseList.contains(e))) {
+                proxyDefualtPurchaseList.addElement(e);
+            }
         }
         JOptionPane.showMessageDialog(null, "your proxy entry list has been loaded, your total money spent is "
                 + proxyPurchaseList.getTotalMoneySpent());
@@ -378,6 +412,7 @@ public class GUI extends JPanel {
     private void initializeNewPanel(SupportEntryList<? extends SupportEntry> supportEntryList, String typeOfEntry,
                                                              JPanel mainPanel) {
         DefaultListModel<SupportEntry> defaultListModelForSupportEntries = new DefaultListModel<>();
+
         assignAppropriatePurchaseList(supportEntryList, defaultListModelForSupportEntries);
         //make the default list model defaultListModelForSupportEntries into a jlist
         JList<SupportEntry> entryJlist = new JList<>(defaultListModelForSupportEntries);
