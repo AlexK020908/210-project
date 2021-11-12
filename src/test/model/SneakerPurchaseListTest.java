@@ -51,6 +51,7 @@ class SneakerPurchaseListTest {
        assertEquals(s4, sneakerEntries.get(3));
        assertEquals(s5, sneakerEntries.get(4));
 
+
     }
     @Test
     public void testAddEntry(){
