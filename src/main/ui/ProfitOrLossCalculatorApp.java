@@ -143,13 +143,15 @@ public class ProfitOrLossCalculatorApp {
             readRevenueList();
         } catch (IOException e) {
             System.out.println("can not load sneaker entry list from" + REVENUE_STORE);
+        } catch (AmountException e) {
+            System.out.println("invalid revenue");
         }
     }
 
     //EFFECT: read revenue list from file and assign it as a revenue list
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
-    private void readRevenueList() throws IOException {
+    private void readRevenueList() throws IOException, AmountException {
         revenueList = jsonReaderForRevenueList.read();
         System.out.println("your revenue List has been loaded from : " + REVENUE_STORE);
         System.out.println("your revenue total is : " + revenueList.calculateTotalRevenue());
@@ -337,7 +339,12 @@ public class ProfitOrLossCalculatorApp {
     private void runRevenue() {
         System.out.println("please enter the new revenue made");
         double revenueMade = input.nextDouble();
-        Revenue revenue = new Revenue(revenueMade);
+        Revenue revenue = null;
+        try {
+            revenue = new Revenue(revenueMade);
+        } catch (AmountException e) {
+            System.out.println("the revenue is invalid");
+        }
         revenueList.addNewRevenue(revenue);
         System.out.println("your new revenue has been added to your revenue list");
         System.out.println("your total revenue so far is now: " + revenueList.calculateTotalRevenue());

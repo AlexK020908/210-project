@@ -1,5 +1,6 @@
 package ui;
 
+import model.AmountException;
 import model.Revenue;
 import model.RevenueList;
 
@@ -28,19 +29,20 @@ public class AddRevenueListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         double newRevenue = Double.parseDouble(JOptionPane.showInputDialog(null, "enter the revenue made", null));
-        if (newRevenue == 0 || newRevenue < 0) {
-            JOptionPane.showMessageDialog(null, "please enter a correct revenue");
-        } else {
-            Revenue revenue = new Revenue(newRevenue);
 
+        try {
+            Revenue revenue = new Revenue(newRevenue);
             revenueList.addNewRevenue(revenue);
             defaultListModel.addElement(revenue);
-
-            int size = defaultListModel.size();
-            if (size > 0) {
-                removeButton.setEnabled(true);
-            }
-
+        } catch (AmountException ex) {
+            JOptionPane.showMessageDialog(null, "please enter a correct revenue");
         }
+
+        int size = defaultListModel.size();
+        if (size > 0) {
+            removeButton.setEnabled(true);
+        }
+
     }
 }
+

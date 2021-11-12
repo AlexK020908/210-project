@@ -246,13 +246,15 @@ public class GUI extends JPanel {
                     + " " + revenueList.calculateTotalRevenue() + " " + "dollars");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "can not load sneaker entry list from" + REVENUE_STORE);
+        } catch (AmountException e) {
+            JOptionPane.showMessageDialog(null, "one of your revenues are invalid");
         }
     }
 
     //EFFECT: read revenue list from file and assign it as a revenue list
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
-    private void readRevenueList() throws IOException {
+    private void readRevenueList() throws IOException, AmountException {
         RevenueList revenueList2 = jsonReaderForRevenueList.read();
         for (Revenue next : revenueList2.getRevenues()) {
             revenueList.addNewRevenue(next);

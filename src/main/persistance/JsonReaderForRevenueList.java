@@ -1,5 +1,6 @@
 package persistance;
 
+import model.AmountException;
 import model.Revenue;
 import model.RevenueList;
 import org.json.JSONArray;
@@ -25,7 +26,7 @@ public class JsonReaderForRevenueList {
 
     // EFFECTS: reads revenue list from file and returns it;
     //          throws IOException if an error occurs reading data from file
-    public RevenueList read() throws IOException {
+    public RevenueList read() throws IOException, AmountException {
         //first turn the file into a stream of string
         String revenueStream = readFile(source);
         //then turn the string into json object
@@ -36,7 +37,7 @@ public class JsonReaderForRevenueList {
     }
 
     //EFFECT: parse the revenue list Json object into a readable revenue list
-    private RevenueList parseJsonObject(JSONObject jsonObjectRevenues) {
+    private RevenueList parseJsonObject(JSONObject jsonObjectRevenues) throws AmountException {
         RevenueList revenueList = new RevenueList();
         addEntries(revenueList, jsonObjectRevenues);
         return revenueList;
@@ -45,7 +46,7 @@ public class JsonReaderForRevenueList {
     //MODIFIES: revenueList
     //EFFECT: add each revenue entry in the  jsonObjectRevenues
     // to an empty revenueList.
-    private RevenueList addEntries(RevenueList revenueList, JSONObject jsonObjectRevenues) {
+    private RevenueList addEntries(RevenueList revenueList, JSONObject jsonObjectRevenues) throws AmountException {
         JSONArray revenuesJsonObjectInArray = jsonObjectRevenues.getJSONArray("revenues");
 
         for (Object revenue : revenuesJsonObjectInArray) {
@@ -57,7 +58,7 @@ public class JsonReaderForRevenueList {
 
     //MODIFIES:  revenueList
     //EFFECT; add the next revenue entry (JSON object) to the revenueList
-    private void addEntry(JSONObject jsonObjectRevenue, RevenueList revenueList) {
+    private void addEntry(JSONObject jsonObjectRevenue, RevenueList revenueList) throws AmountException {
         double revenue = jsonObjectRevenue.getDouble("revenue");
         Revenue newRevenue = new Revenue(revenue);
         revenueList.addNewRevenue(newRevenue);

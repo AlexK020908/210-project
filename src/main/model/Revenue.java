@@ -9,7 +9,10 @@ public class Revenue {
     private double revenue;
 
     //EFFECT: construct a revenue object
-    public Revenue(double revenue) {
+    public Revenue(double revenue) throws AmountException {
+        if (revenue <= 0) {
+            throw new AmountException();
+        }
         this.revenue = revenue;
     }
 
