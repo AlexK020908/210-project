@@ -35,8 +35,10 @@ public class JsonWriterForSupportEntries {
     //EFFECT: write JSON representation of support list entries to file
     //        support entries include: proxy entries, Cook group entries and Third party solver entries
     public void write(SupportEntryList<? extends SupportEntry> purchaseList) {
-        JSONObject list = purchaseList.toJson();
-        writer.print(list.toString(tab));
+        if (purchaseList != null) {
+            JSONObject list = purchaseList.toJson();
+            writer.print(list.toString(tab));
+        }
     }
 
     //MODIFIES

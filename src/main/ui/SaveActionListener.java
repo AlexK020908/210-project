@@ -52,11 +52,11 @@ public class SaveActionListener implements ActionListener {
     //EFFECT: save each entry to Json fle
     @Override
     public void actionPerformed(ActionEvent e) {
+        saveSneakersList();
+        saveRevenueList();
         saveProxyList();
         saveThirdPartySolversList();
         saveCookGroupList();
-        saveSneakersList();
-        saveRevenueList();
 
     }
 

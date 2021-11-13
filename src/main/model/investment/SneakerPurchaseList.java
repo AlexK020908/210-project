@@ -1,5 +1,6 @@
 package model.investment;
 
+import model.AmountException;
 import model.EntryType;
 import model.SneakerEntry;
 import org.json.JSONArray;

@@ -14,8 +14,8 @@ public class SneakerEntry implements Writable {
 
     //REQUIRES: retail price and quantity bought to be positive
     //EFFECT: initialize the sneaker entry with a name, retailPrice and quantityBought
-    public SneakerEntry(String name, double retailPrice,int quantityBought) throws NameException,
-            AmountException, QuantityException {
+    public SneakerEntry(String name, double retailPrice,int quantityBought)
+            throws NameException, QuantityException, AmountException {
         if (name.isEmpty()) {
             throw new NameException();
         } else {
@@ -26,7 +26,7 @@ public class SneakerEntry implements Writable {
         } else {
             this.retailPrice = retailPrice;
         }
-        if (quantityBought == 0 || quantityBought < 0) {
+        if (quantityBought <= 0) {
             throw new QuantityException();
         } else {
             this.quantityBought = quantityBought;
@@ -49,13 +49,13 @@ public class SneakerEntry implements Writable {
     }
 
 
-    //REQUIRES: AMOUNT > 0
     //MODIFIES: this
     //EFFECT: increase the quantities bought of that sneaker by the specified amount
+    //        No exception needed as it is only called when we add an existing entry which means amount bought is
+    //        already checked.
     public void increaseQuantityBought(int amount) {
-        if (amount > 0) {
-            quantityBought += amount;
-        }
+        quantityBought += amount;
+
     }
 
     @Override

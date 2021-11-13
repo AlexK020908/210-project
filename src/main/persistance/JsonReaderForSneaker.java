@@ -27,7 +27,8 @@ public class JsonReaderForSneaker {
 
     // EFFECTS: reads sneaker entry list from file and returns it;
     //          throws IOException if an error occurs reading data from file
-    public SneakerPurchaseList read() throws IOException {
+    public SneakerPurchaseList read() throws IOException,
+            NameException, AmountException, QuantityException {
         String sneakerList = readFile(source);
         //after reading the file into a string containing all the list, we need to turn it into  JSON
         JSONObject sneakerEntryListJsonObject = new JSONObject(sneakerList);
@@ -36,7 +37,8 @@ public class JsonReaderForSneaker {
     }
 
     //EFFECT: parse the sneaker list Json object into a readable sneaker purchase entry list
-    private SneakerPurchaseList parseSneakerJsonObject(JSONObject sneakerEntryListJsonObject) {
+    private SneakerPurchaseList parseSneakerJsonObject(JSONObject sneakerEntryListJsonObject)
+            throws NameException, AmountException, QuantityException {
         //in order to parse we need to create a new sneaker purchase list that we are putting the object in
         SneakerPurchaseList sneakerPurchaseList = new SneakerPurchaseList();
         addSneakerEntries(sneakerPurchaseList, sneakerEntryListJsonObject);
@@ -47,7 +49,8 @@ public class JsonReaderForSneaker {
     //EFFECT: add each sneaker entry in the  sneakerEntryListJsonObject entry
     // to an empty sneaker purchase list.
     private SneakerPurchaseList addSneakerEntries(
-            SneakerPurchaseList sneakerPurchaseList, JSONObject sneakerEntryListJsonObject) {
+            SneakerPurchaseList sneakerPurchaseList, JSONObject sneakerEntryListJsonObject)
+            throws NameException, AmountException, QuantityException {
         JSONArray listOfSneakerEntriesArray = sneakerEntryListJsonObject.getJSONArray("sneakers");
         for (Object next : listOfSneakerEntriesArray) {
             JSONObject nextSneaker = (JSONObject) next;
@@ -58,21 +61,15 @@ public class JsonReaderForSneaker {
 
     //MODIFIES:  SneakerPurchaseList
     //EFFECT; add the next sneaker entry (JSON object) to the thirdPartyCaptchaSolversPurchaseList
-    private void addSneakerEntry(JSONObject nextSneaker, SneakerPurchaseList sneakerPurchaseList) {
+    private void addSneakerEntry(JSONObject nextSneaker, SneakerPurchaseList sneakerPurchaseList) throws
+            NameException, AmountException, QuantityException {
         String name = nextSneaker.getString("name");
         double price = nextSneaker.getDouble("retailPrice");
         int quantityBought = nextSneaker.getInt("quantity");
 
-        try {
-            SneakerEntry sneakerEntry = new SneakerEntry(name, price, quantityBought);
-            sneakerPurchaseList.addEntry(sneakerEntry);
-        } catch (NameException e) {
-            e.printStackTrace();
-        } catch (AmountException e) {
-            e.printStackTrace();
-        } catch (QuantityException e) {
-            e.printStackTrace();
-        }
+        SneakerEntry sneakerEntry = new SneakerEntry(name, price, quantityBought);
+        sneakerPurchaseList.addEntry(sneakerEntry);
+
     }
 
 

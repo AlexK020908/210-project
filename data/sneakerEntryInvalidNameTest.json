@@ -1,0 +1,15 @@
+{
+  "sneakers": [
+    {
+      "quantity": 5,
+      "name": "",
+      "retailPrice": 300
+    },
+    {
+      "quantity": 2,
+      "name": "nike",
+      "retailPrice": 120
+    }
+  ],
+  "type": "Sneaker"
+}

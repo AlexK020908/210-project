@@ -79,8 +79,9 @@ public class GUI extends JPanel {
         JFrame frame = initializeJFrame();
         frame.setJMenuBar(menubar);
         JPanel mainPanel = initializeMainPanel();
-        addSaveLoadMenu();
+        //we need to initialize first and then load back in
         initializeAllEntries(mainPanel);
+        addSaveLoadMenu();
         addSupportEntriesMenu();
         addSneakerEntriesMenu();
         addRevenueMenu();
@@ -147,7 +148,12 @@ public class GUI extends JPanel {
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList, jsonWriterForProxyEntries,
                 jsonWriterForCookGroupEntries, jsonWriterForThirdPartySolverEntries,
                 jsonWriteForSneakers, jsonWriterForRevenueList));
-        loadButton.addActionListener(e -> loadAllSavedProgress());
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadAllSavedProgress();
+            }
+        });
     }
 
     //MODIFIES: this

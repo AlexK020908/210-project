@@ -30,8 +30,8 @@ class SneakerPurchaseListTest {
 
     @BeforeEach
     public void setUp() {
-        sneakerPurchaseList = new SneakerPurchaseList();
         try {
+            sneakerPurchaseList = new SneakerPurchaseList();
             s1 = new SneakerEntry("Nike Dunk Low", 130, 5);
             s11 = new SneakerEntry("Nike Dunk Low", 130, 10);
             s2 = new SneakerEntry("AirForce Low Supreme", 100, 6);
@@ -43,11 +43,11 @@ class SneakerPurchaseListTest {
             s6 = new SneakerEntry("Nike Dunk Low OffWhite White", 500, 2);
             s7 = new SneakerEntry("Travis Scoot Cactus", 200, 10);
         } catch (NameException e) {
-           //good
+           fail();
         } catch (AmountException e) {
-            //good
+          fail();
         } catch (QuantityException e) {
-            //good
+          fail();
         }
     }
 
@@ -56,6 +56,7 @@ class SneakerPurchaseListTest {
     public void testGetSneakers() {
        List<SneakerEntry> emptyList = sneakerPurchaseList.getEntries();
        assertEquals(0, emptyList.size());
+
        assertTrue(sneakerPurchaseList.addEntry(s1));
        sneakerPurchaseList.addEntry(s2);
        sneakerPurchaseList.addEntry(s3);
@@ -67,7 +68,9 @@ class SneakerPurchaseListTest {
        assertEquals(s3, sneakerEntries.get(2));
        assertEquals(s4, sneakerEntries.get(3));
        assertEquals(s5, sneakerEntries.get(4));
+
     }
+
 
 
     @Test
@@ -80,13 +83,11 @@ class SneakerPurchaseListTest {
         //add one entry with repeating name, s2 has the same name
         sneakerPurchaseList.addEntry(s11);
         assertEquals(1, sneakerPurchaseList.getLength());
-        assertEquals(15,
-                s1.getQuantityBought());
+        assertEquals(15, s1.getQuantityBought());
         assertEquals(0, sneakerPurchaseList.indexOf(s11));
 
 
-
-        //add some more entry of different names
+            //add some more entry of different names
         sneakerPurchaseList.addEntry(s2);
         sneakerPurchaseList.addEntry(s3);
         sneakerPurchaseList.addEntry(s4);
@@ -97,7 +98,7 @@ class SneakerPurchaseListTest {
         assertEquals(3, sneakerPurchaseList.indexOf(s4));
         assertEquals(0, sneakerPurchaseList.indexOf(s11));
 
-        //add the remaining entries
+            //add the remaining entries
         sneakerPurchaseList.addEntry(s5);
         sneakerPurchaseList.addEntry(s6);
         sneakerPurchaseList.addEntry(s7);
@@ -108,16 +109,17 @@ class SneakerPurchaseListTest {
         assertEquals(4, sneakerPurchaseList.indexOf(s5));
         assertEquals(3, sneakerPurchaseList.indexOf(s44));
         assertEquals(16, //16 is the sum of s2 and s22's quantity
-                s2.getQuantityBought());
+                s2.getQuantityBought());;
 
     }
 
     @Test
     public void testAddEntryInvalidSneakerName() {
-        assertTrue(sneakerPurchaseList.addEntry(s1));
-        assertEquals(1, sneakerPurchaseList.getLength());
-        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+
         try {
+            assertTrue(sneakerPurchaseList.addEntry(s1));
+            assertEquals(1, sneakerPurchaseList.getLength());
+            assertEquals(0, sneakerPurchaseList.indexOf(s1));
             SneakerEntry invalidS1 = new SneakerEntry("", 120, 2);
             sneakerPurchaseList.addEntry(invalidS1);
             fail();
@@ -135,17 +137,18 @@ class SneakerPurchaseListTest {
 
     @Test
     public void testAddEntryInvalidSneakerPrice() {
-        assertTrue(sneakerPurchaseList.addEntry(s1));
-        assertEquals(1, sneakerPurchaseList.getLength());
-        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+
         try {
+            assertTrue(sneakerPurchaseList.addEntry(s1));
+            assertEquals(1, sneakerPurchaseList.getLength());
+            assertEquals(0, sneakerPurchaseList.indexOf(s1));
             SneakerEntry invalidS1 = new SneakerEntry("sneaker", -20, 2);
             sneakerPurchaseList.addEntry(invalidS1);
             fail();
         } catch (NameException e) {
             fail();
         } catch (AmountException e) {
-            //good
+            System.out.println("new sneaker ");
         } catch (QuantityException e) {
             fail();
         }
@@ -239,6 +242,8 @@ class SneakerPurchaseListTest {
         assertEquals(5 + 2 + 10, s1.getQuantityBought());
 
     }
+
+
 
     @Test
     public void testIncreaseQuantityBoughtInvalidSneakerName(){

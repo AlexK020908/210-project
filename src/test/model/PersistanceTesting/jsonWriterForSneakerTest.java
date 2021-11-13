@@ -54,6 +54,12 @@ public class jsonWriterForSneakerTest extends SneakerTestJson{
             fail("exception should not have been thrown");
         } catch (IOException e) {
             fail("exception IO should not have been thrown");
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
         }
     }
 

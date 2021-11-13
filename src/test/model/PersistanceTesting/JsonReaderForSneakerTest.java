@@ -32,6 +32,12 @@ public class JsonReaderForSneakerTest extends SneakerTestJson {
             fail();
         } catch (IOException e) {
             System.out.println("please enter a correct file directory ");
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+           fail();
         }
 
     }
@@ -44,10 +50,57 @@ public class JsonReaderForSneakerTest extends SneakerTestJson {
             assertEquals(0, sneakerPurchaseList.getLength());
             assertEquals(0, sneakerPurchaseList.getTotalMoneySpent());
             assertEquals(EntryType.Sneaker, sneakerPurchaseList.getType());
-        } catch (IOException e) {
+        } catch (IOException | NameException | AmountException | QuantityException e) {
             fail("no exception should been caught");
         }
 
+    }
+
+    @Test
+    void testReaderInvalidSneakerNameFile() {
+        JsonReaderForSneaker jsonReaderForSneakerTest = new JsonReaderForSneaker("./data/sneakerEntryInvalidNameTest.json");
+        try {
+            sneakerPurchaseList = jsonReaderForSneakerTest.read();
+            assertEquals(2, sneakerPurchaseList.getLength());
+            assertEquals(EntryType.Sneaker, sneakerPurchaseList.getType());
+            fail("empty name in file found");
+        } catch (IOException | AmountException | QuantityException e) {
+            fail("no exception should been caught");
+        } catch (NameException e) {
+            //good
+        }
+
+    }
+
+    @Test
+    public void testReaderInvalidSneakerPriceFile() {
+        JsonReaderForSneaker jsonReaderForSneakerTest = new JsonReaderForSneaker("./data/sneakerEntryInvalidPriceTest.json");
+        try {
+            sneakerPurchaseList = jsonReaderForSneakerTest.read();
+            assertEquals(2, sneakerPurchaseList.getLength());
+            assertEquals(EntryType.Sneaker, sneakerPurchaseList.getType());
+            fail("invalid price found in file found");
+        } catch (IOException | NameException | QuantityException e) {
+            fail("no exception should been caught");
+        } catch (AmountException e) {
+            //good
+        }
+    }
+
+
+    @Test
+    public void testReaderInvalidSneakerQuantityFile() {
+        JsonReaderForSneaker jsonReaderForSneakerTest = new JsonReaderForSneaker("./data/sneakerEntryInvalidQuantityTest.json");
+        try {
+            sneakerPurchaseList = jsonReaderForSneakerTest.read();
+            assertEquals(2, sneakerPurchaseList.getLength());
+            assertEquals(EntryType.Sneaker, sneakerPurchaseList.getType());
+            fail("invalid price found in file found");
+        } catch (IOException | NameException | AmountException e) {
+            fail("no exception should been caught");
+        } catch (QuantityException e) {
+            //good
+        }
     }
 
     @Test
@@ -62,7 +115,7 @@ public class JsonReaderForSneakerTest extends SneakerTestJson {
             assertEquals(EntryType.Sneaker, sneakerPurchaseList.getType());
             checkSneakerEntry("Nike dunk low", 13.99, 10, sneakerPurchaseList.get(0));
             checkSneakerEntry("Yeezy", 20, 10, sneakerPurchaseList.get(1));
-        } catch (IOException e) {
+        } catch (IOException | NameException | AmountException | QuantityException e) {
             fail("no exception should been caught");
 
         }
