@@ -15,6 +15,10 @@
         {
             "name": "added",
             "pricePaid": 2
+        },
+        {
+            "name": "proxy2",
+            "pricePaid": 12
         }
     ],
     "type": "PROXY"
