@@ -147,12 +147,7 @@ public class GUI extends JPanel {
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList, jsonWriterForProxyEntries,
                 jsonWriterForCookGroupEntries, jsonWriterForThirdPartySolverEntries,
                 jsonWriteForSneakers, jsonWriterForRevenueList));
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadAllSavedProgress();
-            }
-        });
+        loadButton.addActionListener(e -> loadAllSavedProgress());
     }
 
     //MODIFIES: this
@@ -225,13 +220,29 @@ public class GUI extends JPanel {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null,"can not load cook group entry list from" + COOK_GROUP_STORE);
         }
-        try {
-            readingSneakersEntryList();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null,"can not load sneaker entry list from" + COOK_GROUP_STORE);
-        }
+
+        tryReadingSneakerEntryList();
+
         tryReadingRevenueList();
 
+    }
+
+
+    //MODIFIES: this
+    //EFFECT: read the sneaker entry list from file. Prompts user with messages if amount, price or quantity is invalid.
+    //        or if file does not exist
+    private void tryReadingSneakerEntryList() {
+        try {
+            readingSneakersEntryList();
+        } catch (NameException e) {
+            JOptionPane.showMessageDialog(null, "sneaker name is invalid");
+        } catch (AmountException e) {
+            JOptionPane.showMessageDialog(null, "sneaker price is invalid");
+        } catch (QuantityException e) {
+            JOptionPane.showMessageDialog(null, "sneaker quantity is invalid");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "can not load sneaker entry list from" + SNEAKER_STORE);
+        }
     }
 
     //MODIFIES: this
@@ -268,7 +279,7 @@ public class GUI extends JPanel {
     //EFFECT: read sneaker list from file and assign it as a sneaker purchase list
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
-    private void readingSneakersEntryList() throws IOException {
+    private void readingSneakersEntryList() throws IOException, NameException, AmountException, QuantityException {
         SneakerPurchaseList sneakerPurchaseList2 = jsonReaderForSneaker.read();
        //sneakerPurchaseList = jsonReaderForSneaker.read();
         for (SneakerEntry next : sneakerPurchaseList2.getEntries()) {

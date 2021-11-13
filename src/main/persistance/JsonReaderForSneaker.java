@@ -1,5 +1,8 @@
 package persistance;
 
+import model.AmountException;
+import model.NameException;
+import model.QuantityException;
 import model.SneakerEntry;
 import model.investment.SneakerPurchaseList;
 import org.json.JSONArray;
@@ -59,8 +62,17 @@ public class JsonReaderForSneaker {
         String name = nextSneaker.getString("name");
         double price = nextSneaker.getDouble("retailPrice");
         int quantityBought = nextSneaker.getInt("quantity");
-        SneakerEntry sneakerEntry = new SneakerEntry(name, price, quantityBought);
-        sneakerPurchaseList.addEntry(sneakerEntry);
+
+        try {
+            SneakerEntry sneakerEntry = new SneakerEntry(name, price, quantityBought);
+            sneakerPurchaseList.addEntry(sneakerEntry);
+        } catch (NameException e) {
+            e.printStackTrace();
+        } catch (AmountException e) {
+            e.printStackTrace();
+        } catch (QuantityException e) {
+            e.printStackTrace();
+        }
     }
 
 

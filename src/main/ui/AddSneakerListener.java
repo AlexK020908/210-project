@@ -1,9 +1,13 @@
 package ui;
 
+import model.AmountException;
+import model.NameException;
+import model.QuantityException;
 import model.SneakerEntry;
 import model.investment.SneakerPurchaseList;
 
 import javax.swing.*;
+import javax.xml.soap.Name;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,28 +32,26 @@ public class AddSneakerListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String sneakerName = JOptionPane.showInputDialog(null, "Please Enter the Sneaker name", null);
-        if (sneakerName == null) {
-            JOptionPane.showMessageDialog(null, "Please try entering the name again");
-        } else {
-            double sneakerPrice = Double.parseDouble(JOptionPane.showInputDialog(null, "Please enter the price", null));
-
-            if (sneakerPrice == 0 || sneakerPrice < 0) {
-                JOptionPane.showMessageDialog(null, "you entered an invalid price");
-            } else {
-                int quantity = Integer.parseInt(JOptionPane.showInputDialog(null,
+        double sneakerPrice = Double.parseDouble(JOptionPane.showInputDialog(null, "Please enter the price", null));
+        int quantity = Integer.parseInt(JOptionPane.showInputDialog(null,
                         "how many" + " " + sneakerName + " " + "did you buy", null));
-                if (quantity == 0 || quantity < 0) {
-                    JOptionPane.showMessageDialog(null, "you entered an invalid quantity");
-                } else {
-                    SneakerEntry sneakerEntry = new SneakerEntry(sneakerName, sneakerPrice, quantity);
-                    if (sneakerPurchaseList.addEntry(sneakerEntry)) {
-                        defaultListModel.addElement(sneakerEntry);
-                    }
-                    checkSizeEnableButton();
-                }
+
+        try {
+            SneakerEntry sneakerEntry = new SneakerEntry(sneakerName, sneakerPrice, quantity);
+            if (sneakerPurchaseList.addEntry(sneakerEntry)) {
+                defaultListModel.addElement(sneakerEntry);
             }
+        } catch (NameException ex) {
+            JOptionPane.showMessageDialog(null, "Please try entering the name again");
+        } catch (AmountException ex) {
+            JOptionPane.showMessageDialog(null, "you entered an invalid price");
+        } catch (QuantityException ex) {
+            JOptionPane.showMessageDialog(null, "you entered an invalid quantity");
         }
+        checkSizeEnableButton();
     }
+
+
 
     //MODIFIES: this
     //EFFECT: if after adding the new entry the size is > 0, enable the remove button

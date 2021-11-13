@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.org.apache.xerces.internal.impl.dv.dtd.NMTOKENDatatypeValidator;
 import model.SneakerEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,13 +19,21 @@ public class sneakerEntryTest {
 
     @BeforeEach
     public void setUp() {
-        s1 = new SneakerEntry("Nike Dunk Low", 120, 5);
-        s2 = new SneakerEntry("Nike Dunk Low", 120, 3);
-        s3 = null;
-        c1 = new CookGroupSubscriptionEntry("Name", 12);
-        s4 = new SneakerEntry("Nike DunkLow", 120, 5);
-        s5 = new SneakerEntry("Nike Dunk Low", 20, 5);
-        s6 = new SneakerEntry("yeezy", 20, 5);
+        try {
+            s1 = new SneakerEntry("Nike Dunk Low", 120, 5);
+            s2 = new SneakerEntry("Nike Dunk Low", 120, 3);
+            s3 = null;
+            c1 = new CookGroupSubscriptionEntry("Name", 12);
+            s4 = new SneakerEntry("Nike DunkLow", 120, 5);
+            s5 = new SneakerEntry("Nike Dunk Low", 20, 5);
+            s6 = new SneakerEntry("yeezy", 20, 5);
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
+        }
     }
 
     @Test
@@ -33,8 +42,101 @@ public class sneakerEntryTest {
     }
 
     @Test
-    public void testNotSameClass() {
-        assertFalse(s2.equals(c1));
+    public void testNullInvalidSneakerName() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("", 120, 10);
+            SneakerEntry s2 = null;
+            assertFalse(s1.equals(s2));
+            fail();
+        } catch (NameException e) {
+            System.out.println("name exception is caught");
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testNullInvalidSneakerPrice() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("sneaker", -120,  10);
+            SneakerEntry s2 = null;
+            assertFalse(s1.equals(s2));
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            System.out.println("invalid price");
+        } catch (QuantityException e) {
+            fail();
+        }
+    }
+
+
+    @Test
+    public void testNullInvalidSneakerQuantity() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("sneaker", 120,  -10);
+            SneakerEntry s2 = null;
+            assertFalse(s1.equals(s2));
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+           fail();
+        } catch (QuantityException e) {
+            System.out.println("invalid quantity");
+        }
+
+    }
+
+    @Test
+    public void testNullInvalidAll() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("", -120,  -10);
+            SneakerEntry s2 = null;
+            assertFalse(s1.equals(s2));
+            fail();
+        } catch (NameException e) {
+            System.out.println("invalid name");
+        } catch (AmountException e) {
+           fail();
+        } catch (QuantityException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testNotSameClassInvalidSneakerName() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("", -120,  -10);
+            Revenue r1 = new Revenue(20);
+            assertFalse(s1.equals(r1));
+            fail();
+        } catch (NameException e) {
+            System.out.println("invalid name");
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testNotSameClassInvalidPrice() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("sneaker", -120,  10);
+            Revenue r1 = new Revenue(20);
+            assertFalse(s1.equals(r1));
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            System.out.println("invalid price");
+        } catch (QuantityException e) {
+            fail();
+        }
     }
 
 
@@ -44,8 +146,72 @@ public class sneakerEntryTest {
     }
 
     @Test
+    public void testHashCodeInvalidSneaker() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("", 120, 20);
+            assertEquals(10000, s1.hashCode());
+            fail();
+        } catch (NameException e) {
+            //good
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
+        }
+    }
+
+    @Test
     public void testSameSneakerEntry() {
         assertTrue(s2.equals(s1));
+    }
+
+    @Test
+    public void testSameSneakerInvalidName() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("", 120, 20);
+            SneakerEntry s2 = new SneakerEntry("", 120, 20);
+            assertTrue(s1.equals(s2));
+            fail();
+        } catch (NameException e) {
+            //good
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void testSameSneakerInvalidPrice() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("sneaker", 0, 20);
+            SneakerEntry s2 = new SneakerEntry("sneaker", 0, 20);
+            assertTrue(s1.equals(s2));
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            //good
+        } catch (QuantityException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testSameSneakerInvalidQuantity() {
+        try {
+            SneakerEntry s1 = new SneakerEntry("sneaker", 12, 0);
+            SneakerEntry s2 = new SneakerEntry("sneaker", 12, 0);
+            assertTrue(s1.equals(s2));
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            //good
+        }
     }
 
     @Test
@@ -63,4 +229,5 @@ public class sneakerEntryTest {
         assertFalse(s1.equals(6));
 
     }
+
 }

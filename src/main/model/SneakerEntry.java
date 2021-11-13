@@ -14,10 +14,23 @@ public class SneakerEntry implements Writable {
 
     //REQUIRES: retail price and quantity bought to be positive
     //EFFECT: initialize the sneaker entry with a name, retailPrice and quantityBought
-    public SneakerEntry(String name, double retailPrice,int quantityBought) {
-        this.name = name;
-        this.retailPrice = retailPrice;
-        this.quantityBought = quantityBought;
+    public SneakerEntry(String name, double retailPrice,int quantityBought) throws NameException,
+            AmountException, QuantityException {
+        if (name.isEmpty()) {
+            throw new NameException();
+        } else {
+            this.name = name;
+        }
+        if (retailPrice == 0 || retailPrice < 0) {
+            throw new AmountException();
+        } else {
+            this.retailPrice = retailPrice;
+        }
+        if (quantityBought == 0 || quantityBought < 0) {
+            throw new QuantityException();
+        } else {
+            this.quantityBought = quantityBought;
+        }
     }
 
     //EFFECT: RETURN the name of the sneaker

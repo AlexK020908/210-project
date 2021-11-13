@@ -124,13 +124,24 @@ public class ProfitOrLossCalculatorApp {
         } catch (IOException e) {
             System.out.println("can not load cook group entry list from" + COOK_GROUP_STORE);
         }
+        tryReadingSneakerEntryList();
+        tryReadingRevenueList();
+
+    }
+
+    //EFFECT: read the sneaker entry list and catch the exceptions.
+    private void tryReadingSneakerEntryList() {
         try {
             readingSneakersEntryList();
         } catch (IOException e) {
             System.out.println("can not load sneaker entry list from" + COOK_GROUP_STORE);
+        } catch (NameException e) {
+            System.out.println("name is invalid");
+        } catch (AmountException e) {
+            System.out.println("amount is invalid");
+        } catch (QuantityException e) {
+            System.out.println("quantity is invallid");
         }
-        tryReadingRevenueList();
-
     }
 
     //MODIFIES: this
@@ -160,7 +171,7 @@ public class ProfitOrLossCalculatorApp {
     //EFFECT: read sneaker list from file and assign it as a sneaker purchase list
     // This [class/method] references code from GitHub
     // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
-    private void readingSneakersEntryList() throws IOException {
+    private void readingSneakersEntryList() throws IOException, NameException, AmountException, QuantityException {
         sneakerPurchaseList = jsonReaderForSneaker.read();
         System.out.println("your sneaker entry list  has been loaded from  " + SNEAKER_STORE);
         printList(sneakerPurchaseList);
@@ -305,13 +316,17 @@ public class ProfitOrLossCalculatorApp {
         double price = input.nextDouble();
         System.out.print("enter quantity of sneaker: ");
         int quantity = input.nextInt();
-        SneakerEntry entry = new SneakerEntry(entryName, price, quantity);
-        if (entry.getQuantityBought() <= 0 || price <= 0) {
-            System.out.println("Please double check your quantity and price to make sure it is valid");
-        } else {
+        try {
+            SneakerEntry entry = new SneakerEntry(entryName, price, quantity);
             sneakerPurchaseList.addEntry(entry);
-            System.out.println("your sneaker entry list has been updated");
+        } catch (NameException e) {
+            System.out.println("invalid name");
+        } catch (AmountException e) {
+            System.out.println("invalid amount");
+        } catch (QuantityException e) {
+            System.out.println("invalid quantity");
         }
+
     }
 
 

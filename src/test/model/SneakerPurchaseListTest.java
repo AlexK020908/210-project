@@ -14,24 +14,41 @@ class SneakerPurchaseListTest {
     SneakerPurchaseList sneakerPurchaseList;
 
     //initializing some sneakers
-    private final SneakerEntry s1 = new SneakerEntry("Nike Dunk Low", 130, 5);
-    private final SneakerEntry s11 = new SneakerEntry("Nike Dunk Low", 130, 10);
-    private final SneakerEntry s11NegativeQuantity = new SneakerEntry("Nike Dunk Low",
-            130, -10);
-    private final SneakerEntry s2 = new SneakerEntry("AirForce Low Supreme", 100, 6);
-    private final SneakerEntry s22 = new SneakerEntry("AirForce Low Supreme", 100, 10);
-    private final SneakerEntry s3 = new SneakerEntry("Jordan Retro 12", 275 , 2);
-    private final SneakerEntry s4 = new SneakerEntry("YEEZY 350 light v2", 300, 5);
-    private final SneakerEntry s44 = new SneakerEntry("YEEZY 350 light v2", 300, 12);
-    private final SneakerEntry s5 = new SneakerEntry("YEEZY 750 v2", 200, 3);
-    private final SneakerEntry s6 = new SneakerEntry("Nike Dunk Low OffWhite White", 500, 2);
-    private final SneakerEntry s7 = new SneakerEntry("Travis Scoot Cactus", 200, 10);
+    private SneakerEntry s1;
+    private SneakerEntry s11;
+
+    private SneakerEntry s2;
+    private SneakerEntry s22;
+    private SneakerEntry s3;
+    private SneakerEntry s4;
+    private SneakerEntry s44;
+    private SneakerEntry s5;
+    private SneakerEntry s6;
+    private SneakerEntry s7;
 
 
 
     @BeforeEach
     public void setUp() {
         sneakerPurchaseList = new SneakerPurchaseList();
+        try {
+            s1 = new SneakerEntry("Nike Dunk Low", 130, 5);
+            s11 = new SneakerEntry("Nike Dunk Low", 130, 10);
+            s2 = new SneakerEntry("AirForce Low Supreme", 100, 6);
+            s22 = new SneakerEntry("AirForce Low Supreme", 100, 10);
+            s3 = new SneakerEntry("Jordan Retro 12", 275, 2);
+            s4 = new SneakerEntry("YEEZY 350 light v2", 300, 5);
+            s44 = new SneakerEntry("YEEZY 350 light v2", 300, 12);
+            s5 = new SneakerEntry("YEEZY 750 v2", 200, 3);
+            s6 = new SneakerEntry("Nike Dunk Low OffWhite White", 500, 2);
+            s7 = new SneakerEntry("Travis Scoot Cactus", 200, 10);
+        } catch (NameException e) {
+           //good
+        } catch (AmountException e) {
+            //good
+        } catch (QuantityException e) {
+            //good
+        }
     }
 
 
@@ -50,9 +67,9 @@ class SneakerPurchaseListTest {
        assertEquals(s3, sneakerEntries.get(2));
        assertEquals(s4, sneakerEntries.get(3));
        assertEquals(s5, sneakerEntries.get(4));
-
-
     }
+
+
     @Test
     public void testAddEntry(){
         // add one entry
@@ -67,11 +84,6 @@ class SneakerPurchaseListTest {
                 s1.getQuantityBought());
         assertEquals(0, sneakerPurchaseList.indexOf(s11));
 
-
-        //adding a negative quantity sneaker that is  of the same name as s11 and s1
-        assertFalse(sneakerPurchaseList.addEntry(s11NegativeQuantity));
-        assertEquals(15, s1.getQuantityBought());
-        // the quantity did not change because s11NegativeQuantity has a negative quantity
 
 
         //add some more entry of different names
@@ -98,8 +110,71 @@ class SneakerPurchaseListTest {
         assertEquals(16, //16 is the sum of s2 and s22's quantity
                 s2.getQuantityBought());
 
+    }
+
+    @Test
+    public void testAddEntryInvalidSneakerName() {
+        assertTrue(sneakerPurchaseList.addEntry(s1));
+        assertEquals(1, sneakerPurchaseList.getLength());
+        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+        try {
+            SneakerEntry invalidS1 = new SneakerEntry("", 120, 2);
+            sneakerPurchaseList.addEntry(invalidS1);
+            fail();
+        } catch (NameException e) {
+           //good
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
+        }
+        assertEquals(1, sneakerPurchaseList.getLength());
 
     }
+
+
+    @Test
+    public void testAddEntryInvalidSneakerPrice() {
+        assertTrue(sneakerPurchaseList.addEntry(s1));
+        assertEquals(1, sneakerPurchaseList.getLength());
+        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+        try {
+            SneakerEntry invalidS1 = new SneakerEntry("sneaker", -20, 2);
+            sneakerPurchaseList.addEntry(invalidS1);
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            //good
+        } catch (QuantityException e) {
+            fail();
+        }
+        assertEquals(1, sneakerPurchaseList.getLength());
+
+    }
+
+
+
+    @Test
+    public void testAddEntryInvalidSneakerQuantity() {
+        assertTrue(sneakerPurchaseList.addEntry(s1));
+        assertEquals(1, sneakerPurchaseList.getLength());
+        assertEquals(0, sneakerPurchaseList.indexOf(s1));
+        try {
+            SneakerEntry invalidS1 = new SneakerEntry("sneaker", 120, -2);
+            sneakerPurchaseList.addEntry(invalidS1);
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+           //good
+        }
+        assertEquals(1, sneakerPurchaseList.getLength());
+
+    }
+
     @Test
     public void testTotalPayment(){
         //test empty entry list
@@ -166,11 +241,85 @@ class SneakerPurchaseListTest {
     }
 
     @Test
+    public void testIncreaseQuantityBoughtInvalidSneakerName(){
+        //here we are using s1 as the main sneakerEntry
+        //base case
+        try {
+            SneakerEntry invalidS1 = new SneakerEntry("", 120, 2);
+            invalidS1.increaseQuantityBought(0);
+            assertEquals(2, s1.getQuantityBought());
+            //increase by a small amount
+            invalidS1.increaseQuantityBought(2);
+            assertEquals(2 + 2, s1.getQuantityBought());
+            //increase by a large amount
+            invalidS1.increaseQuantityBought(10);
+            assertEquals(2 + 2 + 10, s1.getQuantityBought());
+            fail();
+        } catch (NameException e) {
+            //good
+        } catch (AmountException e) {
+           fail();
+        } catch (QuantityException e) {
+           fail();
+        }
+
+    }
+
+    @Test
+    public void testIncreaseQuantityBoughtInvalidQuantity(){
+        //here we are using s1 as the main sneakerEntry
+        //base case
+        try {
+            SneakerEntry invalidS1 = new SneakerEntry("sneaker", 12, -2);
+            invalidS1.increaseQuantityBought(0);
+            assertEquals(-2, s1.getQuantityBought());
+            //increase by a small amount
+            invalidS1.increaseQuantityBought(2);
+            assertEquals(-2 + 2, s1.getQuantityBought());
+            //increase by a large amount
+            invalidS1.increaseQuantityBought(10);
+            assertEquals(0 + 10, s1.getQuantityBought());
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+            fail();
+        } catch (QuantityException e) {
+            //good
+        }
+
+    }
+
+    @Test
+    public void testIncreaseQuantityBoughtInvalidPrice(){
+        //here we are using s1 as the main sneakerEntry
+        //base case
+        try {
+            SneakerEntry invalidS1 = new SneakerEntry("sneaker", -120, 2);
+            invalidS1.increaseQuantityBought(0);
+            assertEquals(5, s1.getQuantityBought());
+            //increase by a small amount
+            invalidS1.increaseQuantityBought(2);
+            assertEquals(5 + 2, s1.getQuantityBought());
+            //increase by a large amount
+            invalidS1.increaseQuantityBought(10);
+            assertEquals(5 + 2 + 10, s1.getQuantityBought());
+            fail();
+        } catch (NameException e) {
+            fail();
+        } catch (AmountException e) {
+           //good
+        } catch (QuantityException e) {
+            fail();
+        }
+
+    }
+
+    @Test
     public void sneakerEntryToStringTest(){
         //using s1 as main testing sneaker entry again
         assertEquals(" " + s1.getName() + " " + s1.getRetailPrice() + " " + s1.getQuantityBought() + ", "
                 , s1.toString());
-
     }
 
     @Test

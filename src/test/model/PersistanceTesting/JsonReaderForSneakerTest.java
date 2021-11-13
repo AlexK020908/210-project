@@ -1,6 +1,9 @@
 package model.PersistanceTesting;
 
+import model.AmountException;
 import model.EntryType;
+import model.NameException;
+import model.QuantityException;
 import model.investment.SneakerPurchaseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,13 +60,13 @@ public class JsonReaderForSneakerTest extends SneakerTestJson {
             assertEquals(2, sneakerPurchaseList.getLength());
             assertEquals(339.9, sneakerPurchaseList.getTotalMoneySpent());
             assertEquals(EntryType.Sneaker, sneakerPurchaseList.getType());
-            checkSneakerEntry( "Nike dunk low", 13.99, 10, sneakerPurchaseList.get(0));
-            checkSneakerEntry("Yeezy",20,10, sneakerPurchaseList.get(1));
+            checkSneakerEntry("Nike dunk low", 13.99, 10, sneakerPurchaseList.get(0));
+            checkSneakerEntry("Yeezy", 20, 10, sneakerPurchaseList.get(1));
         } catch (IOException e) {
             fail("no exception should been caught");
+
         }
-
     }
-
 }
+
 

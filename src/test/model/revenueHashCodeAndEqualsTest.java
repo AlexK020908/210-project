@@ -88,6 +88,10 @@ public class revenueHashCodeAndEqualsTest {
             assertFalse(r1.equals(s));
         } catch (AmountException e) {
             fail();
+        } catch (NameException e) {
+            fail();
+        } catch (QuantityException e) {
+            fail();
         }
     }
 
