@@ -56,6 +56,8 @@ public class GUI extends JPanel {
     private JButton proxyRemoveButton;
     private JButton cookRemoveButton;
     private JButton thirdPartyRemoveButton;
+    private GridBagConstraints constraints;
+    JFrame frame;
 
     //EFFECT: constructs a mainPanel where JPnale will be attached to; initialize a proxy, cook group , third
     //        party solver , sneakers and revenue panels that will be the part of the main panel.
@@ -71,15 +73,17 @@ public class GUI extends JPanel {
         jsonReaderForThirdPartySolvers = new JsonReaderForThirdPartySolvers(THIRD_PARTY_SOLVER_STORE);
         jsonWriterForRevenueList = new JsonWriterForRevenueList(REVENUE_STORE);
         jsonReaderForRevenueList = new JsonReaderForRevenueList(REVENUE_STORE);
+        constraints = new GridBagConstraints();
 
         menubar = new JMenuBar();
         menubar.setOpaque(true);
         menubar.setBackground(Color.WHITE);
         //Create and set up the window.
         JFrame frame = initializeJFrame();
+
         frame.setJMenuBar(menubar);
         JPanel mainPanel = initializeMainPanel();
-        //we need to initialize first and then load back in
+        //we need to initialize first and then load back in... not sure why
         initializeAllEntries(mainPanel);
         addSaveLoadMenu();
         addSupportEntriesMenu();
@@ -121,8 +125,8 @@ public class GUI extends JPanel {
         JMenu supportEntries = new JMenu("Support entries");
         menubar.add(supportEntries);
         JMenuItem addProxy = new JMenuItem("add proxy entry");
-        JMenuItem addCookGroup = new JMenuItem("add cook group entry entry");
-        JMenuItem addThirdPartySolver = new JMenuItem("add third party solver entry");
+        JMenuItem addCookGroup = new JMenuItem("add cook group entry");
+        JMenuItem addThirdPartySolver = new JMenuItem("add solver entry");
         supportEntries.add(addProxy);
         supportEntries.add(addCookGroup);
         supportEntries.add(addThirdPartySolver);
@@ -159,7 +163,7 @@ public class GUI extends JPanel {
     //MODIFIES: this
     //EFFECT: create main PANEL where all component entries will pasted on to
     private JPanel initializeMainPanel() {
-        JPanel mainPanel = new JPanel(new FlowLayout());
+        JPanel mainPanel = new JPanel(new GridBagLayout());
         add(mainPanel);
         mainPanel.setBorder(BorderFactory.createTitledBorder("All Entries"));
         return mainPanel;
@@ -168,7 +172,7 @@ public class GUI extends JPanel {
     //MODIFIES: this
     //EFFECT: create a new Jframe with the title "profit or Loss calculator.
     private JFrame initializeJFrame() {
-        JFrame frame = new JFrame("Profit or Loss calculator");
+        frame = new JFrame("Profit or Loss calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setOpaque(true); //content panes must be opaque
         frame.setContentPane(this);
@@ -187,21 +191,23 @@ public class GUI extends JPanel {
         sneakerPurchaseList = new SneakerPurchaseList();
         revenueList = new RevenueList();
 
-        setLayout(new GridLayout(1, 5));
         initializeNewPanel(proxyPurchaseList, "Proxy", mainPanel);
 
         initializeNewPanel(cookGroupPurchaseList, "Cook group", mainPanel);
 
-        initializeNewPanel(thirdPartyCaptchaSolversPurchaseList, "Third party captcha solver", mainPanel);
+        initializeNewPanel(thirdPartyCaptchaSolversPurchaseList, "solver", mainPanel);
 
         initializeNewSneakerPanel(sneakerPurchaseList, "sneaker", mainPanel);
 
         initializeNewRevenuePanel(revenueList, mainPanel);
 
         JButton calculateButton = new JButton("calculate profit or loss");
-        calculateButton.setPreferredSize(new Dimension(800, 100));
+        constraints.gridy = 3;
+        constraints.gridx = 1;
+        constraints.weightx = 0.5;
+        constraints.gridwidth = 1;
 
-        mainPanel.add(calculateButton);
+        mainPanel.add(calculateButton, constraints);
         calculateButton.addActionListener(new CalculateListener(cookGroupPurchaseList, proxyPurchaseList,
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList));
     }
@@ -374,7 +380,7 @@ public class GUI extends JPanel {
         revenuePanel.setPreferredSize(new Dimension(600, 200));
         JPanel buttonPanel = new JPanel();
         revenuePanel.setBorder(BorderFactory.createTitledBorder("revenue"));
-        mainPanel.add(revenuePanel);
+        addToMainPanelWithConstraints(mainPanel, revenuePanel);
         revenuePanel.add(buttonPanel, BorderLayout.SOUTH);
         JButton addRevenueButton = new JButton("add revenue");
         removeRevenueButton = new JButton("remove revenue");
@@ -389,6 +395,17 @@ public class GUI extends JPanel {
                 revenues, removeRevenueButton));
         viewOverallRevenueButton.addActionListener(new ViewRevenueListener(revenues));
 
+    }
+
+    //MODIFIES: this
+    //EFFECT: specify constraints for the revenue panel on the main panel. The revenue panel should be below
+    //        the sneaker panel and take up the whole row ( third row)
+    private void addToMainPanelWithConstraints(JPanel mainPanel, JPanel revenuePanel) {
+        constraints.weightx = 0.0;
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridwidth = 3;
+        mainPanel.add(revenuePanel, constraints);
     }
 
     //MODIFIES: this
@@ -407,7 +424,7 @@ public class GUI extends JPanel {
         addSneakerEntryButton = new JButton("add" + " " + sneaker + " " + "entry");
         removeSneakerEntryButton = new JButton("remove" + " " + sneaker + " " + "entry");
 
-        mainPanel.add(sneakerPanel);
+        addToMainPanelWithSneakerPanelConstraints(mainPanel);
         buttonPanel.add(addSneakerEntryButton);
         buttonPanel.add(removeSneakerEntryButton);
         sneakerPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -420,6 +437,18 @@ public class GUI extends JPanel {
                 removeSneakerEntryButton, sneakerPurchaseList));
 
 
+    }
+
+    //MODIFIES: this
+    //EFFECT: add the sneaker panel to the main panel with the specified constraints
+    //       sneaker panel should take the whole second row up
+    private void addToMainPanelWithSneakerPanelConstraints(JPanel mainPanel) {
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.weightx = 0.0;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridwidth = 3;
+        mainPanel.add(sneakerPanel, constraints);
     }
 
 
@@ -453,8 +482,7 @@ public class GUI extends JPanel {
         buttonPanel.add(addEntryButton);
         buttonPanel.add(removeEntryButton);
         entryPanel.setBorder(BorderFactory.createTitledBorder(typeOfEntry + " " + "Entries"));
-        entryPanel.setPreferredSize(new Dimension(400, 200));
-        mainPanel.add(entryPanel);
+        addToMainPanelSupportEntriesConstraints(supportEntryList, mainPanel, entryPanel);
         entryPanel.add(entryJlist);
         entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
@@ -463,6 +491,33 @@ public class GUI extends JPanel {
                  defaultListModelForSupportEntries, removeEntryButton));
         removeEntryButton.addActionListener(new RemoveListener(defaultListModelForSupportEntries,
                 entryJlist, removeEntryButton, supportEntryList));
+    }
+
+    //MODIFIES: this
+    //EFFECT: add the support entry panel to the main panel with the specified constraints
+    //        if support entry list 's type is proxy, place the component in the first cell in the first row
+    //        If support entry list's type is cook group entry, place the component in the second cell in the first row
+    //        If support entry list's type is third party solver entry, place the component in the last cell of the
+    //        first row
+    private void addToMainPanelSupportEntriesConstraints(SupportEntryList<? extends SupportEntry> supportEntryList,
+                                                         JPanel mainPanel, JPanel entryPanel) {
+        constraints.weightx  = 0.5;
+        if (supportEntryList.getType() == EntryType.PROXY) {
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(entryPanel, constraints);
+        } else if (supportEntryList.getType() == EntryType.CookGroup) {
+            constraints.gridx = 1;
+            constraints.gridy = 0;
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(entryPanel, constraints);
+        } else if (supportEntryList.getType() == EntryType.ThirdPartSolver) {
+            constraints.gridx = 2;
+            constraints.gridy = 0;
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            mainPanel.add(entryPanel, constraints);
+        }
     }
 
     //MODIFIES: this
