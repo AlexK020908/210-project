@@ -9,6 +9,7 @@ public class Revenue {
     private double revenue;
 
     //EFFECT: construct a revenue object
+    //        if the revenue made is an invalid amount, throw new Amount exception
     public Revenue(double revenue) throws AmountException {
         if (revenue <= 0) {
             throw new AmountException();

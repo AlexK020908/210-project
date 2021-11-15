@@ -14,6 +14,9 @@ public class SneakerEntry implements Writable {
 
     //REQUIRES: retail price and quantity bought to be positive
     //EFFECT: initialize the sneaker entry with a name, retailPrice and quantityBought
+    //        if the sneaker entry has an empty name, throw name exception
+    //        if the sneaker entry has an invalid retail price, throw amount exception
+    //        if the sneaker entry has an invalid quantity , throw quantity exception
     public SneakerEntry(String name, double retailPrice,int quantityBought)
             throws NameException, QuantityException, AmountException {
         if (name.isEmpty()) {
@@ -51,11 +54,8 @@ public class SneakerEntry implements Writable {
 
     //MODIFIES: this
     //EFFECT: increase the quantities bought of that sneaker by the specified amount
-    //        No exception needed as it is only called when we add an existing entry which means amount bought is
-    //        already checked.
     public void increaseQuantityBought(int amount) {
         quantityBought += amount;
-
     }
 
     @Override
@@ -80,6 +80,8 @@ public class SneakerEntry implements Writable {
     }
 
 
+    //EFFECT: check if two sneaker entries are equal, if two entries are the same object, return true, otherwise false
+    //        the same sneaker should have the same name and price;
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -94,6 +96,7 @@ public class SneakerEntry implements Writable {
     }
 
     @Override
+    //hashcode method for overriden equals
     public int hashCode() {
         return Objects.hash(name, retailPrice);
     }

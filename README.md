@@ -48,6 +48,9 @@ entry
 - as a user, I want to be able to load my sneaker entry list from file
 - as a user, I want to be able to save my revenue list to file
 - as a user, I want to be able to load my revenue list from file
+- as a user, I want to be able to remove an entry from a support entry list
+- as a user, I want to be able to remove a sneaker entry from the sneaker entry list 
+- as a user, I want to be able to remove a revenue from a revenue list
 
 
 
