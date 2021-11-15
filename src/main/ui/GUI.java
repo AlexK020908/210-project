@@ -135,7 +135,7 @@ public class GUI extends JPanel {
         addCookGroup.addActionListener(new SupportEntryActionListener("cook group", cookGroupPurchaseList,
                 cookDefaultPurchaseList, cookRemoveButton));
         addThirdPartySolver.addActionListener(new SupportEntryActionListener("Third party Solver",
-                cookGroupPurchaseList, cookDefaultPurchaseList, thirdPartyRemoveButton));
+                thirdPartyCaptchaSolversPurchaseList, thirdPartyDefaultPurchaseList, thirdPartyRemoveButton));
     }
 
     //MODIFIES: this
