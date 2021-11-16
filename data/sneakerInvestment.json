@@ -11,8 +11,18 @@
             "retailPrice": 130
         },
         {
-            "quantity": 2,
+            "quantity": 27,
             "name": "nike",
+            "retailPrice": 120
+        },
+        {
+            "quantity": 2,
+            "name": "niker",
+            "retailPrice": 12
+        },
+        {
+            "quantity": 2,
+            "name": "nikier",
             "retailPrice": 120
         }
     ],

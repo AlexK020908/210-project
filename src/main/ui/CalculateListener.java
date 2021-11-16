@@ -7,6 +7,7 @@ import model.investment.SneakerPurchaseList;
 import model.investment.ThirdPartyCaptchaSolversPurchaseList;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -48,19 +49,42 @@ public class CalculateListener implements ActionListener {
                 + moneySpentOnThirdPartCaptchaSolvers;
 
         if (moneySpentTotal > revenueMadeInTotal) {
-            JOptionPane.showMessageDialog(null,
-                    "you are money" + "you are in a net negative profit of " + " "
+
+            promtpUserWithResult("UH OH!","./data/losing.png",
+                    "you are losing money" + ", " + "you are in a net negative profit of " + " "
                             + (moneySpentTotal - revenueMadeInTotal));
+
         } else if (moneySpentTotal < revenueMadeInTotal) {
-            JOptionPane.showMessageDialog(null, "you are making a net positive profit of" + " "
-                    + (revenueMadeInTotal - moneySpentTotal));
+
+            promtpUserWithResult("WOW!","./data/stonks.jpg",
+                    "you are making a net positive profit of" + " "
+                            + (revenueMadeInTotal - moneySpentTotal));
+
 
         } else if (moneySpentTotal == revenueMadeInTotal) {
-            JOptionPane.showMessageDialog(null, "you are breaking even, making a net prorit "
-                    + "0 dollars");
+
+            promtpUserWithResult("balancing","./data/balance.png",
+                    "you are breaking even, making a net profit "
+                            + "0 dollars");
+
         }
 
 
+    }
+
+    //EFFECT: prompts user with pop up window that shows them how much money they are making or losing
+    //        corresponding to an image.
+    private void promtpUserWithResult(String title,
+                                      String filePath, String message) {
+        ImageIcon stonks = new ImageIcon(filePath); //by using get class, you are telling program
+        Image imageResized = stonks.getImage().getScaledInstance(300, 200, Image.SCALE_DEFAULT);
+        //to search for image from the starting class, it can not be traced back
+        ImageIcon resizedIcon = new ImageIcon(imageResized, title);
+
+        JOptionPane.showMessageDialog(null,
+                message, title,
+                JOptionPane.WARNING_MESSAGE,
+                resizedIcon);
     }
 
 }

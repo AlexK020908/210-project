@@ -22,6 +22,14 @@
         },
         {
             "name": "12",
+            "pricePaid": 4
+        },
+        {
+            "name": "proxy12",
+            "pricePaid": 14
+        },
+        {
+            "name": "what",
             "pricePaid": 2
         }
     ],
