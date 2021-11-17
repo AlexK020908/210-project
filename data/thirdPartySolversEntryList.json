@@ -12,6 +12,10 @@
         {
             "name": "solving",
             "pricePaid": 4
+        },
+        {
+            "name": "solvinger",
+            "pricePaid": 12
         }
     ]
 }
