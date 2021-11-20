@@ -65,8 +65,8 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
         for (T next : typePurchaseList) {
             if (next.getName().equals(name)) {
                 next.addToPricePaidSoFar(pricePaid);
-                EventLog.getInstance().logEvent(new Event("one of the support of name " + entry.getName() + " "
-                        +  "entries has updated its total price paid"));
+                EventLog.getInstance().logEvent(new Event("one of the support extries of name " + entry.getName() + " "
+                        +  "has updated its total price paid"));
                 return false;
             }
 

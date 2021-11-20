@@ -53,6 +53,49 @@ entry
 - as a user, I want to be able to remove a revenue from a revenue list
 
 
+## phase 4 : task 2
+- a sample of events logged in my system:
+
+Sat Nov 20 12:44:36 PST 2021\
+a new support entry has been added, its name is Oculus proxies
+
+Sat Nov 20 12:44:46 PST 2021\
+a new support entry has been added, its name is Forbidden Cook
+
+Sat Nov 20 12:44:57 PST 2021\
+a new support entry has been added, its name is Cap Monster Solver
+
+Sat Nov 20 12:45:15 PST 2021\
+a new support entry has been added, its name is solv
+
+Sat Nov 20 12:45:16 PST 2021\
+a support entry of name solv has been removed from its list
+
+Sat Nov 20 12:45:28 PST 2021\
+a new support entry has been added, its name is 2Captcha
+
+Sat Nov 20 12:45:39 PST 2021\
+a new sneaker entry named Yeezy 350 White ColorWay has been added to an empty sneaker entry list
+
+Sat Nov 20 12:45:48 PST 2021\
+a new entry named Nike Dunk Low has been added to the sneaker entry list
+
+Sat Nov 20 12:45:51 PST 2021\
+a new revenue of 1900.0 has been added to the existing revenues
+
+Sat Nov 20 12:45:54 PST 2021\
+a new revenue of 13000.0 has been added to the existing revenues
+
+Sat Nov 20 12:45:57 PST 2021\
+an existing revenue of 13000.0 has been removed from the existing revenues
+
+Sat Nov 20 12:46:00 PST 2021\
+a new revenue of 2100.0 has been added to the existing revenues
+
+
+
+
+
 
 
 

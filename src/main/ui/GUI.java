@@ -5,6 +5,7 @@ import model.*;
 import model.Event;
 import model.investment.*;
 import persistance.*;
+import sun.tools.jconsole.PlotterPanel;
 
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 
+import static java.awt.GridBagConstraints.BOTH;
 import static javax.swing.ScrollPaneConstants.*;
 
 //this class represents the GUI of this project
@@ -25,7 +27,7 @@ public class GUI extends JPanel {
     public static final String COOK_GROUP_STORE = "./data/cookGroupEntryList.json";
     public static final String THIRD_PARTY_SOLVER_STORE = "./data/thirdPartySolversEntryList.json";
     public static final String REVENUE_STORE = "./data/revenueEntryList.json";
-    private static final String  FILE_DESCRIPTION = "to file";
+    private static final String  CONSOLE = "to console";
     private static final String SCREEN_DESCRIPTION = "to screen";
     private ProxyPurchaseList proxyPurchaseList;
     private CookGroupPurchaseList cookGroupPurchaseList;
@@ -80,16 +82,6 @@ public class GUI extends JPanel {
         jsonReaderForRevenueList = new JsonReaderForRevenueList(REVENUE_STORE);
         constraints = new GridBagConstraints();
 
-
-        JDesktopPane desktop = new JDesktopPane();
-        JInternalFrame eventLog = new JInternalFrame("event log", false, true, false, false);
-
-        desktop.add(eventLog);
-        JPanel topPanel = new JPanel();
-        add(topPanel);
-        topPanel.add(desktop);
-
-
         menubar = new JMenuBar();
         menubar.setOpaque(true);
         menubar.setBackground(Color.WHITE);
@@ -100,11 +92,11 @@ public class GUI extends JPanel {
         JPanel mainPanel = initializeMainPanel();
         //we need to initialize first and then load back in... not sure why
         initializeAllEntries(mainPanel);
-        topPanel.add(mainPanel);
         addSaveLoadMenu();
         addSupportEntriesMenu();
         addSneakerEntriesMenu();
         addRevenueMenu();
+
 
 
 
@@ -180,6 +172,7 @@ public class GUI extends JPanel {
     //EFFECT: create main PANEL where all component entries will pasted on to
     private JPanel initializeMainPanel() {
         JPanel mainPanel = new JPanel(new GridBagLayout());
+        add(mainPanel);
         mainPanel.setBorder(BorderFactory.createTitledBorder("All Entries"));
         return mainPanel;
     }
@@ -217,14 +210,32 @@ public class GUI extends JPanel {
         initializeNewRevenuePanel(revenueList, mainPanel);
 
         createAndAddCalculateButton(mainPanel);
+        createAndAddQuitButton(mainPanel);
         createAndAddLogButton(mainPanel);
         createAndAddComboBox(mainPanel);
 
 
+    }
+
+    //EFFECT: add the quit button under the calulate button and make sure it takes up the whole row.
+    //        when a user clicks the quit button, make sure to print the event log to the console
+    private void createAndAddQuitButton(JPanel mainPanel) {
+        JMenu close = new JMenu("close");
+        JMenuItem quitButton = new JMenuItem("close application and print log");
+        menubar.add(close);
+        close.add(quitButton);
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventLog el = EventLog.getInstance();
+                for (Event next : el) {
+                    System.out.println("\n " + next.toString());
+                }
+                System.exit(0);
+            }
+        });
 
 
-        //need to add clear log later
-        //need to add load log option from file
     }
 
     //EFFECT: create and add the calculate button
@@ -248,6 +259,20 @@ public class GUI extends JPanel {
         constraints.weightx = 0.5;
         constraints.gridwidth = 1;
         mainPanel.add(showEventLog, constraints);
+        JTextArea eventLog = new JTextArea("logs" + "\n");
+        JPanel eventPanel = new JPanel();
+        constraints.gridy = 4;
+        constraints.gridx = 0;
+        constraints.weightx = 0.5;
+        constraints.gridwidth = 3;
+        constraints.gridheight = 5;
+        constraints.fill = BOTH;
+        mainPanel.add(eventPanel, constraints);
+        eventPanel.add(eventLog);
+        JScrollPane pane = new JScrollPane(eventLog);
+        pane.setPreferredSize(new Dimension(750, 100));
+        eventPanel.add(pane);
+        eventLog.setEditable(false);
 
 
         showEventLog.addActionListener(new ActionListener() {
@@ -255,11 +280,20 @@ public class GUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String selection = (String) comboBox.getSelectedItem();
 
-                if (selection == FILE_DESCRIPTION) {
-                    //
+                if (selection == CONSOLE) {
+                    EventLog el = EventLog.getInstance();
+                    for (Event next : el) {
+                        System.out.println("\n " + next.toString());
+                    }
 
                 } else if (selection == SCREEN_DESCRIPTION) {
-                    //
+                    eventLog.selectAll();
+                    eventLog.replaceSelection("");
+                    EventLog el = EventLog.getInstance();
+                    for (Event next : el)  {
+                        eventLog.append(next.toString() + "\n\n");
+                    }
+
                 }
             }
         });
@@ -268,7 +302,7 @@ public class GUI extends JPanel {
     //EFFECT: create and add combo box next to the log button
     private void createAndAddComboBox(JPanel mainPanel) {
         comboBox = new JComboBox<>();
-        comboBox.addItem(FILE_DESCRIPTION);
+        comboBox.addItem(CONSOLE);
         comboBox.addItem(SCREEN_DESCRIPTION);
         constraints.gridy = 3;
         constraints.gridx = 1;
@@ -511,7 +545,7 @@ public class GUI extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.weightx = 0.0;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = BOTH;
         constraints.gridwidth = 3;
         mainPanel.add(sneakerPanel, constraints);
     }
@@ -570,17 +604,17 @@ public class GUI extends JPanel {
         if (supportEntryList.getType() == EntryType.PROXY) {
             constraints.gridx = 0;
             constraints.gridy = 0;
-            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.fill = BOTH;
             mainPanel.add(entryPanel, constraints);
         } else if (supportEntryList.getType() == EntryType.CookGroup) {
             constraints.gridx = 1;
             constraints.gridy = 0;
-            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.fill = BOTH;
             mainPanel.add(entryPanel, constraints);
         } else if (supportEntryList.getType() == EntryType.ThirdPartSolver) {
             constraints.gridx = 2;
             constraints.gridy = 0;
-            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.fill = BOTH;
             mainPanel.add(entryPanel, constraints);
         }
     }
