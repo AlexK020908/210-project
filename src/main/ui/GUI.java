@@ -2,6 +2,7 @@ package ui;
 
 
 import model.*;
+import model.Event;
 import model.investment.*;
 import persistance.*;
 
@@ -24,6 +25,8 @@ public class GUI extends JPanel {
     public static final String COOK_GROUP_STORE = "./data/cookGroupEntryList.json";
     public static final String THIRD_PARTY_SOLVER_STORE = "./data/thirdPartySolversEntryList.json";
     public static final String REVENUE_STORE = "./data/revenueEntryList.json";
+    private static final String  FILE_DESCRIPTION = "to file";
+    private static final String SCREEN_DESCRIPTION = "to screen";
     private ProxyPurchaseList proxyPurchaseList;
     private CookGroupPurchaseList cookGroupPurchaseList;
     private ThirdPartyCaptchaSolversPurchaseList thirdPartyCaptchaSolversPurchaseList;
@@ -57,7 +60,9 @@ public class GUI extends JPanel {
     private JButton cookRemoveButton;
     private JButton thirdPartyRemoveButton;
     private GridBagConstraints constraints;
-    JFrame frame;
+    private JFrame frame;
+    private JComboBox<String> comboBox;
+
 
     //EFFECT: constructs a mainPanel where JPnale will be attached to; initialize a proxy, cook group , third
     //        party solver , sneakers and revenue panels that will be the part of the main panel.
@@ -75,6 +80,16 @@ public class GUI extends JPanel {
         jsonReaderForRevenueList = new JsonReaderForRevenueList(REVENUE_STORE);
         constraints = new GridBagConstraints();
 
+
+        JDesktopPane desktop = new JDesktopPane();
+        JInternalFrame eventLog = new JInternalFrame("event log", false, true, false, false);
+
+        desktop.add(eventLog);
+        JPanel topPanel = new JPanel();
+        add(topPanel);
+        topPanel.add(desktop);
+
+
         menubar = new JMenuBar();
         menubar.setOpaque(true);
         menubar.setBackground(Color.WHITE);
@@ -85,6 +100,7 @@ public class GUI extends JPanel {
         JPanel mainPanel = initializeMainPanel();
         //we need to initialize first and then load back in... not sure why
         initializeAllEntries(mainPanel);
+        topPanel.add(mainPanel);
         addSaveLoadMenu();
         addSupportEntriesMenu();
         addSneakerEntriesMenu();
@@ -164,7 +180,6 @@ public class GUI extends JPanel {
     //EFFECT: create main PANEL where all component entries will pasted on to
     private JPanel initializeMainPanel() {
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        add(mainPanel);
         mainPanel.setBorder(BorderFactory.createTitledBorder("All Entries"));
         return mainPanel;
     }
@@ -201,15 +216,65 @@ public class GUI extends JPanel {
 
         initializeNewRevenuePanel(revenueList, mainPanel);
 
+        createAndAddCalculateButton(mainPanel);
+        createAndAddLogButton(mainPanel);
+        createAndAddComboBox(mainPanel);
+
+
+
+
+        //need to add clear log later
+        //need to add load log option from file
+    }
+
+    //EFFECT: create and add the calculate button
+    private void createAndAddCalculateButton(JPanel mainPanel) {
         JButton calculateButton = new JButton("calculate profit or loss");
         constraints.gridy = 3;
-        constraints.gridx = 1;
+        constraints.gridx = 2;
         constraints.weightx = 0.5;
         constraints.gridwidth = 1;
 
         mainPanel.add(calculateButton, constraints);
         calculateButton.addActionListener(new CalculateListener(cookGroupPurchaseList, proxyPurchaseList,
                 thirdPartyCaptchaSolversPurchaseList, sneakerPurchaseList, revenueList));
+    }
+
+    //EFFECT: create and add log button
+    private void createAndAddLogButton(JPanel mainPanel) {
+        JButton showEventLog = new JButton("load event log to...");
+        constraints.gridy = 3;
+        constraints.gridx = 0;
+        constraints.weightx = 0.5;
+        constraints.gridwidth = 1;
+        mainPanel.add(showEventLog, constraints);
+
+
+        showEventLog.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selection = (String) comboBox.getSelectedItem();
+
+                if (selection == FILE_DESCRIPTION) {
+                    //
+
+                } else if (selection == SCREEN_DESCRIPTION) {
+                    //
+                }
+            }
+        });
+    }
+
+    //EFFECT: create and add combo box next to the log button
+    private void createAndAddComboBox(JPanel mainPanel) {
+        comboBox = new JComboBox<>();
+        comboBox.addItem(FILE_DESCRIPTION);
+        comboBox.addItem(SCREEN_DESCRIPTION);
+        constraints.gridy = 3;
+        constraints.gridx = 1;
+        constraints.weightx = 0.5;
+        constraints.gridwidth = 1;
+        mainPanel.add(comboBox, constraints);
     }
 
 

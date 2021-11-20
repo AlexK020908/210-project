@@ -59,25 +59,28 @@ public class SupportEntryActionListener implements ActionListener {
                                                       JPanel entryPanel) {
         double entryPrice = Double.parseDouble(JOptionPane.showInputDialog(null, entryName + "'s price?",
                 "Enter price", JOptionPane.QUESTION_MESSAGE));
-        if (entryPrice == 0) {
+        if (entryPrice == 0 || entryPrice < 0) {
             JOptionPane.showMessageDialog(entryPanel, "please enter a valid price");
-        }
+        } else {
 
-        switch (supportEntryList.getType()) {
-            case PROXY:
-                ProxyEntry proxyEntry = new ProxyEntry(entryName, entryPrice);
-                entryHelper(supportEntryList, proxyEntry, defaultListModel);
-                break;
+            switch (supportEntryList.getType()) {
+                case PROXY:
+                    ProxyEntry proxyEntry = new ProxyEntry(entryName, entryPrice);
+                    entryHelper(supportEntryList, proxyEntry, defaultListModel);
+                    break;
 
-            case CookGroup:
-                CookGroupSubscriptionEntry cookEntry = new CookGroupSubscriptionEntry(entryName, entryPrice);
-                entryHelper(supportEntryList, cookEntry, defaultListModel);
-                break;
+                case CookGroup:
+                    CookGroupSubscriptionEntry cookEntry = new CookGroupSubscriptionEntry(entryName, entryPrice);
+                    entryHelper(supportEntryList, cookEntry, defaultListModel);
+                    break;
 
-            case ThirdPartSolver: ThirdPartyCaptchaSolverEntry solverEntry =
-                    new ThirdPartyCaptchaSolverEntry(entryName, entryPrice);
-                entryHelper(supportEntryList, solverEntry, defaultListModel);
-                break;
+                case ThirdPartSolver:
+                    ThirdPartyCaptchaSolverEntry solverEntry =
+                            new ThirdPartyCaptchaSolverEntry(entryName, entryPrice);
+                    entryHelper(supportEntryList, solverEntry, defaultListModel);
+                    break;
+            }
+
         }
 
     }

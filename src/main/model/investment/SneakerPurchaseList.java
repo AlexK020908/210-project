@@ -1,8 +1,6 @@
 package model.investment;
 
-import model.AmountException;
-import model.EntryType;
-import model.SneakerEntry;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistance.Writable;
@@ -59,6 +57,8 @@ public class SneakerPurchaseList implements Writable {
     public boolean removeEntry(SneakerEntry sneakerEntry) {
         if (sneakerPurchaseList.contains(sneakerEntry)) {
             sneakerPurchaseList.remove(sneakerEntry);
+            EventLog.getInstance().logEvent(new Event("a sneaker entry named" +  sneakerEntry.getName()
+                    + " has been removed from its sneaker entry list"));
             return true;
         } else {
             return false;
@@ -77,12 +77,18 @@ public class SneakerPurchaseList implements Writable {
     public boolean addEntry(SneakerEntry entry) {
         if (sneakerPurchaseList.isEmpty()) {
             sneakerPurchaseList.add(entry);
+            EventLog.getInstance().logEvent(new Event("a new sneaker entry named " + entry.getName()
+                    + "has been added to an empty sneaker entry list"));
             return true;
         } else if (sneakerPurchaseList.contains(entry)) {
             updateQuantityOfExistingSneakerEntry(entry);
+            EventLog.getInstance().logEvent(new Event(entry.getName() + "'s quantity has been updated"
+                    + " by" + entry.getQuantityBought()));
             return false;
         } else {
             sneakerPurchaseList.add(entry);
+            EventLog.getInstance().logEvent(new Event("a new entry named" + " " + entry.getName()
+                    + "has been added to the sneaker entry list"));
             return true;
         }
     }

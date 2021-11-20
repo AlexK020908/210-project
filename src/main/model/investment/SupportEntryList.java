@@ -1,6 +1,8 @@
 package model.investment;
 
 import model.EntryType;
+import model.Event;
+import model.EventLog;
 import model.SupportEntry;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -63,11 +65,15 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
         for (T next : typePurchaseList) {
             if (next.getName().equals(name)) {
                 next.addToPricePaidSoFar(pricePaid);
+                EventLog.getInstance().logEvent(new Event("one of the support of name " + entry.getName() + " "
+                        +  "entries has updated its total price paid"));
                 return false;
             }
 
         }
         typePurchaseList.add(entry);
+        EventLog.getInstance().logEvent(new Event("a new support entry has been added, its name is "
+                + entry.getName()));
         return true;
 
     }
@@ -79,6 +85,8 @@ public abstract class SupportEntryList<T extends SupportEntry> implements Writab
     public Boolean removeEntry(SupportEntry entry) {
         if (typePurchaseList.contains(entry)) {
             typePurchaseList.remove(entry);
+            EventLog.getInstance().logEvent(new Event("a support entry of name " + entry.getName() + " "
+                    + "has been removed from its list"));
             return true;
         }
         return false;

@@ -1,13 +1,4 @@
 {
-    "Cook Group List": [
-        {
-            "name": "cooking",
-            "pricePaid": 6
-        },
-        {
-            "name": "cooker",
-            "pricePaid": 24
-        }
-    ],
+    "Cook Group List": [],
     "type": "CookGroup"
 }

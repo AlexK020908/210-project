@@ -25,6 +25,8 @@ public class RevenueList implements Writable {
     //EFFECT: add the new money made to revenue.
     public void addNewRevenue(Revenue r) {
         revenues.add(r);
+        EventLog.getInstance().logEvent(new Event("a new revenue of " + r.getRevenue() + " "
+                + "has been added to the existing revenues"));
     }
 
     //EFFECT: calculate the total revenue by adding all the revenues together
@@ -63,6 +65,8 @@ public class RevenueList implements Writable {
         for (Revenue next : revenues) {
             if (next.getRevenue() == revenue.getRevenue()) {
                 revenues.remove(next);
+                EventLog.getInstance().logEvent(new Event("an existing revenue of " + revenue.getRevenue() + " "
+                        + "has been removed from the existing revenues"));
             }
         }
 

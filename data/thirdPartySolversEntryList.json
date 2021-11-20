@@ -1,21 +1,4 @@
 {
     "type": "ThirdPartSolver",
-    "solvers": [
-        {
-            "name": "solver",
-            "pricePaid": 2
-        },
-        {
-            "name": "solver2",
-            "pricePaid": 2
-        },
-        {
-            "name": "solving",
-            "pricePaid": 4
-        },
-        {
-            "name": "solvinger",
-            "pricePaid": 12
-        }
-    ]
+    "solvers": []
 }

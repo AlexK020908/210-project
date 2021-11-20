@@ -1,41 +1,7 @@
 {
-    "proxies": [
-        {
-            "name": "proxy",
-            "pricePaid": 18
-        },
-        {
-            "name": "Leaf proxies",
-            "pricePaid": 2
-        },
-        {
-            "name": "oculus ",
-            "pricePaid": 6
-        },
-        {
-            "name": "added",
-            "pricePaid": 2
-        },
-        {
-            "name": "proxy2",
-            "pricePaid": 12
-        },
-        {
-            "name": "12",
-            "pricePaid": 4
-        },
-        {
-            "name": "proxy12",
-            "pricePaid": 14
-        },
-        {
-            "name": "what",
-            "pricePaid": 2
-        },
-        {
-            "name": "oculus2",
-            "pricePaid": 12
-        }
-    ],
+    "proxies": [{
+        "name": "proxy",
+        "pricePaid": 12
+    }],
     "type": "PROXY"
 }
