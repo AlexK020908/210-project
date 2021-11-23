@@ -27,7 +27,7 @@ public class GUI extends JPanel {
     public static final String COOK_GROUP_STORE = "./data/cookGroupEntryList.json";
     public static final String THIRD_PARTY_SOLVER_STORE = "./data/thirdPartySolversEntryList.json";
     public static final String REVENUE_STORE = "./data/revenueEntryList.json";
-    private static final String  CONSOLE = "to console";
+    private static final String  CONSOLE = "to console and close";
     private static final String SCREEN_DESCRIPTION = "to screen";
     private ProxyPurchaseList proxyPurchaseList;
     private CookGroupPurchaseList cookGroupPurchaseList;
@@ -227,11 +227,7 @@ public class GUI extends JPanel {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EventLog el = EventLog.getInstance();
-                for (Event next : el) {
-                    System.out.println("\n " + next.toString());
-                }
-                System.exit(0);
+                closeAppAndPrintLogs();
             }
         });
 
@@ -265,10 +261,8 @@ public class GUI extends JPanel {
                 String selection = (String) comboBox.getSelectedItem();
 
                 if (selection == CONSOLE) {
-                    EventLog el = EventLog.getInstance();
-                    for (Event next : el) {
-                        System.out.println("\n " + next.toString());
-                    }
+                    closeAppAndPrintLogs();
+
 
                 } else if (selection == SCREEN_DESCRIPTION) {
                     eventLog.selectAll();
@@ -282,6 +276,24 @@ public class GUI extends JPanel {
             }
         });
     }
+
+    //MODIFIES: this
+    //EFFECT: close the program and print the logs to the console
+    private void closeAppAndPrintLogs() {
+        EventLog el = EventLog.getInstance();
+        for (Event next : el) {
+            System.out.println("\n " + next.toString());
+        }
+        System.exit(0);
+    }
+
+             /*
+                    EventLog el = EventLog.getInstance();
+                    for (Event next : el) {
+                        System.out.println("\n " + next.toString());
+                    }
+
+             */
 
     //EFFECT: add the event panel to the main panel, event panel should contain an event panel with an appropriate
     //        jscroll pane
@@ -308,7 +320,7 @@ public class GUI extends JPanel {
     //MODIFES: this
     //EFFECT: create a load event button that allows user to load the event log
     private JButton createLoadEventButton(JPanel mainPanel) {
-        JButton showEventLog = new JButton("load event log to...");
+        JButton showEventLog = new JButton("load event to.... ");
         constraints.gridy = 3;
         constraints.gridx = 0;
         constraints.weightx = 0.5;
