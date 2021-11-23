@@ -10,10 +10,12 @@ import java.util.List;
 //All the revenues in a list, implements writable to implement the toJson method to turn a revenuelist into a JsonObject
 public class RevenueList implements Writable {
     private List<Revenue> revenues;
+    private EntryType type;
 
     //EFFECT: CREATE an empty Revenue list
     public RevenueList() {
         revenues = new LinkedList<>();
+        type = EntryType.Revenue;
     }
 
     //Get the length of the revenue List
@@ -44,6 +46,7 @@ public class RevenueList implements Writable {
      // Link: [https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git]
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", type);
         jsonObject.put("revenues",toJsonRevenueArray());
         return jsonObject;
     }
@@ -73,5 +76,9 @@ public class RevenueList implements Writable {
     //EFFECT: return the revenues in form of a list
     public List<Revenue> getRevenues() {
         return revenues;
+    }
+
+    public EntryType getType() {
+        return type;
     }
 }

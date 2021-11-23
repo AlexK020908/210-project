@@ -51,11 +51,26 @@ public class RevenueListTest {
 
 
     @Test
+    public void testGetType() {
+        try {
+            //add one revenue
+            Revenue r1 = new Revenue(20.00);
+            Revenue r2 = new Revenue(120.00);
+            Revenues.addNewRevenue(r1);
+            Revenues.addNewRevenue(r2);
+            assertEquals(EntryType.Revenue, Revenues.getType());
+        } catch (AmountException e) {
+            fail();
+        }
+
+    }
+
+
+    @Test
     public void testAddRevenue() {
         try {
             //add one revenue
             Revenue r1 = new Revenue(20.00);
-            Revenue r11 = new Revenue(20.00);
             Revenue r2 = new Revenue(120.00);
             Revenue r3 = new Revenue(21.00);
             Revenue r4 = new Revenue(10.00);
