@@ -20,7 +20,8 @@ public class RemoveSupportEntryListener implements ActionListener, ListSelection
     private SupportEntryList<? extends SupportEntry> supportEntryList;
 
     //EFFECT: intialize a remove listener constructor
-    public RemoveSupportEntryListener(DefaultListModel<SupportEntry> defaultListModel, JList entryJList, JButton removeButton,
+    public RemoveSupportEntryListener(DefaultListModel<SupportEntry> defaultListModel, JList entryJList,
+                                      JButton removeButton,
                                       SupportEntryList<? extends SupportEntry> supportEntryList) {
         this.defaultListModel = defaultListModel;
         this.entryJList = entryJList;
