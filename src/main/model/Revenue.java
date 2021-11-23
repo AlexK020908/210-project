@@ -1,11 +1,13 @@
 package model;
 
+import org.json.Cookie;
 import org.json.JSONObject;
+import persistance.Writable;
 
 import java.util.Objects;
 
 //class for revenue
-public class Revenue {
+public class Revenue implements Writable {
     private double revenue;
 
     //EFFECT: construct a revenue object
@@ -22,6 +24,7 @@ public class Revenue {
         return this.revenue;
     }
 
+    @Override
     //EFFECT: RETURN the revenue as a JSON object
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();

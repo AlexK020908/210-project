@@ -1,7 +1,13 @@
 {
-    "proxies": [{
-        "name": "proxy",
-        "pricePaid": 12
-    }],
+    "proxies": [
+        {
+            "name": "proxy",
+            "pricePaid": 12
+        },
+        {
+            "name": "leaf proxies",
+            "pricePaid": 12
+        }
+    ],
     "type": "PROXY"
 }

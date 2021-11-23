@@ -93,6 +93,23 @@ Sat Nov 20 12:46:00 PST 2021\
 a new revenue of 2100.0 has been added to the existing revenues
 
 
+## phase 4 trask 3: 
+After reflecting on my design and UML, I realized that the structure of my model classes were fine. However, I realized
+a huge mistake made on my design of GUI. As shown in the UML diagram I have many helper classes for listening to button events
+when a specific button is pressed. Instead of making these classes nested classes which can have access to private fields in my main
+gui class, I created a new Java class outside of GUI. By making these supposedly nested classes a new java class, it presented with trouble
+referring to private fields in my GUI class. In fact, I realized this error while working on phase but at the time did not know how to solve
+this problem. For every other event listener class I created outside the GUI class, I had to pass in the fields I want in the GUI class into the 
+constructor of the newly created listener class. For example, my **SaveActionListener** needed all of my RevenueList, SneakerPurchaseList, ThirdPartySolverPurchaseList, 
+ProxyPurchase and CookGroupPurchaseList instances passed into its constructor. By creating these classes outside of my GUI class, I have created 
+more than one path to a class. If starting from GUI, I want to access sneakerPurchaseList class, I have many paths. One path goes
+straight from GUI to SneakerPurchaseList class, another path can be taken from GUI to addSneakerListener, and then to SneakerPurchaseListClass. This 
+increases coupling which is not desired.\
+
+
+
+
+
 
 
 

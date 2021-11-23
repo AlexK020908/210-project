@@ -1,4 +1,17 @@
 {
     "type": "ThirdPartSolver",
-    "solvers": []
+    "solvers": [
+        {
+            "name": "cap monster",
+            "pricePaid": 12
+        },
+        {
+            "name": "monster",
+            "pricePaid": 12
+        },
+        {
+            "name": "2captcha",
+            "pricePaid": 120
+        }
+    ]
 }

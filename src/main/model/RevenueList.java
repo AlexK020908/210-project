@@ -61,15 +61,13 @@ public class RevenueList implements Writable {
 
     //MODIFIES: this
     //EFFECT: REMOVE the specified revenue from the revenue list if it does contain the given revenue
+    // can not use forloop as it will cause concurency error, need the iteralble interface....
     public void removeRevenue(Revenue revenue) {
-        for (Revenue next : revenues) {
-            if (next.getRevenue() == revenue.getRevenue()) {
-                revenues.remove(next);
-                EventLog.getInstance().logEvent(new Event("an existing revenue of " + revenue.getRevenue() + " "
-                        + "has been removed from the existing revenues"));
-            }
+        if (revenues.contains(revenue)) {
+            revenues.remove(revenue);
+            EventLog.getInstance().logEvent(new Event("an existing revenue of " + revenue.getRevenue() + " "
+                    + "has been removed from the existing revenues"));
         }
-
     }
 
     //EFFECT: return the revenues in form of a list

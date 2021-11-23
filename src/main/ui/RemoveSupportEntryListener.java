@@ -13,15 +13,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //this class represetns an action listner for the remove button for support entries
-public class RemoveListener implements ActionListener, ListSelectionListener {
+public class RemoveSupportEntryListener implements ActionListener, ListSelectionListener {
     private DefaultListModel<SupportEntry> defaultListModel;
     private JList<SupportEntry> entryJList;
     private JButton removeButton;
     private SupportEntryList<? extends SupportEntry> supportEntryList;
 
     //EFFECT: intialize a remove listener constructor
-    public RemoveListener(DefaultListModel<SupportEntry> defaultListModel, JList entryJList, JButton removeButton,
-                          SupportEntryList<? extends SupportEntry> supportEntryList) {
+    public RemoveSupportEntryListener(DefaultListModel<SupportEntry> defaultListModel, JList entryJList, JButton removeButton,
+                                      SupportEntryList<? extends SupportEntry> supportEntryList) {
         this.defaultListModel = defaultListModel;
         this.entryJList = entryJList;
         this.removeButton = removeButton;

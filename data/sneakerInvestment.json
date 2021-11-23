@@ -1,4 +1,20 @@
 {
-    "sneakers": [],
+    "sneakers": [
+        {
+            "quantity": 2,
+            "name": "yeezy",
+            "retailPrice": 150
+        },
+        {
+            "quantity": 12,
+            "name": "nike dunk low",
+            "retailPrice": 120
+        },
+        {
+            "quantity": 130,
+            "name": "supreme tee",
+            "retailPrice": 89.99
+        }
+    ],
     "type": "Sneaker"
 }

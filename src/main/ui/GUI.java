@@ -5,7 +5,7 @@ import model.*;
 import model.Event;
 import model.investment.*;
 import persistance.*;
-import sun.tools.jconsole.PlotterPanel;
+
 
 
 import javax.swing.*;
@@ -253,26 +253,10 @@ public class GUI extends JPanel {
 
     //EFFECT: create and add log button
     private void createAndAddLogButton(JPanel mainPanel) {
-        JButton showEventLog = new JButton("load event log to...");
-        constraints.gridy = 3;
-        constraints.gridx = 0;
-        constraints.weightx = 0.5;
-        constraints.gridwidth = 1;
-        mainPanel.add(showEventLog, constraints);
+        JButton showEventLog = createLoadEventButton(mainPanel);
         JTextArea eventLog = new JTextArea("logs" + "\n");
         JPanel eventPanel = new JPanel();
-        constraints.gridy = 4;
-        constraints.gridx = 0;
-        constraints.weightx = 0.5;
-        constraints.gridwidth = 3;
-        constraints.gridheight = 5;
-        constraints.fill = BOTH;
-        mainPanel.add(eventPanel, constraints);
-        eventPanel.add(eventLog);
-        JScrollPane pane = new JScrollPane(eventLog);
-        pane.setPreferredSize(new Dimension(750, 100));
-        eventPanel.add(pane);
-        eventLog.setEditable(false);
+        addNewPanelToMainPanelContainingEventLog(mainPanel, eventLog, eventPanel);
 
 
         showEventLog.addActionListener(new ActionListener() {
@@ -297,6 +281,40 @@ public class GUI extends JPanel {
                 }
             }
         });
+    }
+
+    //EFFECT: add the event panel to the main panel, event panel should contain an event panel with an appropriate
+    //        jscroll pane
+    private void addNewPanelToMainPanelContainingEventLog(JPanel mainPanel, JTextArea eventLog, JPanel eventPanel) {
+        setConstraints();
+        mainPanel.add(eventPanel, constraints);
+        eventPanel.add(eventLog);
+        JScrollPane pane = new JScrollPane(eventLog);
+        pane.setPreferredSize(new Dimension(750, 100));
+        eventPanel.add(pane);
+        eventLog.setEditable(false);
+    }
+
+    //EFFECT: set the constrainst on the grid bad layout on the event panel
+    private void setConstraints() {
+        constraints.gridy = 4;
+        constraints.gridx = 0;
+        constraints.weightx = 0.5;
+        constraints.gridwidth = 3;
+        constraints.gridheight = 5;
+        constraints.fill = BOTH;
+    }
+
+    //MODIFES: this
+    //EFFECT: create a load event button that allows user to load the event log
+    private JButton createLoadEventButton(JPanel mainPanel) {
+        JButton showEventLog = new JButton("load event log to...");
+        constraints.gridy = 3;
+        constraints.gridx = 0;
+        constraints.weightx = 0.5;
+        constraints.gridwidth = 1;
+        mainPanel.add(showEventLog, constraints);
+        return showEventLog;
     }
 
     //EFFECT: create and add combo box next to the log button
@@ -490,7 +508,7 @@ public class GUI extends JPanel {
         revenuePanel.add(revenueJList);
         revenuePanel.add(new JScrollPane(revenueJList, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
         addRevenueButton.addActionListener(new AddRevenueListener(revenues, revenueListModel, removeRevenueButton));
-        removeRevenueButton.addActionListener(new RemoveButtonListener(revenueJList, revenueListModel,
+        removeRevenueButton.addActionListener(new RemoveRevenueListener(revenueJList, revenueListModel,
                 revenues, removeRevenueButton));
         viewOverallRevenueButton.addActionListener(new ViewRevenueListener(revenues));
 
@@ -588,7 +606,7 @@ public class GUI extends JPanel {
 
         addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList,
                  defaultListModelForSupportEntries, removeEntryButton));
-        removeEntryButton.addActionListener(new RemoveListener(defaultListModelForSupportEntries,
+        removeEntryButton.addActionListener(new RemoveSupportEntryListener(defaultListModelForSupportEntries,
                 entryJlist, removeEntryButton, supportEntryList));
     }
 

@@ -10,15 +10,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //This class reprsents an action listener for the remove button for revenue list
-public class RemoveButtonListener implements ActionListener, ListSelectionListener {
+public class RemoveRevenueListener implements ActionListener, ListSelectionListener {
     JList<Revenue> revenueJList;
     DefaultListModel<Revenue> defaultListModel;
     RevenueList revenueList;
     JButton removeButton;
 
     //EFFECT: initialize a remove button listiner construtor
-    public RemoveButtonListener(JList<Revenue> revenueJList, DefaultListModel<Revenue> defaultListModel,
-                                RevenueList revenueList, JButton removeButton) {
+    public RemoveRevenueListener(JList<Revenue> revenueJList, DefaultListModel<Revenue> defaultListModel,
+                                 RevenueList revenueList, JButton removeButton) {
         this.revenueJList =  revenueJList;
         this.defaultListModel = defaultListModel;
         this.revenueList = revenueList;
