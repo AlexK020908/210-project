@@ -66,6 +66,7 @@ public class GUI extends JPanel {
     private JComboBox<String> comboBox;
 
 
+
     //EFFECT: constructs a mainPanel where JPnale will be attached to; initialize a proxy, cook group , third
     //        party solver , sneakers and revenue panels that will be the part of the main panel.
     //        components should be laid out horizontally from left to right.
@@ -138,11 +139,11 @@ public class GUI extends JPanel {
         supportEntries.add(addProxy);
         supportEntries.add(addCookGroup);
         supportEntries.add(addThirdPartySolver);
-        addProxy.addActionListener(new SupportEntryActionListener("proxy", proxyPurchaseList,
+        addProxy.addActionListener(new AddSupportEntryActionListener("proxy", proxyPurchaseList,
                 proxyDefualtPurchaseList, proxyRemoveButton));
-        addCookGroup.addActionListener(new SupportEntryActionListener("cook group", cookGroupPurchaseList,
+        addCookGroup.addActionListener(new AddSupportEntryActionListener("cook group", cookGroupPurchaseList,
                 cookDefaultPurchaseList, cookRemoveButton));
-        addThirdPartySolver.addActionListener(new SupportEntryActionListener("Third party Solver",
+        addThirdPartySolver.addActionListener(new AddSupportEntryActionListener("Third party Solver",
                 thirdPartyCaptchaSolversPurchaseList, thirdPartyDefaultPurchaseList, thirdPartyRemoveButton));
     }
 
@@ -616,7 +617,7 @@ public class GUI extends JPanel {
         entryPanel.add(new JScrollPane(entryJlist, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
 
-        addEntryButton.addActionListener(new SupportEntryActionListener(typeOfEntry, supportEntryList,
+        addEntryButton.addActionListener(new AddSupportEntryActionListener(typeOfEntry, supportEntryList,
                  defaultListModelForSupportEntries, removeEntryButton));
         removeEntryButton.addActionListener(new RemoveSupportEntryListener(defaultListModelForSupportEntries,
                 entryJlist, removeEntryButton, supportEntryList));
