@@ -110,7 +110,7 @@ classes inside of GUI decreased coupling. The reason why I say my structure of t
 I have both nested and non-nested classes....
 
 In conclusion I would : 
-- move all listner classes designed outside of the GUI class into the GUI class and make them private nested classes
+- move all listener classes designed outside of the GUI class into the GUI class and make them private nested classes
 - Cook Group Purchase List, Proxy Purchase List and Third Party Purchase List can be combined into one single class that represent one single class of support Entry list
   - However, this would make it unorganized although it would make the program simpler
 - Revenue list does not have to be a list, which may provide the burden of have the field of a list of revenues. 
