@@ -116,10 +116,10 @@ In conclusion I would :
 - Revenue list does not have to be a list, which may provide the burden of have the field of a list of revenues. 
   - RevenueList and Revenue Class can be combined into one single class that holds one double value. Whenever the customer makes a new revenue, simply update 
 the existing revenue by adding the new revenue and the existing revenue together.
-- another thing I would have done is extracting a jsonWriter abstract class , for all the writer classes, they have identical code for the constructor, open(), and close.
+- another thing I would have done is extracting a jsonWriter super class , for all the writer classes, they have identical code for the constructor, open(), and close.
   - the write method for different writers take in different parameters, therefore the method would be troublesome to extract. 
-- For the json reader classes, I would have extracted a jsonReader super class that has a constructor that initialize the file location as a string and also a method 
-that reads the source file into a String and returns the string.
+- For the json reader classes, I would have extracted a jsonReader super class that has a constructor that initializeS the file location as a string and also a method 
+that reads the source file into a String and returns the string as all readers have the same code turning the source file into a string for conversion into json.
 
 
 
